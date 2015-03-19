@@ -6,7 +6,7 @@
 #include "Perso.h"
 
 typedef struct{
-
+	
 }Carte;
 
 Carte charger(char* nom_fichier);
