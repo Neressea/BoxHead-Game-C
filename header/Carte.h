@@ -5,10 +5,20 @@
 #include "Batiment.h"
 #include "Perso.h"
 
+/**
+* Defines what the map is.
+*/
 typedef struct{
-	
-}Carte;
 
-Carte charger(char* nom_fichier);
-void afficher(Carte c);
+}Map;
+
+/**
+* Load a map from a text file.
+*/
+Map load(char* nom_fichier);
+
+/**
+* Print the map on the screen
+*/
+void show(Map c);
 
