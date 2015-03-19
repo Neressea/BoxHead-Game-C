@@ -1,6 +1,5 @@
-#ifndef perso_h
-#define perso_h
-#endif
+#ifndef char_h
+#define char_h
 
 #include "Weapon.h"
 #include "Building.h"
@@ -14,34 +13,35 @@
 * xp : the experience of the char
 * pos_x, pos_y : the position of the character
 */
-typdef struct
-{
+typedef struct{
 	int hp;
 	int defense;
 	int attack;
 	int level; //?
 	int xp;
 	int pos_x, pos_y;
-	Arme weapon;
+	Weapon weapon;
 }Character;
 
-typedef struct ListChar{
+typedef struct{
 	Character current;
 	struct ListChar* next;
-};
+}ListChar;
 
 
 /**
 * Move the character
 */
-void move(Character p, x, y);
+void move(Character p, int x, int y);
 
 /**
 * p1 attacks p2
 */
-void attack(Character p1, Character p2);
+void attackCharacter(Character p1, Character p2);
 
 /**
 * p attacks the building b
 */
-void attack(Character p, Building b);
+void attackBuilding(Character p, Building b);
+
+#endif

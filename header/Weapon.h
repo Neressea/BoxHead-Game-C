@@ -1,6 +1,5 @@
 #ifndef weapon_h
 #define weapon_h
-#ifndef
 
 
 /**
@@ -14,3 +13,5 @@ typedef struct{
 	int ammo;
 	int rate; //?
 }Weapon;
+
+#endif

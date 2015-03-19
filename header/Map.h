@@ -1,6 +1,5 @@
 #ifndef map_h
 #define map_h
-#endif
 
 #include "Building.h"
 #include "Character.h"
@@ -26,4 +25,6 @@ Map load(char* nom_fichier);
 * Print the map on the screen
 */
 void show(Map c);
+
+#endif
 
