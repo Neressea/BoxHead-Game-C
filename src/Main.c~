@@ -4,7 +4,8 @@
 
 int main(){
 
-	int bloque = 1;	
+	int bloque = 1;
+	SDL_Event event;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // gestion erreur chargement SDL
@@ -23,9 +24,6 @@ int main(){
 
         }
 
-    }
-
-	}
 
 	SDL_Quit();
 
