@@ -3,6 +3,7 @@
 
 #include "Building.h"
 #include "Character.h"
+#include "Main.h"
 
 /**
 * Defines what the map is.

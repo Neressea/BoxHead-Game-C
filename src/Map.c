@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL/SDL.h>
-#include "../header/Map.h"
 
-int main(){
-	
-}
+#include "../header/Map.h"
 
 /**
 * Load a map from a text file.

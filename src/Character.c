@@ -3,10 +3,6 @@
 #include <SDL/SDL.h>
 #include "../header/Character.h"
 
-int main(){
-	return 0;
-}
-
 /**
 * Move the character
 */
