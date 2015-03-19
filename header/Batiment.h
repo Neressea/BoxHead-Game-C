@@ -18,4 +18,9 @@ typedef struct
 	int defense;
 }Building;
 
+typedef struct ListBuilding{
+	Building current;
+	struct ListBuilding* next;
+};
+
 void attack(Building b, Character p);

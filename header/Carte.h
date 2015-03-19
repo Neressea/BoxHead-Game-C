@@ -7,9 +7,14 @@
 
 /**
 * Defines what the map is.
+* list_buildings : List of the buildings on the map
+* lit_char : List of the characters on the map
+* width, length : size of the map
 */
 typedef struct{
-
+	ListBuilding *list_buildings;
+	ListChar *lit_char;
+	int width, length;
 }Map;
 
 /**

@@ -25,6 +25,11 @@ typdef struct
 	Arme weapon;
 }Character;
 
+typedef struct ListChar{
+	Character current;
+	struct ListChar* next;
+};
+
 
 /**
 * Move the character
