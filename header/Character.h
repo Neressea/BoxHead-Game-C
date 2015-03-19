@@ -2,8 +2,8 @@
 #define perso_h
 #endif
 
-#include "Arme.h"
-#include "Batiment.h"
+#include "Weapon.h"
+#include "Building.h"
 
 /**
 * This struct defines what a character is, for the main char and ennemies.

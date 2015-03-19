@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
+#include "../header/Main.h"
 
 int main(){
 
@@ -26,8 +27,7 @@ int main(){
 			break;
 		}
 
-        }
-
+    }
 
 	SDL_Quit();
 

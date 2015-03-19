@@ -1,5 +1,5 @@
-#ifndef arme_h
-#define arme_h
+#ifndef weapon_h
+#define weapon_h
 #ifndef
 
 

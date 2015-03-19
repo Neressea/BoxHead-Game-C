@@ -1,9 +1,9 @@
-#ifndef carte_h 
-#define carte_h
+#ifndef map_h
+#define map_h
 #endif
 
-#include "Batiment.h"
-#include "Perso.h"
+#include "Building.h"
+#include "Character.h"
 
 /**
 * Defines what the map is.

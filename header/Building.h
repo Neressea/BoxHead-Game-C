@@ -1,5 +1,5 @@
-#ifndef batiment_h
-#define batiment_h
+#ifndef building_h
+#define building_h
 #endif
 
 
