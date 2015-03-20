@@ -10,11 +10,15 @@
 * list_buildings : List of the buildings on the map
 * lit_char : List of the characters on the map
 * width, length : size of the map
+* background : name of the background of the map
+* split_pos : position of the map that is in the left-up corner
 */
 typedef struct{
-	ListBuilding *list_buildings;
-	ListChar *lit_char;
-	int width, length;
+	ListBuilding *buildings;
+	ListChar *characters;
+	int width, length; //?
+	char* background;
+	int split_pos;
 }Map;
 
 /**
