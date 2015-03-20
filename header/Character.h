@@ -23,10 +23,11 @@ typedef struct{
 	Weapon weapon;
 }Character;
 
-typedef struct{
+typedef struct ListChar ListChar;
+struct ListChar{
 	Character current;
 	struct ListChar* next;
-}ListChar;
+};
 
 
 /**

@@ -17,11 +17,12 @@ typedef struct{
 	int defense;
 }Building;
 
-typedef struct{
+typedef struct ListBuilding ListBuilding;
+struct ListBuilding{
 	Building current;
 	struct ListBuilding* next;
-}ListBuilding;
+};
 
-//void attack(Building b, Character p);
+//void attackFromBuildToChar(Building b, Character p);
 
 #endif
