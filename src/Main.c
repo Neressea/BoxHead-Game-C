@@ -41,10 +41,10 @@ void managing_event(){
 
 	SDL_Event event;
 
-	//SDL_EnableKeyRepeat(10, 10);
+	SDL_EnableKeyRepeat(10, 10);
 
 	while(bloque){
-		while(SDL_PollEvent(&event)){
+		SDL_WaitEvent(&event);
 			switch(event.type){
 				case SDL_QUIT:
 					bloque = 0;
@@ -87,9 +87,7 @@ void managing_event(){
 
 						}
 				break;
-				}
-
-					
+								
 		}
 
 	test_key(key, &pennemy);
