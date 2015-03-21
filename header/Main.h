@@ -2,6 +2,7 @@
 #define main_h
 
 int main();
-void first_screen();
+void managing_event();
+void key_event(SDL_Event *event,SDL_Rect *pblock);
 
 #endif
