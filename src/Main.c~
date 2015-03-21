@@ -37,60 +37,62 @@ void managing_event(){
 	pennemy.y = main_screen->h / 2 - ennemy->h / 2;
 
 	int bloque = 1;
-	int up = 0;
-	int down = 0; 
-	int le = 0; 
-	int ri = 0;
+	int key[4] = {0};
 
 	SDL_Event event;
 
-	SDL_EnableKeyRepeat(10, 10);
+	//SDL_EnableKeyRepeat(10, 10);
 
 	while(bloque){
-		SDL_WaitEvent(&event);
-		switch(event.type){
-			case SDL_QUIT:
-				bloque = 0;
-			break;
-			case SDL_KEYDOWN:
-				switch ((*event).key.keysym.sym){	//openclassrooms.com/uploads/fr/ftp/mateo21/sdlkeysym.html
-					case SDLK_ESCAPE:
-        				break;
-					case SDLK_UP:
-						up = 1;
-					break;
-					case SDLK_DOWN:
-						down = 1;
-					break;
-					case SDLK_LEFT:
-						le = 1;
-					break;
-					case SDLK_RIGHT:
-						ri = 1;
-					break;
+		while(SDL_PollEvent(&event)){
+			switch(event.type){
+				case SDL_QUIT:
+					bloque = 0;
+				break;
+				case SDL_KEYDOWN:
+					switch (event.key.keysym.sym){	//openclassrooms.com/uploads/fr/ftp/mateo21/sdlkeysym.html
+						case SDLK_ESCAPE:
+        					break;
+						case SDLK_UP:
+							key[0] = 1;
+						break;
+						case SDLK_DOWN:
+							key[1] = 1;
+						break;
+						case SDLK_LEFT:
+							key[2] = 1;
+						break;
+						case SDLK_RIGHT:
+							key[3] = 1;
+						break;
 
-					}
-			break;
+						}
+				break;
+				case SDL_KEYUP:
+					switch (event.key.keysym.sym){
+						case SDLK_ESCAPE:
+        					break;
+						case SDLK_UP:
+							key[0] = 0;
+						break;
+						case SDLK_DOWN:
+							key[1] = 0;
+						break;
+						case SDLK_LEFT:
+							key[2] = 0;
+						break;
+						case SDLK_RIGHT:
+							key[3] = 0;
+						break;
+
+						}
+				break;
+				}
+
+					
 		}
-	
-	if (up){		
-		pennemy.y --;
-		up = 0;		
-	}
-	else if (down){
-		pennemy.y ++;
-		down = 0;
-	
-	}
 
-	if (le){
-		pennemy.x --;
-		le = 0;
-	}
-	else if (ri){
-		pennemy.x ++;
-		ri = 0;
-	}
+	test_key(key, &pennemy);
 
 	
 	SDL_FillRect(main_screen, NULL, SDL_MapRGB(main_screen->format, 255, 255, 255));
@@ -102,49 +104,40 @@ void managing_event(){
 
 }
 
-void key_event(SDL_Event *event,SDL_Rect *pennemy){
+void test_key(int key[], SDL_Rect *position){
+		
+	if (key[0] && key[2]){
+		position->y --;
+		position->x --;
+	}
+	if (key[0] && key[3]){
+		position->y --;
+		position->x ++;
+	}
+	if (key[0] && !key[3] && !key[2]){
+		position->y --;
+	}
 	
-	int up, down, le, ri = 0;
+	if (key[1] && key[2]){
+		position->y ++;
+		position->x --;
+	}
+	if (key[1] && key[3]){
+		position->y ++;
+		position->x ++;
+	}
+	if (key[1] && !key[3] && !key[2]){
+		position->y ++;
+	}
 	
-	switch ((*event).key.keysym.sym){	//openclassrooms.com/uploads/fr/ftp/mateo21/sdlkeysym.html
-		case SDLK_ESCAPE:
-        	break;
-		case SDLK_UP:
-			up = 1;
-		break;
-		case SDLK_DOWN:
-			down = 1;
-		break;
-		case SDLK_LEFT:
-			le = 1;
-		break;
-		case SDLK_RIGHT:
-			ri = 1;
-		break;
-
-	}
-
-	if (up){		
-		pennemy->y --;
-		up = 0;		
-	}
-	else if (down){
-		pennemy->y ++;
-		down = 0;
-	
-	}
-
-	if (le){
-		pennemy->x --;
-		le = 0;
-	}
-	else if (ri){
-		pennemy->x ++;
-		ri = 0;
-	}
-
 
 	
+	if (key[2] && !key[0] && !key[1]){
+		position->x --;
+	}
+	if (key[3] !key[0] && !key[1]){
+		position->x ++;
+	}
 
 
 }

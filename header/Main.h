@@ -3,6 +3,6 @@
 
 int main();
 void managing_event();
-void key_event(SDL_Event *event,SDL_Rect *pblock);
+void test_key(int key [], SDL_Rect *position);
 
 #endif
