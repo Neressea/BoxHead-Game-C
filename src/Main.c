@@ -11,8 +11,7 @@ int main(){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
-
-	SDL_SetVideoMode(600, 600, 32, SDL_HWSURFACE || SDL_DOUBLEBUF); // iniatializing screen
+ 
 	SDL_WM_SetCaption("Jeu de la mort qui tue", NULL); // set name to this screen
 	
 	managing_event();
@@ -29,7 +28,7 @@ void managing_event(){
 	SDL_Rect pennemy;
 	
 
-	main_screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE || SDL_DOUBLEBUF);
+	main_screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE || SDL_DOUBLEBUF);	// iniatializing screen
 	ennemy = SDL_LoadBMP("../images/sprites/ennemy.bmp");
 	SDL_FillRect(main_screen, NULL, SDL_MapRGB(main_screen->format, 255, 255, 255));
 
@@ -127,9 +126,7 @@ void test_key(int key[], SDL_Rect *position){
 	if (key[1] && !key[3] && !key[2]){
 		position->y ++;
 	}
-	
-
-	
+		
 	if (key[2] && !key[0] && !key[1]){
 		position->x --;
 	}
