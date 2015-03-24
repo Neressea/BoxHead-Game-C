@@ -22,7 +22,7 @@
 
 # Création de l'exécutable 'Light'
 all: create Map.o Building.o Character.o Game.o Weapon.o Main.o
-	gcc ./bin/*.o -o ./bin/Game sdl2-config --cflags --libs
+	gcc ./bin/*.o -o ./bin/Game sdl2-config sdl2_image --cflags --libs
 
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
