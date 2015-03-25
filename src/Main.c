@@ -14,6 +14,7 @@ int main(){
 	
 	managing_event();
 
+	IMG_Quit();
 	SDL_Quit();
 
 	return EXIT_SUCCESS;
@@ -40,15 +41,15 @@ void managing_event(){
 	SDL_SetRenderDrawColor(rendu, 0, 0, 255, 255); 
 
 	//ennemy = SDL_LoadBMP("../images/sprites/ennemy.bmp");
-	texture_ennemy = IMG_LoadTexture(rendu, "../images/sprites/ennemy.bmp");	
+	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/ennemy.bmp");	
 	//texture_ennemy = SDL_CreateTextureFromSurface(rendu, ennemy);
-
+	
 	SDL_ShowCursor(SDL_DISABLE);
 
-	/*if (ennemy == NULL){
+	if (texture_ennemy == NULL){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
-	}*/
+	}
 	
 	pennemy.h = 200;
 	pennemy.w = 200;
@@ -59,9 +60,6 @@ void managing_event(){
   	SrcR.y = 0;
 	SrcR.h = 200;
 	SrcR.h = 200;
-
-
-	//SDL_FreeSurface(ennemy);
 
 	int quit = 0;
 	int key[4] = {0};
@@ -124,10 +122,11 @@ void managing_event(){
 	SDL_RenderPresent(rendu);
 	
 
-	SDL_Delay(1);
+	//SDL_Delay(1);
 
 	}
 	
+	SDL_DestroyTexture(texture_ennemy);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
