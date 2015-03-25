@@ -6,13 +6,20 @@
 
 int main(){
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
+	int init = SDL_Init(SDL_INIT_VIDEO);
+	int threadReturnValue;
+	if (init== -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
 
-	
-	managing_event();
+	int a = IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+	if(a==-1){
+		fprintf(stderr, "Erreur d'initialisation des images : %s\n", SDL_GetError()); // managing SDL loading error 
+		exit(EXIT_FAILURE);
+	}
+
+    managing_event();
 
 	IMG_Quit();
 	SDL_Quit();
@@ -20,29 +27,18 @@ int main(){
 	return EXIT_SUCCESS;
 }
 
-
 void managing_event(){
-	
-	/*Uint32 format;
-	int access = 0;
-	int largeur = 0;
-	int hauteur = 0;*/	
 
 	SDL_Window *main_screen = NULL;
-	//SDL_Surface *ennemy = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_ennemy = NULL;
-	SDL_Rect pennemy;
-	SDL_Rect SrcR;
+	SDL_Rect *pennemy = NULL;
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,600,600, SDL_WINDOW_SHOWN); 			 // iniatializing screen
-	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
-	
-	SDL_SetRenderDrawColor(rendu, 0, 0, 255, 255); 
-
-	//ennemy = SDL_LoadBMP("../images/sprites/ennemy.bmp");
-	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/tower.bmp");	
-	//texture_ennemy = SDL_CreateTextureFromSurface(rendu, ennemy);
+	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
+	SDL_RenderClear(rendu);
+	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
 
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -50,22 +46,20 @@ void managing_event(){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
-	
-	pennemy.h = 200;
-	pennemy.w = 200;
-	pennemy.x = 0;
-	pennemy.y = 0;
 
-	SrcR.x = 0;
-  	SrcR.y = 0;
-	SrcR.h = 200;
-	SrcR.h = 200;
+	pennemy = malloc(sizeof(SDL_Rect));
+	
+	pennemy->h = 200;
+	pennemy->w = 200;
+	pennemy->x = 0;
+	pennemy->y = 0;
 
 	int quit = 0;
 	int key[4] = {0};
 
 	SDL_Event event;
-
+		
+	
 	while(quit == 0){
 		SDL_WaitEvent(&event);
 			switch(event.type){
@@ -113,15 +107,20 @@ void managing_event(){
 								
 			}
 
-	test_key(key, &pennemy);
-
-	//SDL_SetRenderDrawColor(rendu, 0, 255, 0, 255);
-	SDL_RenderClear(rendu);
-	//SDL_QueryTexture(texture_ennemy,&format, &access, &largeur, &hauteur);
-	SDL_RenderCopy(rendu, texture_ennemy, &SrcR, &pennemy);
-	SDL_RenderPresent(rendu);
 	
-	//SDL_Delay(1);
+
+	SDL_RenderClear(rendu);
+	SDL_RenderCopy(rendu, texture_ennemy, NULL, pennemy);	
+	SDL_RenderPresent(rendu);
+
+	test_key(key, pennemy);	
+
+	SDL_Delay(1);
+
+		if (texture_ennemy == NULL){
+			fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
+			exit(EXIT_FAILURE);
+		}
 
 	}
 	
