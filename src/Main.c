@@ -41,9 +41,9 @@ void managing_event(){
 	SDL_SetRenderDrawColor(rendu, 0, 0, 255, 255); 
 
 	//ennemy = SDL_LoadBMP("../images/sprites/ennemy.bmp");
-	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/ennemy.bmp");	
+	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/tower.bmp");	
 	//texture_ennemy = SDL_CreateTextureFromSurface(rendu, ennemy);
-	
+
 	SDL_ShowCursor(SDL_DISABLE);
 
 	if (texture_ennemy == NULL){
