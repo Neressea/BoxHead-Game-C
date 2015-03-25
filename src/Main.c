@@ -121,7 +121,6 @@ void managing_event(){
 	SDL_RenderCopy(rendu, texture_ennemy, &SrcR, &pennemy);
 	SDL_RenderPresent(rendu);
 	
-
 	//SDL_Delay(1);
 
 	}
@@ -129,7 +128,6 @@ void managing_event(){
 	SDL_DestroyTexture(texture_ennemy);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
-	
 	
 }
 
