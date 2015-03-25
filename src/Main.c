@@ -127,7 +127,6 @@ void managing_event(){
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
-	
 }
 
 void test_key(int key[], SDL_Rect *position){

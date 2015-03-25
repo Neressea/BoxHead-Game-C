@@ -6,7 +6,7 @@
 
 int main(){
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
+	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
@@ -111,6 +111,7 @@ void managing_event(){
 	SDL_RenderClear(rendu);
 	SDL_RenderCopy(rendu, texture_ennemy, &SrcR, &pennemy);	
 	SDL_RenderPresent(rendu);
+<<<<<<< HEAD
 
 	test_key(key, &pennemy);	
 
@@ -120,13 +121,16 @@ void managing_event(){
 			fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
 		}
+=======
+	
+	//SDL_Delay(1);
+>>>>>>> 32f17d5eb0e708251c3a7d15c5af5a7d582bbc17
 
 	}
 	
 	SDL_DestroyTexture(texture_ennemy);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
-	
 	
 }
 
