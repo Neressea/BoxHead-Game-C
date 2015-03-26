@@ -54,7 +54,7 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	fgets(line, 100, file);
 
 	if(line == NULL){
-		fprintf(stderr, "Non well-formated file : %s\n", filepath);
+		fprintf(stderr, "Non well-formated file (background) : %s\n", filepath);
 		exit(2);
 	}
 
@@ -69,8 +69,24 @@ Map load(SDL_Renderer *rendu, char* filepath){
 		exit(2);
 	}
 
-	map.textures[1] = IMG_LoadTexture(rendu, "./images/sprites/bloc.png");
+	fgets(line, 100, file);
 
+	if(line == NULL){
+		fprintf(stderr, "Non well-formated file (walls) : %s\n", filepath);
+		exit(2);
+	}
+
+	char path2[120] = "./images/sprites/";
+	strcat(path2, line);
+	path2[strlen(path2)-1] = '\0';
+	map.textures[1] = IMG_LoadTexture(rendu, path2);
+
+	if(map.textures[1] == NULL){
+		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
+		exit(2);
+	}
+
+	free(line);
 	line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
 
 	//Then we read the other lines that represents each "line" of the map
