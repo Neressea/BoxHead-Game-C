@@ -33,7 +33,7 @@ void managing_event(){
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
-	Map map;
+	//Map map;
 	
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
@@ -51,7 +51,7 @@ void managing_event(){
 		exit(EXIT_FAILURE);
 	}
 
-	map = load(rendu, "./maps/map1");
+	//map = load(rendu, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
@@ -64,6 +64,7 @@ void managing_event(){
 	int key[4] = {0};
 	int i;
 	int j = 0;
+	int f = 0;
 
 	SDL_Event event;
 		
@@ -119,16 +120,23 @@ void managing_event(){
 	
 
 	SDL_RenderClear(rendu);
-	show(rendu, map);
+	//show(rendu, map);
+
+	if (j > 4){
+		j = 0;
+	}	
+
+
+	current_texture = update_heros(key, texture_heros, &j, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
-	test_key(key, pennemy);	
+	test_key(key, pennemy, &j);	
 
 	SDL_Delay(1);
 
 		if (current_texture == NULL){
-			fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
+			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
 		}
 
@@ -136,13 +144,13 @@ void managing_event(){
 	
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
-	destroy_texture(NB_TEXTS, map.textures);
+	//destroy_texture(NB_TEXTS, map.textures);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
 }
 
-void test_key(int key[], SDL_Rect *position){
+void test_key(int key[], SDL_Rect *position, int *j){
 		
 	if (key[0] && key[2]){
 		position->y -= SPEED;
@@ -175,11 +183,14 @@ void test_key(int key[], SDL_Rect *position){
 		position->x += SPEED;
 	}
 
+	*j++;
 
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
+	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/heros6.png");
 	
 }
 
@@ -192,47 +203,47 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 }
 
-void update_heros(int key[], SDL_Texture *tableau[], SDL_Renderer *rendu, SDL_Texture *current_texture, int *j){
+SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f){
 	
 	if (key[0] && key[2]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
 	if (key[0] && key[3]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
 	if (key[0] && !key[3] && !key[2]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
 	
 	if (key[1] && key[2]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
 	if (key[1] && key[3]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
 	if (key[1] && !key[3] && !key[2]){
 		
-		if (*j==0){
-			current_texture = tableau[0];
-			*j++;
+		if (*j == 0){
+			return tableau[0];
 		}
 		else if (*j == 1){
-			current_texture = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
-			*j++;
+			return tableau[1];
 		}
 		else{
-			current_texture = tableau[0];
-			*j = 0;
+			return tableau[0];
 		}
 
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
-		current_texture = tableau[0];
+		*f = 6;		
+		return tableau[6];
 	}
 	if (key[3] && !key[0] && !key[1]){
-		current_texture = tableau[0];
+		return tableau[0];
 	}
+
+	return tableau[*f];
 
 }
 

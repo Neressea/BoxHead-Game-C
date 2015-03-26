@@ -13,8 +13,8 @@
 int main();
 void managing_event();
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]);
-void test_key(int key [], SDL_Rect *position);
+void test_key(int key[], SDL_Rect *position, int *j);
 void destroy_texture(int taille, SDL_Texture *tableau[]);
-void update_heros(int key[], SDL_Texture *tableau[], SDL_Renderer *rendu, SDL_Texture *current_texture, int *j);
+SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f);
 
 #endif
