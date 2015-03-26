@@ -43,6 +43,7 @@ void managing_event(){
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
+	printf("MAchin");
 
 	current_texture = texture_heros[0];
 
@@ -178,8 +179,7 @@ void test_key(int key[], SDL_Rect *position){
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
-	
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");	
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
