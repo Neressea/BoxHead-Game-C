@@ -129,14 +129,14 @@ void show(SDL_Renderer *rendu, Map map){
 	printf("%d   %d\n", end_x, end_y);
 
 	int i, j;
+	SDL_Rect pos;
 	for (i = begin_x; i <= end_x; i+=PX_W){
 		for (j = begin_y; j <= end_y; j+=PX_H){
-			SDL_Rect *pos = malloc(sizeof(SDL_Rect *));
-			pos->h=PX_H;
-			pos->w=PX_W;
-			pos->x = i;
-			pos->y = j;
-			SDL_RenderCopy(rendu, map.textures[0], NULL, pos);	
+			pos.h=PX_H;
+			pos.w=PX_W;
+			pos.x = i;
+			pos.y = j;
+			SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);	
 		}
 	}
 }
