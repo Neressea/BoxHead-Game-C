@@ -65,6 +65,7 @@ void managing_event(){
 	int i;
 	int j = 0;
 	int f = 0;
+	int trame = 0;
 
 	SDL_Event event;
 		
@@ -121,14 +122,11 @@ void managing_event(){
 
 	SDL_RenderClear(rendu);
 	show(rendu, map);
-
-	if (j > 8){
-		j = 0;
-	}	
-
+	
 	j++;
+	compute_tram(&j, &trame);
 
-	current_texture = update_heros(key, texture_heros, &j, &f);
+	current_texture = update_heros(key, texture_heros, &trame, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
@@ -145,7 +143,7 @@ void managing_event(){
 	
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
-	//destroy_texture(NB_TEXTS, map.textures);
+	destroy_texture(NB_TEXTS, map.textures);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
@@ -189,8 +187,10 @@ void test_key(int key[], SDL_Rect *position){
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
 	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/heros3.png");
 	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/heros6.png");
 	tableau[12] = IMG_LoadTexture(rendu, "./images/sprites/heros12.png");
+	tableau[15] = IMG_LoadTexture(rendu, "./images/sprites/heros15.png");
 	
 }
 
@@ -203,7 +203,7 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 }
 
-SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f){
+SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f){
 	
 	if (key[0] && key[2]){
 		return tableau[0];
@@ -212,24 +212,27 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f){
 		return tableau[0];
 	}
 	if (key[0] && !key[3] && !key[2]){
-		return tableau[0];
+		*f = 3;
+		return tableau[3];
 	}
 	
 	if (key[1] && key[2]){
-		return tableau[0];
+		*f = 15;
+		return tableau[15];
 	}
 	if (key[1] && key[3]){
-		return tableau[0];
+		*f = 12;
+		return tableau[12];
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
-		if (*j == 0 || *j == 1){
+		if (*trame == 0){
 			return tableau[0];
 		}
-		else if (*j == 2 || *j == 3){
+		else if (*trame == 1){
 			return tableau[1];
 		}
-		else if (*j == 4 || *j == 5){
+		else if (*trame == 2){
 			return tableau[0];
 		}
 		else {
@@ -246,6 +249,15 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f){
 	}
 
 	return tableau[*f];
+
+}
+
+void compute_tram(int *j, int *trame){
+	if (*j > SPEED){
+		*j = 0;
+	}
+
+	*trame = *j % SPEED;
 
 }
 
