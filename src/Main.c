@@ -31,25 +31,33 @@ void managing_event(){
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_ennemy = NULL;
+	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
+	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
 	
+	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,600,600, SDL_WINDOW_SHOWN); 			 // iniatializing screen
+
 	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
 	SDL_RenderClear(rendu);
+	
+	init_texture(rendu, texture_heros);
+
+	
 	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
 
-	SDL_ShowCursor(SDL_DISABLE);
+	current_texture = texture_heros[0];
 
-	if (texture_ennemy == NULL){
-		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
+	if (current_texture == NULL){
+		fprintf(stderr, "Erreur d'initialisation de sprite courant : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
-	pennemy->h = 200;
-	pennemy->w = 200;
+	pennemy->h = PX_H;
+	pennemy->w = PX_W;
 	pennemy->x = 0;
 	pennemy->y = 0;
 
@@ -59,6 +67,7 @@ void managing_event(){
 
 	SDL_Event event;
 		
+	SDL_ShowCursor(SDL_DISABLE);
 	
 	while(quit == 0){
 		SDL_PollEvent(&event);
@@ -110,7 +119,8 @@ void managing_event(){
 	
 
 	SDL_RenderClear(rendu);
-	SDL_RenderCopy(rendu, texture_ennemy, NULL, pennemy);	
+	show(rendu, map);
+	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
 	test_key(key, pennemy);	
@@ -164,6 +174,10 @@ void test_key(int key[], SDL_Rect *position){
 	}
 
 
+}
+
+void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
 }
 
 
