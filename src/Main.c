@@ -43,7 +43,6 @@ void managing_event(){
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
-	printf("MAchin");
 	
 	current_texture = texture_heros[0];
 
@@ -64,6 +63,7 @@ void managing_event(){
 	int quit = 0;
 	int key[4] = {0};
 	int i;
+	int j = 0;
 
 	SDL_Event event;
 		
@@ -192,5 +192,48 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 }
 
+void update_heros(int key[], SDL_Texture *tableau[], SDL_Renderer *rendu, SDL_Texture *current_texture, int *j){
+	
+	if (key[0] && key[2]){
+		current_texture = tableau[0];
+	}
+	if (key[0] && key[3]){
+		current_texture = tableau[0];
+	}
+	if (key[0] && !key[3] && !key[2]){
+		current_texture = tableau[0];
+	}
+	
+	if (key[1] && key[2]){
+		current_texture = tableau[0];
+	}
+	if (key[1] && key[3]){
+		current_texture = tableau[0];
+	}
+	if (key[1] && !key[3] && !key[2]){
+		
+		if (*j==0){
+			current_texture = tableau[0];
+			*j++;
+		}
+		else if (*j == 1){
+			current_texture = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+			*j++;
+		}
+		else{
+			current_texture = tableau[0];
+			*j = 0;
+		}
+
+	}
+		
+	if (key[2] && !key[0] && !key[1]){
+		current_texture = tableau[0];
+	}
+	if (key[3] && !key[0] && !key[1]){
+		current_texture = tableau[0];
+	}
+
+}
 
 

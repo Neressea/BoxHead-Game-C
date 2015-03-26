@@ -31,6 +31,8 @@ void managing_event(){
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
+	SDL_Texture *test1 = NULL;
+	SDL_Texture *test2 = NULL;
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
 	Map map;
@@ -42,10 +44,13 @@ void managing_event(){
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
 	SDL_RenderClear(rendu);
 	
-	init_texture(rendu, texture_heros);
-	printf("MAchin");
+	//init_texture(rendu, texture_heros);
+	test1 = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
+	//test2 = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+
+	SDL_RenderClear(rendu);
 	
-	current_texture = texture_heros[0];
+	current_texture = test1;
 
 	if (current_texture == NULL){
 		fprintf(stderr, "Erreur d'initialisation de sprite courant : %s\n", SDL_GetError()); // managing SDL loading error 
@@ -56,14 +61,15 @@ void managing_event(){
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
-	pennemy->h = PX_H;
-	pennemy->w = PX_W;
+	pennemy->h = PXH_H;
+	pennemy->w = PXH_W;
 	pennemy->x = 0;
 	pennemy->y = 0;
 
 	int quit = 0;
 	int key[4] = {0};
 	int i;
+	int j = 0;
 
 	SDL_Event event;
 		
@@ -192,5 +198,48 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 }
 
+void update_heros(int key[], SDL_Texture *tableau[], SDL_Renderer *rendu, SDL_Texture *current_texture, int *j){
+	
+	if (key[0] && key[2]){
+		current_texture = tableau[0];
+	}
+	if (key[0] && key[3]){
+		current_texture = tableau[0];
+	}
+	if (key[0] && !key[3] && !key[2]){
+		current_texture = tableau[0];
+	}
+	
+	if (key[1] && key[2]){
+		current_texture = tableau[0];
+	}
+	if (key[1] && key[3]){
+		current_texture = tableau[0];
+	}
+	if (key[1] && !key[3] && !key[2]){
+		
+		if (*j==0){
+			current_texture = tableau[0];
+			*j++;
+		}
+		else if (*j == 1){
+			current_texture = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+			*j++;
+		}
+		else{
+			current_texture = tableau[0];
+			*j = 0;
+		}
+
+	}
+		
+	if (key[2] && !key[0] && !key[1]){
+		current_texture = tableau[0];
+	}
+	if (key[3] && !key[0] && !key[1]){
+		current_texture = tableau[0];
+	}
+
+}
 
 
