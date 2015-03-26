@@ -159,7 +159,7 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 			is = 1;
 
 		//If we are after the position of the case, it is not a building
-		if(b->current.pos_x > pos.x && b->current.pos_y > pos.y)
+		if(b->current.pos_x * PX_W < pos.x && b->current.pos_y * PX_H < pos.y)
 			break;
 
 		b = b->next;
