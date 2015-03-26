@@ -45,9 +45,6 @@ void managing_event(){
 	
 	init_texture(rendu, texture_heros);
 
-	
-	texture_ennemy = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
-
 	current_texture = texture_heros[0];
 
 	if (current_texture == NULL){
@@ -55,7 +52,7 @@ void managing_event(){
 		exit(EXIT_FAILURE);
 	}
 
-	map = load(rendu, "./maps/map1");
+	//map = load(rendu, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
@@ -137,7 +134,6 @@ void managing_event(){
 
 	}
 	
-	SDL_DestroyTexture(texture_ennemy);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
