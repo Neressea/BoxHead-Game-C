@@ -33,7 +33,7 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	Map map;
 	map.buildings = NULL;
 	map.characters = NULL;
-	map.textures = malloc(sizeof(SDL_Texture *) * 2);
+	map.textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS);
 	map.corner_x = 0;
 	map.corner_y = 0;
 	map.width = 0;
@@ -61,7 +61,6 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	char path [120] = "./images/sprites/";
 	strcat(path, line);
 	path[strlen(path)-1] = '\0';
-	printf("%s\n", path);
 	map.textures[0] = IMG_LoadTexture(rendu, path);
 
 	if(map.textures[0] == NULL){
@@ -120,11 +119,9 @@ Map load(SDL_Renderer *rendu, char* filepath){
 void show(SDL_Renderer *rendu, Map map){
 	
 	//We go through all cases to flip.
-	int case_x = PX_W * map.width;
-	int case_y = PX_H * map.height;
 
-	int begin_x = map.corner_x - FRAME * case_x;
-	int begin_y = map.corner_y - FRAME * case_y;
+	int begin_x = map.corner_x - FRAME * PX_W;
+	int begin_y = map.corner_y - FRAME * PX_H;
 
 	int i, j;
 	for (i = begin_x; i < map.width + 2 * PX_W; i+=PX_W)
@@ -141,7 +138,6 @@ void show(SDL_Renderer *rendu, Map map){
 			//}
 		}
 	}
-
 }
 	
 

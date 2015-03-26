@@ -8,6 +8,7 @@
 #include "Main.h"
 
 #define FRAME 2
+#define NB_TEXTS 1
 
 /**
 * Defines what the map is.
