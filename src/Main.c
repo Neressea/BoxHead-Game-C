@@ -34,6 +34,7 @@ void managing_event(){
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
+	Map map;
 	
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,600,600, SDL_WINDOW_SHOWN); 			 // iniatializing screen
@@ -53,6 +54,8 @@ void managing_event(){
 		fprintf(stderr, "Erreur d'initialisation de sprite courant : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
+
+	map = load(rendu, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	

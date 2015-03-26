@@ -1,6 +1,8 @@
 #ifndef main_h 
+#include "../header/Map.h"
 #define main_h
 #define SPEED 1
+
 #define SCREEN_H 640
 #define SCREEN_W 480
 #define PX_H 50
@@ -9,7 +11,7 @@
 
 int main();
 void managing_event();
-init_texture(SDL_Texture *tableau[]);
+void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]);
 void test_key(int key [], SDL_Rect *position);
 
 #endif
