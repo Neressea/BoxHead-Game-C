@@ -1,35 +1,37 @@
 #ifndef map_h
 #define map_h
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Building.h"
 #include "Character.h"
 #include "Main.h"
 
 /**
 * Defines what the map is.
-* list_buildings : List of the buildings on the map
-* lit_char : List of the characters on the map
+* buildings : List of the buildings on the map
+* characters : List of the characters on the map
+* textures : Array of textures (0 : background, 1 : tower)
 * width, length : size of the map
-* background : name of the background of the map
-* split_pos : position of the map that is in the left-up corner
+* corner_split : position of the map that is in the left-up corner
 */
 typedef struct{
 	ListBuilding *buildings;
 	ListChar *characters;
+	SDL_Texture **textures;
 	int width, length; //?
-	char* background;
-	int split_pos;
+	int corner_split;
 }Map;
 
 /**
 * Load a map from a text file.
 */
-Map load(char* nom_fichier);
+Map load(SDL_Renderer *rendu, char* nom_fichier);
 
 /**
 * Print the map on the screen
 */
-void show(Map c);
+void show(SDL_Renderer *rendu, Map c);
 
 #endif
 

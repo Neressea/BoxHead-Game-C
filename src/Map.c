@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL/SDL.h>
 
 #include "../header/Map.h"
 
@@ -29,13 +28,13 @@
 * Load a map from a text file.
 * filepath : the path to the file
 */
-Map load(char* filepath){
+Map load(SDL_Renderer *rendu, char* filepath){
 
 	Map map;
 	map.buildings = NULL;
 	map.characters = NULL;
-	map.background = NULL;
-	map.split_pos = 0;
+	map.textures = malloc(sizeof(SDL_Texture *) * 2);
+	map.corner_split = 0;
 	map.width = 0;
 	map.length = 0;
 
@@ -57,7 +56,16 @@ Map load(char* filepath){
 		exit(2);
 	}
 
-	map.background = line;
+	//We load the texture of the background
+	char path [120] = "./images/sprites/";
+	strcat(path, line);
+	map.textures[0] = IMG_LoadTexture(rendu, path);
+
+	if(!map.textures[0]){
+		fprintf(stderr, "Error loading the background\n");
+		exit(2);
+	}
+
 	line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
 
 	//Then we read the other lines that represents each "line" of the map
@@ -91,6 +99,9 @@ Map load(char* filepath){
 		y++;
 	}
 
+	map.width=PX_W * x;
+	map.height=PX_H * y;
+
 	fclose(file);
 
 	return map;
@@ -99,7 +110,7 @@ Map load(char* filepath){
 /**
 * Print the map on the screen
 */
-void show(Map c){
+void show(SDL_Renderer *rendu, Map c){
 	
 }
 
