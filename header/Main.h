@@ -6,6 +6,8 @@
 #define SCREEN_H 480
 #define PX_H 50
 #define PX_W 50
+#define PXH_H 70
+#define PXH_W 50
 #define NB_SPRITES_H 24
 
 int main();

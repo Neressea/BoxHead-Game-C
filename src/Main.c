@@ -38,13 +38,13 @@ void managing_event(){
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
 
-	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_ACCELERATED);
+	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
 	printf("MAchin");
-
+	
 	current_texture = texture_heros[0];
 
 	if (current_texture == NULL){
@@ -56,8 +56,8 @@ void managing_event(){
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
-	pennemy->h = PX_H;
-	pennemy->w = PX_W;
+	pennemy->h = PXH_H;
+	pennemy->w = PXH_W;
 	pennemy->x = 0;
 	pennemy->y = 0;
 
@@ -179,7 +179,8 @@ void test_key(int key[], SDL_Rect *position){
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");	
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
+	
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
