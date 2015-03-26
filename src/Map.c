@@ -60,10 +60,12 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	//We load the texture of the background
 	char path [120] = "./images/sprites/";
 	strcat(path, line);
+	path[strlen(path)-1] = '\0';
+	printf("%s\n", path);
 	map.textures[0] = IMG_LoadTexture(rendu, path);
 
-	if(!map.textures[0]){
-		fprintf(stderr, "Error loading the background\n");
+	if(map.textures[0] == NULL){
+		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
 		exit(2);
 	}
 
