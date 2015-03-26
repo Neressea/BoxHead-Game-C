@@ -34,6 +34,7 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	map.buildings = NULL;
 	map.characters = NULL;
 	map.textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS);
+	map.corner = malloc(sizeof(SDL_Rect));
 	map.corner->x = 0;
 	map.corner->y = 0;
 	map.width = 0;
