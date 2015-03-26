@@ -253,11 +253,11 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 }
 
 void compute_tram(int *j, int *trame){
-	if (*j > SPEED){
+	if (*j > SPEED_TRAME * 4){
 		*j = 0;
 	}
 
-	*trame = *j % SPEED;
+	*trame = *j % SPEED_TRAME;
 
 }
 

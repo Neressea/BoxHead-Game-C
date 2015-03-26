@@ -1,7 +1,8 @@
 #ifndef main_h 
 #include "../header/Map.h"
 #define main_h
-#define SPEED 1
+#define SPEED 2
+#define SPEED_TRAME 4
 #define SCREEN_W 640
 #define SCREEN_H 480
 #define PX_H 50
