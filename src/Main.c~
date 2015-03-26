@@ -122,16 +122,17 @@ void managing_event(){
 	SDL_RenderClear(rendu);
 	//show(rendu, map);
 
-	if (j > 4){
+	if (j > 8){
 		j = 0;
 	}	
 
+	j++;
 
 	current_texture = update_heros(key, texture_heros, &j, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
-	test_key(key, pennemy, &j);	
+	test_key(key, pennemy);	
 
 	SDL_Delay(1);
 
@@ -150,7 +151,7 @@ void managing_event(){
 	
 }
 
-void test_key(int key[], SDL_Rect *position, int *j){
+void test_key(int key[], SDL_Rect *position){
 		
 	if (key[0] && key[2]){
 		position->y -= SPEED;
@@ -183,14 +184,13 @@ void test_key(int key[], SDL_Rect *position, int *j){
 		position->x += SPEED;
 	}
 
-	*j++;
-
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
 	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
 	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/heros6.png");
+	tableau[12] = IMG_LoadTexture(rendu, "./images/sprites/heros12.png");
 	
 }
 
@@ -222,21 +222,23 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *j, int *f){
 		return tableau[0];
 	}
 	if (key[1] && !key[3] && !key[2]){
-		
-		if (*j == 0){
+		*f = 0;
+		if (*j == 0 || j* == 1){
 			return tableau[0];
 		}
-		else if (*j == 1){
+		else if (*j == 2 || j* == 3){
 			return tableau[1];
 		}
-		else{
+		else if (j* == 4 || j* == 5){
 			return tableau[0];
 		}
-
+		else {
+			return tableau[1];
+		}
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
-		*j = 6;		
+		*f = 6;		
 		return tableau[6];
 	}
 	if (key[3] && !key[0] && !key[1]){
