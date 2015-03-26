@@ -18,7 +18,7 @@ int main(){
 		exit(EXIT_FAILURE);
 	}
 
-    managing_event();
+	managing_event();
 
 	IMG_Quit();
 	SDL_Quit();
@@ -30,14 +30,13 @@ void managing_event(){
 
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
-	SDL_Texture *texture_ennemy = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
 	Map map;
 	
 	
-	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,600,600, SDL_WINDOW_SHOWN); 			 // iniatializing screen
+	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_H,SCREEN_W, SDL_WINDOW_SHOWN); 			 // iniatializing screen
 
 	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
@@ -52,7 +51,7 @@ void managing_event(){
 		exit(EXIT_FAILURE);
 	}
 
-	//map = load(rendu, "./maps/map1");
+	map = load(rendu, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
@@ -127,14 +126,15 @@ void managing_event(){
 
 	SDL_Delay(1);
 
-		if (texture_ennemy == NULL){
+		if (current_texture == NULL){
 			fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
 		}
 
 	}
 	
-	SDL_DestroyTexture(texture_ennemy);
+	SDL_DestroyTexture(current_texture);
+	SDL_DestroyTexture(current_texture);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
@@ -179,5 +179,14 @@ void test_key(int key[], SDL_Rect *position){
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
 }
+
+void destroy_texture(int taille, SDL_Texture *tableau[]){
+	int i;
+
+	for (i = 0; i < taille; i++){
+		SDL_DestroyTexture(tableau[i]);
+	}
+}
+
 
 
