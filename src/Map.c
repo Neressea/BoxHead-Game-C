@@ -69,6 +69,8 @@ Map load(SDL_Renderer *rendu, char* filepath){
 		exit(2);
 	}
 
+	map.textures[1] = IMG_LoadTexture(rendu, "./images/sprites/bloc.png");
+
 	line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
 
 	//Then we read the other lines that represents each "line" of the map
@@ -137,7 +139,7 @@ void show(SDL_Renderer *rendu, Map map){
 			pos.y = j;
 
 			if(isBuilding(map.buildings, pos)){
-				SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);
+				SDL_RenderCopy(rendu, map.textures[1], NULL, &pos);
 			}else{
 				SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);
 			}	
