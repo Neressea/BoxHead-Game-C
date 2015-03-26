@@ -8,13 +8,12 @@
 
 int main(){
 
-	if (SDL_Init(SDL_INIT_VIDEO)== -1){
+	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
 
-	int a = IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-	if(a==-1){
+	if(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == -1){
 		fprintf(stderr, "Erreur d'initialisation des images : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
