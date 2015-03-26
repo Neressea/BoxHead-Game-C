@@ -212,7 +212,8 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 		return tableau[0];
 	}
 	if (key[0] && !key[3] && !key[2]){
-		return tableau[0];
+		*f = 3;
+		return tableau[3];
 	}
 	
 	if (key[1] && key[2]){
@@ -252,7 +253,7 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 }
 
 void compute_tram(int *j, int *trame){
-	if (*j > SPEED){
+	if (*j > SPEED * 4){
 		*j = 0;
 	}
 
