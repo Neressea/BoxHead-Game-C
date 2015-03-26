@@ -23,7 +23,7 @@ typedef struct{
 	ListChar *characters;
 	SDL_Texture **textures;
 	int width, height; //?
-	int corner_x, corner_y;
+	SDL_Rect *corner;
 }Map;
 
 /**
