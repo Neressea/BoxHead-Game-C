@@ -36,7 +36,7 @@ void managing_event(){
 	Map map;
 	
 	
-	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_H,SCREEN_W, SDL_WINDOW_SHOWN); 			 // iniatializing screen
+	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
 
 	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
@@ -135,6 +135,7 @@ void managing_event(){
 	
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
+	destroy_texture(NB_TEXTS, map.textures);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
@@ -177,7 +178,8 @@ void test_key(int key[], SDL_Rect *position){
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
+	
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
@@ -186,6 +188,7 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 	for (i = 0; i < taille; i++){
 		SDL_DestroyTexture(tableau[i]);
 	}
+
 }
 
 
