@@ -115,10 +115,32 @@ Map load(SDL_Renderer *rendu, char* filepath){
 /**
 * Print the map on the screen
 */
-void show(SDL_Renderer *rendu, Map c){
+void show(SDL_Renderer *rendu, Map map){
 	
-	
-	
+	//We go through all cases to flip.
+	int case_x = PX_W * map.width;
+	int case_y = PX_H * map.height;
+
+	int begin_x = map.corner_x - FRAME * case_x;
+	int begin_y = map.corner_y - FRAME * case_y;
+
+	int i, j;
+	for (i = begin_x; i < map.width + 2 * PX_W; i+=PX_W)
+	{
+		for (j = begin_y; j < map.height + 2 * PX_H; j+=PX_H)
+		{
+			//if(){
+				SDL_Rect *pos = malloc(sizeof(SDL_Rect *));
+				pos->h=PX_H;
+				pos->w=PX_W;
+				pos->x = i;
+				pos->y = j;
+				SDL_RenderCopy(rendu, map.textures[0], NULL, pos);	
+			//}
+		}
+	}
+
 }
+	
 
 

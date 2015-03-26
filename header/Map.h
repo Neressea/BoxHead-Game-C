@@ -7,6 +7,8 @@
 #include "Character.h"
 #include "Main.h"
 
+#define FRAME 2
+
 /**
 * Defines what the map is.
 * buildings : List of the buildings on the map
