@@ -135,6 +135,7 @@ void managing_event(){
 	
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
+	destroy_texture(NB_TEXTS, map.textures);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
@@ -177,7 +178,14 @@ void test_key(int key[], SDL_Rect *position){
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/jpg.png");
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
+	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/heros3.png");
+	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/heros6.png");
+	tableau[9] = IMG_LoadTexture(rendu, "./images/sprites/heros9.png");
+	tableau[12] = IMG_LoadTexture(rendu, "./images/sprites/heros12.png");
+	tableau[15] = IMG_LoadTexture(rendu, "./images/sprites/heros15.png");
+	tableau[18] = IMG_LoadTexture(rendu, "./images/sprites/heros18.png");
+	tableau[21] = IMG_LoadTexture(rendu, "./images/sprites/heros21.png");
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
@@ -186,7 +194,10 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 	for (i = 0; i < taille; i++){
 		SDL_DestroyTexture(tableau[i]);
 	}
+
 }
+
+
 
 
 
