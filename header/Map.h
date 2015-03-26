@@ -36,5 +36,10 @@ Map load(SDL_Renderer *rendu, char* nom_fichier);
 */
 void show(SDL_Renderer *rendu, Map c);
 
+/**
+* Return 1 if pos is a building, else 0.
+*/
+int isBuilding(ListBuilding* buildings, SDL_Rect pos);
+
 #endif
 

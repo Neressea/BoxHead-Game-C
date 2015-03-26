@@ -135,9 +135,35 @@ void show(SDL_Renderer *rendu, Map map){
 			pos.w=PX_W;
 			pos.x = i;
 			pos.y = j;
-			SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);	
+
+			if(isBuilding(map.buildings, pos)){
+				SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);
+			}else{
+				SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);
+			}	
 		}
 	}
+}
+
+int isBuilding(ListBuilding* buildings, SDL_Rect pos){
+	int is = 0;
+
+	ListBuilding* b = buildings;
+
+	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
+	while(is==0 && b != NULL){
+
+		if(b->current.pos_x * PX_W == pos.x && b->current.pos_y * PX_H == pos.y)
+			is = 1;
+
+		//If we are after the position of the case, it is not a building
+		if(b->current.pos_x > pos.x && b->current.pos_y > pos.y)
+			break;
+
+		b = b->next;
+	}
+
+	return is;
 }
 	
 
