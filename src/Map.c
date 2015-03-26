@@ -34,8 +34,8 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	map.buildings = NULL;
 	map.characters = NULL;
 	map.textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS);
-	map.corner_x = 0;
-	map.corner_y = 0;
+	map.corner->x = 0;
+	map.corner->y = 0;
 	map.width = 0;
 	map.height = 0;
 
@@ -105,8 +105,8 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	map.height=PX_H * y;
 
 	//We set the left up corner of the map
-	map.corner_x = (int) (map.width / 2 - SCREEN_W/2);
-	map.corner_y = (int) (map.height / 2 - SCREEN_H/2);
+	map.corner->x = (int) (map.width / 2 - SCREEN_W/2);
+	map.corner->y = (int) (map.height / 2 - SCREEN_H/2);
 
 	fclose(file);
 
@@ -120,22 +120,23 @@ void show(SDL_Renderer *rendu, Map map){
 	
 	//We go through all cases to flip.
 
-	int begin_x = map.corner_x - FRAME * PX_W;
-	int begin_y = map.corner_y - FRAME * PX_H;
+	int begin_x = - FRAME * PX_W;
+	int begin_y = - FRAME * PX_H;
+
+	int end_x = SCREEN_W + FRAME * PX_W;
+	int end_y = SCREEN_H + FRAME * PX_H;
+
+	printf("%d   %d\n", end_x, end_y);
 
 	int i, j;
-	for (i = begin_x; i < map.width + 2 * PX_W; i+=PX_W)
-	{
-		for (j = begin_y; j < map.height + 2 * PX_H; j+=PX_H)
-		{
-			//if(){
-				SDL_Rect *pos = malloc(sizeof(SDL_Rect *));
-				pos->h=PX_H;
-				pos->w=PX_W;
-				pos->x = i;
-				pos->y = j;
-				SDL_RenderCopy(rendu, map.textures[0], NULL, pos);	
-			//}
+	for (i = begin_x; i <= end_x; i+=PX_W){
+		for (j = begin_y; j <= end_y; j+=PX_H){
+			SDL_Rect *pos = malloc(sizeof(SDL_Rect *));
+			pos->h=PX_H;
+			pos->w=PX_W;
+			pos->x = i;
+			pos->y = j;
+			SDL_RenderCopy(rendu, map.textures[0], NULL, pos);	
 		}
 	}
 }
