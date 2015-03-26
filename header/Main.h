@@ -2,8 +2,8 @@
 #include "../header/Map.h"
 #define main_h
 #define SPEED 1
-#define SCREEN_H 640
-#define SCREEN_W 480
+#define SCREEN_W 640
+#define SCREEN_H 480
 #define PX_H 50
 #define PX_W 50
 #define NB_SPRITES_H 24
