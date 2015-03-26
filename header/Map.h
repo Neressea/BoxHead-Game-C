@@ -19,8 +19,8 @@ typedef struct{
 	ListBuilding *buildings;
 	ListChar *characters;
 	SDL_Texture **textures;
-	int width, length; //?
-	int corner_split;
+	int width, height; //?
+	int corner_x, corner_y;
 }Map;
 
 /**

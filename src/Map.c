@@ -34,9 +34,10 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	map.buildings = NULL;
 	map.characters = NULL;
 	map.textures = malloc(sizeof(SDL_Texture *) * 2);
-	map.corner_split = 0;
+	map.corner_x = 0;
+	map.corner_y = 0;
 	map.width = 0;
-	map.length = 0;
+	map.height = 0;
 
 	//We open the file containing the map
 	FILE* file = NULL;
@@ -102,6 +103,10 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	map.width=PX_W * x;
 	map.height=PX_H * y;
 
+	//We set the left up corner of the map
+	map.corner_x = (int) (map.width / 2 - SCREEN_W/2);
+	map.corner_y = (int) (map.height / 2 - SCREEN_H/2);
+
 	fclose(file);
 
 	return map;
@@ -111,6 +116,8 @@ Map load(SDL_Renderer *rendu, char* filepath){
 * Print the map on the screen
 */
 void show(SDL_Renderer *rendu, Map c){
+	
+	
 	
 }
 
