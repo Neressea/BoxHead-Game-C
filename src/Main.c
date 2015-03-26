@@ -3,13 +3,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../header/Main.h"
-#define SPEED 3
+
+
 
 int main(){
 
-	int init = SDL_Init(SDL_INIT_VIDEO);
-	int threadReturnValue;
-	if (init== -1){
+	if (SDL_Init(SDL_INIT_VIDEO)== -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
@@ -57,12 +56,13 @@ void managing_event(){
 
 	int quit = 0;
 	int key[4] = {0};
+	int i;
 
 	SDL_Event event;
 		
 	
 	while(quit == 0){
-		SDL_WaitEvent(&event);
+		SDL_PollEvent(&event);
 			switch(event.type){
 				case SDL_QUIT:
 					quit = 1;
@@ -134,34 +134,34 @@ void managing_event(){
 void test_key(int key[], SDL_Rect *position){
 		
 	if (key[0] && key[2]){
-		position->y --;
-		position->x --;
+		position->y -= SPEED;
+		position->x -= SPEED;
 	}
 	if (key[0] && key[3]){
-		position->y --;
-		position->x ++;
+		position->y -= SPEED;
+		position->x += SPEED;
 	}
 	if (key[0] && !key[3] && !key[2]){
-		position->y --;
+		position->y -= SPEED;
 	}
 	
 	if (key[1] && key[2]){
-		position->y ++;
-		position->x --;
+		position->y += SPEED;
+		position->x -= SPEED;
 	}
 	if (key[1] && key[3]){
-		position->y ++;
-		position->x ++;
+		position->y += SPEED;
+		position->x += SPEED;
 	}
 	if (key[1] && !key[3] && !key[2]){
-		position->y ++;
+		position->y += SPEED;
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
-		position->x --;
+		position->x -= SPEED;
 	}
 	if (key[3] && !key[0] && !key[1]){
-		position->x ++;
+		position->x += SPEED;
 	}
 
 
