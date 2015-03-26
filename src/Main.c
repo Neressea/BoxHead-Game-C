@@ -33,7 +33,7 @@ void managing_event(){
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
-	//Map map;
+	Map map;
 	
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
@@ -51,7 +51,7 @@ void managing_event(){
 		exit(EXIT_FAILURE);
 	}
 
-	//map = load(rendu, "./maps/map1");
+	map = load(rendu, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
@@ -120,7 +120,7 @@ void managing_event(){
 	
 
 	SDL_RenderClear(rendu);
-	//show(rendu, map);
+	show(rendu, map);
 
 	if (j > 8){
 		j = 0;
