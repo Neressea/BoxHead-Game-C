@@ -137,9 +137,9 @@ void destroyMap(Map* map){
 	free(map->corner);
 
 	//We free the textures
-	int i=0;
-	for (i = 0; i < NB_TEXTS_MAP; ++i){
-		free(map->textures[i]);
+	int i;
+	for(i = 0; i < NB_TEXTS_MAP; i++){
+		SDL_DestroyTexture(map->textures[i]);
 	}
 
 	free(map->textures);
