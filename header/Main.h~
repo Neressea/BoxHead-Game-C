@@ -1,7 +1,7 @@
 #ifndef main_h 
 #include "../header/Map.h"
 #define main_h
-#define SPEED 3
+#define SPEED 4
 #define SPEED_TRAME 4
 #define SCREEN_W 640
 #define SCREEN_H 480
@@ -19,5 +19,6 @@ void test_key(int key[], SDL_Rect *position);
 void destroy_texture(int taille, SDL_Texture *tableau[]);
 SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f);
 void compute_tram(int *j, int *trame);
+int text_move(int *f, int *trame);
 
 #endif
