@@ -28,17 +28,17 @@
 * Load a map from a text file.
 * filepath : the path to the file
 */
-Map load(SDL_Renderer *rendu, char* filepath){
+Map* load(SDL_Renderer *rendu, char* filepath){
 
-	Map map;
-	map.buildings = NULL;
-	map.characters = NULL;
-	map.textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS);
-	map.corner = malloc(sizeof(SDL_Rect));
-	map.corner->x = 0;
-	map.corner->y = 0;
-	map.width = 0;
-	map.height = 0;
+	Map* map = malloc(sizeof(Map));
+	map->buildings = NULL;
+	map->characters = NULL;
+	map->textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS_MAP);
+	map->corner = malloc(sizeof(SDL_Rect));
+	map->corner->x = 0;
+	map->corner->y = 0;
+	map->width = 0;
+	map->height = 0;
 
 	//We open the file containing the map
 	FILE* file = NULL;
@@ -62,9 +62,9 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	char path [120] = "./images/sprites/";
 	strcat(path, line);
 	path[strlen(path)-1] = '\0';
-	map.textures[0] = IMG_LoadTexture(rendu, path);
+	map->textures[0] = IMG_LoadTexture(rendu, path);
 
-	if(map.textures[0] == NULL){
+	if(map->textures[0] == NULL){
 		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
 		exit(2);
 	}
@@ -79,9 +79,9 @@ Map load(SDL_Renderer *rendu, char* filepath){
 	char path2[120] = "./images/sprites/";
 	strcat(path2, line);
 	path2[strlen(path2)-1] = '\0';
-	map.textures[1] = IMG_LoadTexture(rendu, path2);
+	map->textures[1] = IMG_LoadTexture(rendu, path2);
 
-	if(map.textures[1] == NULL){
+	if(map->textures[1] == NULL){
 		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
 		exit(2);
 	}
@@ -109,8 +109,8 @@ Map load(SDL_Renderer *rendu, char* filepath){
 				lb->current = b;
 
 				//We change the head of the list
-				lb->next = map.buildings;
-				map.buildings = lb;
+				lb->next = map->buildings;
+				map->buildings = lb;
 
 			}
 			i++;
@@ -120,12 +120,12 @@ Map load(SDL_Renderer *rendu, char* filepath){
 		y++;
 	}
 
-	map.width=PX_W * x;
-	map.height=PX_H * y;
+	map->width=PX_W * x;
+	map->height=PX_H * y;
 
 	//We set the left up corner of the map
-	map.corner->x = (int) (map.width / 2 - SCREEN_W/2);
-	map.corner->y = (int) (map.height / 2 - SCREEN_H/2);
+	map->corner->x = (int) (map->width / 2 - SCREEN_W/2);
+	map->corner->y = (int) (map->height / 2 - SCREEN_H/2);
 
 	fclose(file);
 
@@ -133,9 +133,43 @@ Map load(SDL_Renderer *rendu, char* filepath){
 }
 
 /**
+* Free the map
+*/
+void destroyMap(Map* map){
+	//We free the corner
+	free(map->corner);
+
+	//We free the textures
+	int i=0;
+	for (i = 0; i < NB_TEXTS_MAP; ++i){
+		free(map->textures[i]);
+	}
+
+	free(map->textures);
+
+	//We free the list of buildings
+	ListBuilding *b = map->buildings;
+	ListBuilding *nextB = NULL;
+	while(b != NULL){
+		nextB = b->next;
+		free(b);
+		b = nextB;
+	}
+
+	//We free the list of characters
+	ListChar* lc = map->characters;
+	ListChar* nextC = NULL;
+	while(lc != NULL){
+		nextC = lc->next;
+		free(lc);
+		lc = nextC;
+	}
+}
+
+/**
 * Print the map on the screen
 */
-void show(SDL_Renderer *rendu, Map map){
+void show(SDL_Renderer *rendu, Map* map){
 	
 	//We go through all cases to flip.
 
@@ -154,10 +188,10 @@ void show(SDL_Renderer *rendu, Map map){
 			pos.x = i;
 			pos.y = j;
 
-			if(isBuilding(map.buildings, pos)){
-				SDL_RenderCopy(rendu, map.textures[1], NULL, &pos);
+			if(isBuilding(map->buildings, pos)){
+				SDL_RenderCopy(rendu, map->textures[1], NULL, &pos);
 			}else{
-				SDL_RenderCopy(rendu, map.textures[0], NULL, &pos);
+				SDL_RenderCopy(rendu, map->textures[0], NULL, &pos);
 			}	
 		}
 	}
@@ -182,6 +216,10 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 	}
 
 	return is;
+}
+
+void saveMap(Map *map){
+
 }
 	
 

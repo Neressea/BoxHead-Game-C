@@ -8,7 +8,7 @@
 #include "Main.h"
 
 #define FRAME 2
-#define NB_TEXTS 1
+#define NB_TEXTS_MAP 1
 
 /**
 * Defines what the map is.
@@ -22,24 +22,43 @@ typedef struct{
 	ListBuilding *buildings;
 	ListChar *characters;
 	SDL_Texture **textures;
-	int width, height; //?
+	int width, height;
 	SDL_Rect *corner;
 }Map;
 
 /**
 * Load a map from a text file.
+* rendu : the renderer for which we load a map
+* file_name : load a map from a file_name
 */
-Map load(SDL_Renderer *rendu, char* nom_fichier);
+Map* load(SDL_Renderer *rendu, char* file_name);
+
+/**
+* Free all the pointers of a map
+* map : the map to destroy
+*/
+void destroyMap(Map* map);
 
 /**
 * Print the map on the screen
+* rendu : the renderer where we blit the map
+* map : the map tp blit on the renderer
 */
-void show(SDL_Renderer *rendu, Map c);
+void show(SDL_Renderer *rendu, Map* map);
 
 /**
+* buildings : the lst of the buildings of the map
+* pos : the position to check
 * Return 1 if pos is a building, else 0.
 */
 int isBuilding(ListBuilding* buildings, SDL_Rect pos);
+
+/**
+* m : the map to save in a text file
+* This function check the folder of maps, determines the name of the file 
+* in which it will save the map, create and fill it up.
+*/
+void save(Map* m);
 
 #endif
 
