@@ -33,7 +33,7 @@ void managing_event(){
 	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
-	Map map;
+	Map *map = malloc(sizeof(Map));
 	
 	
 	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
@@ -51,7 +51,7 @@ void managing_event(){
 		exit(EXIT_FAILURE);
 	}
 
-	map = load(rendu, "./maps/map1");
+	load(rendu, map, "./maps/map1");
 
 	pennemy = malloc(sizeof(SDL_Rect));
 	
@@ -62,16 +62,18 @@ void managing_event(){
 
 	int quit = 0;
 	int key[4] = {0};
-	int i;
 	int j = 0;
 	int f = 0;
 	int trame = 0;
+	int limit = 0;
+	int test
 
 	SDL_Event event;
 		
 	SDL_ShowCursor(SDL_DISABLE);
 	
 	while(quit == 0){
+
 		SDL_PollEvent(&event);
 			switch(event.type){
 				case SDL_QUIT:
@@ -132,8 +134,24 @@ void managing_event(){
 
 	test_key(key, pennemy);	
 
-	SDL_Delay(1);
+	//We manage the FPS
 
+	test = SDL_GetTicks();	
+
+	if (limit > test){
+		if (limit > test + FPS){
+			SDL_Delay(FPS);
+		}
+		else {
+			SDL_Delay(limit - test);
+		}
+	}
+
+
+
+
+	limit = SDL_GetTicks() + FPS;
+	
 		if (current_texture == NULL){
 			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
@@ -143,7 +161,7 @@ void managing_event(){
 	
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
-	destroy_texture(NB_TEXTS, map.textures);
+	destroyMap(map);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
 	
@@ -253,11 +271,11 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 }
 
 void compute_tram(int *j, int *trame){
-	if (*j > SPEED * 4){
+	if (*j > SPEED_TRAME * 4){
 		*j = 0;
 	}
 
-	*trame = *j % SPEED;
+	*trame = *j % SPEED_TRAME;
 
 }
 

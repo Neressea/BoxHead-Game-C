@@ -65,15 +65,14 @@ void managing_event(){
 	int j = 0;
 	int f = 0;
 	int trame = 0;
+	int limit = 0;
+	int test = 0;
 
 	SDL_Event event;
 		
 	SDL_ShowCursor(SDL_DISABLE);
 	
-	int temps_ecoule = 0, temps_precedent = 0;
 	while(quit == 0){
-
-		temps_precedent = SDL_GetTicks();
 
 		SDL_PollEvent(&event);
 			switch(event.type){
@@ -136,10 +135,23 @@ void managing_event(){
 	test_key(key, pennemy);	
 
 	//We manage the FPS
-	temps_ecoule = SDL_GetTicks();
-	if(temps_ecoule - temps_precedent > FPS)
-		SDL_Delay(FPS - (temps_ecoule - temps_precedent));
 
+	test = SDL_GetTicks();	
+
+	if (limit > test){
+		if (limit > test + FPS){
+			SDL_Delay(FPS);
+		}
+		else {
+			SDL_Delay(limit - test);
+		}
+	}
+
+
+
+
+	limit = SDL_GetTicks() + FPS;
+	
 		if (current_texture == NULL){
 			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
