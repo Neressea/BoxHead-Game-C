@@ -66,7 +66,7 @@ void managing_event(){
 	int f = 0;
 	int trame = 0;
 	int limit = 0;
-	int test
+	int test = 0;
 
 	SDL_Event event;
 		
@@ -132,7 +132,8 @@ void managing_event(){
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
-	test_key(key, pennemy);	
+	//test_key(key, pennemy);
+	moveMap(map, key);	
 
 	//We manage the FPS
 
@@ -150,7 +151,7 @@ void managing_event(){
 
 
 
-	limit = SDL_GetTicks() + FPS;
+		limit = SDL_GetTicks() + FPS;
 	
 		if (current_texture == NULL){
 			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
@@ -205,10 +206,28 @@ void test_key(int key[], SDL_Rect *position){
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/heros0.png");
 	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/heros1.png");
+	tableau[2] = IMG_LoadTexture(rendu, "./images/sprites/heros2.png");
 	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/heros3.png");
+	tableau[4] = IMG_LoadTexture(rendu, "./images/sprites/heros4.png");
+	tableau[5] = IMG_LoadTexture(rendu, "./images/sprites/heros5.png");
 	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/heros6.png");
+	tableau[7] = IMG_LoadTexture(rendu, "./images/sprites/heros7.png");
+	tableau[8] = IMG_LoadTexture(rendu, "./images/sprites/heros8.png");
+	tableau[9] = IMG_LoadTexture(rendu, "./images/sprites/heros9.png");
+	tableau[10] = IMG_LoadTexture(rendu, "./images/sprites/heros10.png");
+	tableau[11] = IMG_LoadTexture(rendu, "./images/sprites/heros11.png");
 	tableau[12] = IMG_LoadTexture(rendu, "./images/sprites/heros12.png");
+	tableau[13] = IMG_LoadTexture(rendu, "./images/sprites/heros13.png");
+	tableau[14] = IMG_LoadTexture(rendu, "./images/sprites/heros14.png");
 	tableau[15] = IMG_LoadTexture(rendu, "./images/sprites/heros15.png");
+	tableau[16] = IMG_LoadTexture(rendu, "./images/sprites/heros16.png");
+	tableau[17] = IMG_LoadTexture(rendu, "./images/sprites/heros17.png");
+	tableau[18] = IMG_LoadTexture(rendu, "./images/sprites/heros18.png");
+	tableau[19] = IMG_LoadTexture(rendu, "./images/sprites/heros19.png");
+	tableau[20] = IMG_LoadTexture(rendu, "./images/sprites/heros20.png");
+	tableau[21] = IMG_LoadTexture(rendu, "./images/sprites/heros21.png");
+	tableau[22] = IMG_LoadTexture(rendu, "./images/sprites/heros22.png");
+	tableau[23] = IMG_LoadTexture(rendu, "./images/sprites/heros23.png");
 	
 }
 
@@ -224,10 +243,23 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f){
 	
 	if (key[0] && key[2]){
-		return tableau[0];
+		*f = 21;		
+		if (*trame == 0){
+			return tableau[0];
+		}
+		else if (*trame == 1){
+			return tableau[1];
+		}
+		else if (*trame == 2){
+			return tableau[0];
+		}
+		else {
+			return tableau[2];
+		}
 	}
 	if (key[0] && key[3]){
-		return tableau[0];
+		*f = 18;
+		return tableau[18];
 	}
 	if (key[0] && !key[3] && !key[2]){
 		*f = 3;
@@ -254,7 +286,7 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 			return tableau[0];
 		}
 		else {
-			return tableau[1];
+			return tableau[2];
 		}
 	}
 		
@@ -263,7 +295,8 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 		return tableau[6];
 	}
 	if (key[3] && !key[0] && !key[1]){
-		return tableau[0];
+		*f = 9;
+		return tableau[9];
 	}
 
 	return tableau[*f];
