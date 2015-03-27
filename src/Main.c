@@ -244,59 +244,37 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 	
 	if (key[0] && key[2]){
 		*f = 21;		
-		if (*trame == 0){
-			return tableau[21];
-		}
-		else if (*trame == 1){
-			return tableau[22];
-		}
-		else if (*trame == 2){
-			return tableau[21];
-		}
-		else {
-			return tableau[23];
-		}
+		return tableau[21 + text_move(trame)];
 	}
 	if (key[0] && key[3]){
 		*f = 18;
-		return tableau[18];
+		return tableau[18 + text_move(trame)];
 	}
 	if (key[0] && !key[3] && !key[2]){
 		*f = 3;
-		return tableau[3];
+		return tableau[3 + text_move(trame)];
 	}
 	
 	if (key[1] && key[2]){
 		*f = 15;
-		return tableau[15];
+		return tableau[15 + text_move(trame)];
 	}
 	if (key[1] && key[3]){
 		*f = 12;
-		return tableau[12];
+		return tableau[12 + text_move(trame)];
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
-		if (*trame == 0){
-			return tableau[0];
-		}
-		else if (*trame == 1){
-			return tableau[1];
-		}
-		else if (*trame == 2){
-			return tableau[0];
-		}
-		else {
-			return tableau[2];
-		}
+		return tableau[0 + text_move(trame)];
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
 		*f = 6;		
-		return tableau[6];
+		return tableau[6 + text_move(trame)];
 	}
 	if (key[3] && !key[0] && !key[1]){
 		*f = 9;
-		return tableau[9];
+		return tableau[9 + text_move(trame)];
 	}
 
 	return tableau[*f];
@@ -309,6 +287,24 @@ void compute_tram(int *j, int *trame){
 	}
 
 	*trame = *j % SPEED_TRAME;
+
+}
+
+int text_move(int *trame){
+	if (*trame == 0){
+		return 0;
+	}
+	else if (*trame == 1){
+		return 1;
+	}
+	else if (*trame == 2){
+		return 0;
+	}
+	else {
+		return 2;
+	}
+
+	return 0;
 
 }
 
