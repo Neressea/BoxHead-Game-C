@@ -66,7 +66,7 @@ void managing_event(){
 	int f = 0;
 	int trame = 0;
 	int limit = 0;
-	int test
+	int test = 0;
 
 	SDL_Event event;
 		
@@ -140,10 +140,10 @@ void managing_event(){
 
 	if (limit > test){
 		if (limit > test + FPS){
-			delay(FPS);
+			SDL_Delay(FPS);
 		}
 		else {
-			delay(limit - test);
+			SDL_Delay(limit - test);
 		}
 	}
 
@@ -152,13 +152,6 @@ void managing_event(){
 
 	limit = SDL_GetTicks() + FPS;
 	
-
-
-	if(temps_ecoule - temps_precedent > FPS)
-		SDL_Delay(FPS - (temps_ecoule - temps_precedent));
-
-
-
 		if (current_texture == NULL){
 			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
 			exit(EXIT_FAILURE);
