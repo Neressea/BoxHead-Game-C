@@ -34,7 +34,7 @@ Main.o: ./src/Main.c ./header/*.h
 	gcc -Wall -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image
  
 Map.o: ./src/Map.c ./header/*.h
-	gcc -Wall -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image
+	gcc -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image
  
 Building.o: ./src/Building.c ./header/*.h
 	gcc -Wall -c ./src/Building.c -o ./bin/Building.o -lSDL2-2.0 -lSDL2_image

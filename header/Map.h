@@ -8,6 +8,7 @@
 #include "Main.h"
 
 #define NB_TEXTS_MAP 2
+#define NB_SPRITES_BLITTED 2
 
 /**
 * Defines what the map is.
