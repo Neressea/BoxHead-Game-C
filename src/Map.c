@@ -179,8 +179,6 @@ void show(SDL_Renderer *rendu, Map* map){
 	int end_x = SCREEN_W - (SCREEN_W % PX_W) + begin_x + NB_SPRITES_BLITTED * PX_W;
 	int end_y = SCREEN_H - (SCREEN_H % PX_H) + begin_y + NB_SPRITES_BLITTED * PX_H;
 
-	printf("%d %d\n", begin_x, begin_y);
-
 	SDL_Rect map_pos;
 	SDL_Rect blit_pos;
 
