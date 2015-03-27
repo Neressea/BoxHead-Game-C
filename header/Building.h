@@ -6,7 +6,7 @@
 /**
 * Struct that defines the buildings of the map.
 * hp : health points if the building
-* pos_x, pos_y : the position of the building (in cases and not pixels)
+* pos_x, pos_y : the position of the building in pixels
 * attack : the attack if it is a tower. If it is only a defense, -1.
 * defense : the defense of the building
 */

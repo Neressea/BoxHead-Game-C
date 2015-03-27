@@ -7,16 +7,15 @@
 #include "Character.h"
 #include "Main.h"
 
-#define FRAME 2
-#define NB_TEXTS_MAP 1
+#define NB_TEXTS_MAP 2
 
 /**
 * Defines what the map is.
 * buildings : List of the buildings on the map
 * characters : List of the characters on the map
 * textures : Array of textures (0 : background, 1 : tower)
-* width, length : size of the map
-* corner_split : position of the map that is in the left-up corner
+* width, length : size of the map in pixels
+* corner_split : position of the map that is in the left-up corner in pixels
 */
 typedef struct{
 	ListBuilding *buildings;

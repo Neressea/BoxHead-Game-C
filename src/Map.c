@@ -98,12 +98,12 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 				ListBuilding* lb = malloc(sizeof(ListBuilding));
 				Building b;
 
-				//We add the new buuilding to the list
+				//We add the new building to the list
 				b.hp = -1; //They are unbreakable
 				b.attack = -1; //They don't attack
 				b.defense = -1;
-				b.pos_x = x;
-				b.pos_y = y;
+				b.pos_x = x * PX_W;
+				b.pos_y = y * PX_H;
 
 				lb->current = b;
 
@@ -167,13 +167,47 @@ void destroyMap(Map* map){
 * Print the map on the screen
 */
 void show(SDL_Renderer *rendu, Map* map){
+
+	//We compute the shift bewteen the map and the view
+	int shift_x = map->corner->x % PX_W;
+	int shift_y = map->corner->y % PX_H;
+
+	//We compute the position of the case we want to show
+	int begin_x = map->corner->x - shift_x - PX_W;
+	int begin_y = map->corner->y - shift_y - PX_H;
+	int end_x = SCREEN_W + begin_x + PX_W;
+	int end_y = SCREEN_H + begin_y + PX_H;
+
+	SDL_Rect map_pos;
+
+	//We blit all the necessary textures
+	int i, j;
+	for (i = begin_x; i < end_x; i+=PX_W)
+	 {
+	 	for (j = begin_y; j < end_y; j+=PX_H)
+	 	{
+	 		map_pos.x = i;
+			map_pos.y = j;
+
+	 		SDL_Rect blit_pos;
+	 		blit_pos.x = i - shift_x;
+	 		blit_pos.y = j - shift_y;
+
+	 		//We check the type of the case to blit
+	 		if(isBuilding(map->buildings, map_pos)){
+	 			SDL_RenderCopy(rendu, map->textures[1], NULL, &blit_pos);
+	 		}else{
+	 			SDL_RenderCopy(rendu, map->textures[0], NULL, &blit_pos);
+	 		}
+	 	}
+	 }
 	
 	//We go through all cases to flip.
-	int begin_x = - FRAME * PX_W;
-	int begin_y = - FRAME * PX_H;
+	/*int begin_x = 0;
+	int begin_y = 0;
 
-	int end_x = SCREEN_W + FRAME * PX_W;
-	int end_y = SCREEN_H + FRAME * PX_H;
+	int end_x = SCREEN_W;
+	int end_y = SCREEN_H;
 
 	int i, j;
 	SDL_Rect pos;
@@ -190,7 +224,7 @@ void show(SDL_Renderer *rendu, Map* map){
 				SDL_RenderCopy(rendu, map->textures[0], NULL, &pos);
 			}	
 		}
-	}
+	}*/
 }
 
 int isBuilding(ListBuilding* buildings, SDL_Rect pos){

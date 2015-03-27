@@ -132,7 +132,7 @@ void managing_event(){
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
-	test_key(key, pennemy);
+	//test_key(key, pennemy);
 	moveMap(map, key);	
 
 	//We manage the FPS
@@ -151,7 +151,7 @@ void managing_event(){
 
 
 
-	limit = SDL_GetTicks() + FPS;
+		limit = SDL_GetTicks() + FPS;
 	
 		if (current_texture == NULL){
 			fprintf(stderr, "Erreur de récupération des textures : %s\n", SDL_GetError()); // managing SDL loading error 
