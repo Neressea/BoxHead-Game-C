@@ -1,7 +1,7 @@
 #ifndef main_h 
 #include "../header/Map.h"
 #define main_h
-#define SPEED 2
+#define SPEED 3
 #define SPEED_TRAME 4
 #define SCREEN_W 640
 #define SCREEN_H 480
@@ -10,7 +10,7 @@
 #define PXH_H 70
 #define PXH_W 50
 #define NB_SPRITES_H 24
-#define FPS 15
+#define FPS 10
 
 int main();
 void managing_event();
