@@ -54,11 +54,18 @@ void show(SDL_Renderer *rendu, Map* map);
 int isBuilding(ListBuilding* buildings, SDL_Rect pos);
 
 /**
-* m : the map to save in a text file
 * This function check the folder of maps, determines the name of the file 
 * in which it will save the map, create and fill it up.
+* m : the map to save in a text file
 */
 void save(Map* m);
+
+/**
+* Move the map to "follow" the player
+* map : the map to move
+* key : the input events
+*/
+void moveMap(Map* map, int key[]);
 
 #endif
 

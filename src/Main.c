@@ -132,7 +132,8 @@ void managing_event(){
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
 	SDL_RenderPresent(rendu);
 
-	test_key(key, pennemy);	
+	test_key(key, pennemy);
+	moveMap(map, key);	
 
 	//We manage the FPS
 

@@ -169,7 +169,6 @@ void destroyMap(Map* map){
 void show(SDL_Renderer *rendu, Map* map){
 	
 	//We go through all cases to flip.
-
 	int begin_x = - FRAME * PX_W;
 	int begin_y = - FRAME * PX_H;
 
@@ -217,6 +216,39 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 
 void saveMap(Map *map){
 	map->corner = NULL; //temp
+}
+
+void moveMap(Map* map, int key[]){
+	if (key[0] && key[2]){
+		map->corner->y -= SPEED;
+		map->corner->x -= SPEED;
+	}
+	if (key[0] && key[3]){
+		map->corner->y -= SPEED;
+		map->corner->x += SPEED;
+	}
+	if (key[0] && !key[3] && !key[2]){
+		map->corner->y -= SPEED;
+	}
+	
+	if (key[1] && key[2]){
+		map->corner->y += SPEED;
+		map->corner->x -= SPEED;
+	}
+	if (key[1] && key[3]){
+		map->corner->y += SPEED;
+		map->corner->x += SPEED;
+	}
+	if (key[1] && !key[3] && !key[2]){
+		map->corner->y += SPEED;
+	}
+		
+	if (key[2] && !key[0] && !key[1]){
+		map->corner->x -= SPEED;
+	}
+	if (key[3] && !key[0] && !key[1]){
+		map->corner->x += SPEED;
+	}
 }
 	
 
