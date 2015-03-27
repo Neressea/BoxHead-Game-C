@@ -1,3 +1,3 @@
 *.o
-Game
+./Game
 ./maps/*
