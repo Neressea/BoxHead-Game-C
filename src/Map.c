@@ -28,9 +28,8 @@
 * Load a map from a text file.
 * filepath : the path to the file
 */
-Map* load(SDL_Renderer *rendu, char* filepath){
+void load(SDL_Renderer *rendu, Map* map, char* filepath){
 
-	Map* map = malloc(sizeof(Map));
 	map->buildings = NULL;
 	map->characters = NULL;
 	map->textures = malloc(sizeof(SDL_Texture *) * NB_TEXTS_MAP);
@@ -128,8 +127,6 @@ Map* load(SDL_Renderer *rendu, char* filepath){
 	map->corner->y = (int) (map->height / 2 - SCREEN_H/2);
 
 	fclose(file);
-
-	return map;
 }
 
 /**
@@ -219,7 +216,7 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 }
 
 void saveMap(Map *map){
-
+	map->corner = NULL; //temp
 }
 	
 

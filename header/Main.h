@@ -10,6 +10,7 @@
 #define PXH_H 70
 #define PXH_W 50
 #define NB_SPRITES_H 24
+#define FPS 15
 
 int main();
 void managing_event();

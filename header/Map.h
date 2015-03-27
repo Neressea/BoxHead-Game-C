@@ -31,7 +31,7 @@ typedef struct{
 * rendu : the renderer for which we load a map
 * file_name : load a map from a file_name
 */
-Map* load(SDL_Renderer *rendu, char* file_name);
+void load(SDL_Renderer *rendu, Map* map, char* file_name);
 
 /**
 * Free all the pointers of a map

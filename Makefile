@@ -22,7 +22,7 @@
 
 # Création de l'exécutable 'Light'
 all: create Map.o Building.o Character.o Game.o Weapon.o Main.o
-	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
+	gcc -Wall ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
 
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
@@ -31,22 +31,22 @@ create:
 
 ############ Compilation de l'ensemble des fichiers ############
 Main.o: ./src/Main.c ./header/*.h
-	gcc -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image
  
 Map.o: ./src/Map.c ./header/*.h
-	gcc -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image
  
 Building.o: ./src/Building.c ./header/*.h
-	gcc -c ./src/Building.c -o ./bin/Building.o -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Building.c -o ./bin/Building.o -lSDL2-2.0 -lSDL2_image
  
 Character.o: ./src/Character.c ./header/*.h
-	gcc -c ./src/Character.c -o ./bin/Character.o -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Character.c -o ./bin/Character.o -lSDL2-2.0 -lSDL2_image
  
 Game.o: ./src/Game.c ./header/*.h
-	gcc -c ./src/Game.c -o ./bin/Game.o  -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Game.c -o ./bin/Game.o  -lSDL2-2.0 -lSDL2_image
 
 Weapon.o: ./src/Weapon.c ./header/*.h
-	gcc -c ./src/Weapon.c -o ./bin/Weapon.o -lSDL2-2.0 -lSDL2_image
+	gcc -Wall -c ./src/Weapon.c -o ./bin/Weapon.o -lSDL2-2.0 -lSDL2_image
  
 # Suppression des fichiers temporaires
 clean:
