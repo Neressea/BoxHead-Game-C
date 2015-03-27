@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "../header/Map.h"
 
@@ -93,6 +94,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	while(fgets(line, 100, file) != NULL){
 		line[strlen(line)] = '\0';
 		int i=0;
+		x=0;
 		while(line[i] != '\0'){
 			if(line[i] == '1'){
 				ListBuilding* lb = malloc(sizeof(ListBuilding));
@@ -115,7 +117,6 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 			i++;
 			x++;
 		}
-		x=0;
 		y++;
 	}
 
@@ -173,12 +174,15 @@ void show(SDL_Renderer *rendu, Map* map){
 	int shift_y = map->corner->y % PX_H;
 
 	//We compute the position of the case we want to show
-	int begin_x = map->corner->x - shift_x - PX_W;
-	int begin_y = map->corner->y - shift_y - PX_H;
-	int end_x = SCREEN_W + begin_x + PX_W;
-	int end_y = SCREEN_H + begin_y + PX_H;
+	int begin_x = map->corner->x - shift_x - (NB_SPRITES_BLITTED * PX_W);
+	int begin_y = map->corner->y - shift_y - (NB_SPRITES_BLITTED * PX_H);
+	int end_x = SCREEN_W - (SCREEN_W % PX_W) + begin_x + NB_SPRITES_BLITTED * PX_W;
+	int end_y = SCREEN_H - (SCREEN_H % PX_H) + begin_y + NB_SPRITES_BLITTED * PX_H;
+
+	printf("%d %d\n", begin_x, begin_y);
 
 	SDL_Rect map_pos;
+	SDL_Rect blit_pos;
 
 	//We blit all the necessary textures
 	int i, j;
@@ -189,7 +193,6 @@ void show(SDL_Renderer *rendu, Map* map){
 	 		map_pos.x = i;
 			map_pos.y = j;
 
-	 		SDL_Rect blit_pos;
 	 		blit_pos.x = i - shift_x;
 	 		blit_pos.y = j - shift_y;
 
@@ -235,11 +238,11 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(is==0 && b != NULL){
 
-		if(b->current.pos_x * PX_W == pos.x && b->current.pos_y * PX_H == pos.y)
+		if(b->current.pos_x == pos.x && b->current.pos_y == pos.y)
 			is = 1;
 
 		//If we are after the position of the case, it is not a building
-		if(b->current.pos_x * PX_W < pos.x && b->current.pos_y * PX_H < pos.y)
+		if(b->current.pos_x < pos.x && b->current.pos_y < pos.y)
 			break;
 
 		b = b->next;
