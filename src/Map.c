@@ -185,6 +185,8 @@ void show(SDL_Renderer *rendu, Map* map){
 	SDL_Rect* blit_pos = malloc(sizeof(SDL_Rect));
 	blit_pos->x = - (NB_SPRITES_BLITTED * PX_W);
 	blit_pos->y = - (NB_SPRITES_BLITTED * PX_H);
+	blit_pos->w = PX_W;
+	blit_pos->h = PX_H;
 
 	//We blit all the necessary textures
 	int i=0, j=0;
