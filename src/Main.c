@@ -140,8 +140,8 @@ SDL_WINDOW_RESIZABLE);
 
 	SDL_GetWindowSize(main_screen,screen_w,screen_h);
 
-	pennemy->x = *screen_w /2- PXH_H / 2;
-	pennemy->y = *screen_h / 2 - PXH_W / 2;
+	pennemy->x = *screen_w /2- PXH_W / 2;
+	pennemy->y = *screen_h / 2 - PXH_H / 2;
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
