@@ -178,24 +178,24 @@ void show(SDL_Renderer *rendu, Map* map){
 	int begin_x = map->corner->x - shift_x - (NB_SPRITES_BLITTED * PX_W);
 	int begin_y = map->corner->y - shift_y - (NB_SPRITES_BLITTED * PX_H);
 
-	int end_x = begin_x + (SCREEN_W - SCREEN_W % PX_W) + NB_SPRITES_BLITTED * PX_W;
-	int end_y = begin_y + (SCREEN_H - SCREEN_H % PX_H) + NB_SPRITES_BLITTED * PX_H;
+	int end_x = begin_x + (SCREEN_W - SCREEN_W % PX_W) + NB_SPRITES_BLITTED * PX_W * 2;
+	int end_y = begin_y + (SCREEN_H - SCREEN_H % PX_H) + NB_SPRITES_BLITTED * PX_H * 2;
 
 	//We compute the position where we blit the surface
 	SDL_Rect* blit_pos = malloc(sizeof(SDL_Rect));
-	blit_pos->x = - (NB_SPRITES_BLITTED * PX_W);
-	blit_pos->y = - (NB_SPRITES_BLITTED * PX_H);
+	blit_pos->x = - (NB_SPRITES_BLITTED * PX_W) - shift_x;
+	blit_pos->y = - (NB_SPRITES_BLITTED * PX_H) - shift_y;
 	blit_pos->w = PX_W;
 	blit_pos->h = PX_H;
 
 	//We blit all the necessary textures
 	int i=0, j=0;
-	for (i = begin_x; i < end_x; i+=PX_W){
+	for (i = begin_x; i <= end_x; i+=PX_W){
 
 		//We reinitialize y
 		blit_pos->y=- (NB_SPRITES_BLITTED * PX_H);
 
-	 	for (j = begin_y; j < end_y; j+=PX_H){
+	 	for (j = begin_y; j <= end_y; j+=PX_H){
 
 	 		//We check the type of the case to blit
 	 		if(isBuilding(map->buildings, map_pos)){
