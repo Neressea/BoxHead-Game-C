@@ -193,7 +193,7 @@ void show(SDL_Renderer *rendu, Map* map){
 	for (i = begin_x; i <= end_x; i+=PX_W){
 
 		//We reinitialize y
-		blit_pos->y=- (NB_SPRITES_BLITTED * PX_H);
+		blit_pos->y=- (NB_SPRITES_BLITTED * PX_H) - shift_y;
 
 	 	for (j = begin_y; j <= end_y; j+=PX_H){
 
