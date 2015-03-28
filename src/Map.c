@@ -202,30 +202,6 @@ void show(SDL_Renderer *rendu, Map* map){
 	 		}
 	 	}
 	 }
-	
-	//We go through all cases to flip.
-	/*int begin_x = 0;
-	int begin_y = 0;
-
-	int end_x = SCREEN_W;
-	int end_y = SCREEN_H;
-
-	int i, j;
-	SDL_Rect pos;
-	for (i = begin_x; i <= end_x; i+=PX_W){
-		for (j = begin_y; j <= end_y; j+=PX_H){
-			pos.h=PX_H;
-			pos.w=PX_W;
-			pos.x = i;
-			pos.y = j;
-
-			if(isBuilding(map->buildings, pos)){
-				SDL_RenderCopy(rendu, map->textures[1], NULL, &pos);
-			}else{
-				SDL_RenderCopy(rendu, map->textures[0], NULL, &pos);
-			}	
-		}
-	}*/
 }
 
 int isBuilding(ListBuilding* buildings, SDL_Rect pos){
@@ -236,8 +212,9 @@ int isBuilding(ListBuilding* buildings, SDL_Rect pos){
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(is==0 && b != NULL){
 
-		if(b->current.pos_x == pos.x && b->current.pos_y == pos.y)
+		if(b->current.pos_x == pos.x && b->current.pos_y == pos.y){
 			is = 1;
+		}
 
 		//If we are after the position of the case, it is not a building
 		if(b->current.pos_x < pos.x && b->current.pos_y < pos.y)
