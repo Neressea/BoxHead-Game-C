@@ -51,7 +51,7 @@ void show(SDL_Renderer *rendu, Map* map);
 * pos : the position to check
 * Return 1 if pos is a building, else 0.
 */
-int isBuilding(ListBuilding* buildings, SDL_Rect pos);
+int isBuilding(ListBuilding* buildings, SDL_Rect* pos);
 
 /**
 * This function check the folder of maps, determines the name of the file 
