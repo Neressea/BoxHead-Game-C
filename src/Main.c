@@ -74,8 +74,8 @@ SDL_WINDOW_RESIZABLE);
 
 	pennemy->h = PXH_H;
 	pennemy->w = PXH_W;
-	pennemy->x = *screen_w /2- PXH_H / 2;
-	pennemy->y = *screen_h / 2 - PXH_W / 2;
+	pennemy->x = *screen_w /2- PXH_W / 2;
+	pennemy->y = *screen_h / 2 - PXH_H / 2;
 	
 	SDL_Event event;
 		
