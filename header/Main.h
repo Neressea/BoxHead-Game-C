@@ -2,7 +2,7 @@
 #include "../header/Map.h"
 #define main_h
 #define SPEED 4
-#define SPEED_TRAME 4
+#define SPEED_TRAME 15
 #define SCREEN_W 640
 #define SCREEN_H 480
 #define PX_H 50
