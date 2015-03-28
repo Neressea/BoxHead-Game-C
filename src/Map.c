@@ -277,6 +277,8 @@ void moveMap(Map* map, int key[]){
 		map->corner->x += SPEED;
 	}
 }
+
+
 	
 
 

@@ -67,5 +67,10 @@ void save(Map* m);
 */
 void moveMap(Map* map, int key[]);
 
+/**
+* Add a wall on the map at the position (x, y) in pixels
+*/
+void addWall(Map* map, int x, int y);
+
 #endif
 
