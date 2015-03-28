@@ -34,9 +34,20 @@ void managing_event(){
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pennemy = NULL;
 	Map *map = malloc(sizeof(Map));
+	int *screen_h = NULL;
+	int *screen_w = NULL;
 	
+	int quit = 0;
+	int key[4] = {0};
+	int j = 0;
+	int f = 0;
+	int trame = 0;
+	int limit = 0;
+	int test = 0;
 	
-	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN); 			 // iniatializing screen
+	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN|
+SDL_WINDOW_RESIZABLE);
+ 			 // iniatializing screen
 
 	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
@@ -53,21 +64,19 @@ void managing_event(){
 
 	load(rendu, map, "./maps/map1");
 
+	screen_h = malloc(sizeof(SDL_Rect));
+	screen_w = malloc(sizeof(SDL_Rect));	
+
+	*screen_h = SCREEN_H;
+	*screen_w = SCREEN_W;	
+
 	pennemy = malloc(sizeof(SDL_Rect));
-	
+
 	pennemy->h = PXH_H;
 	pennemy->w = PXH_W;
-	pennemy->x = SCREEN_H /2- PXH_H / 2;
-	pennemy->y = SCREEN_W / 2 - PXH_W / 2;
-
-	int quit = 0;
-	int key[4] = {0};
-	int j = 0;
-	int f = 0;
-	int trame = 0;
-	int limit = 0;
-	int test = 0;
-
+	pennemy->x = *screen_w /2- PXH_H / 2;
+	pennemy->y = *screen_h / 2 - PXH_W / 2;
+	
 	SDL_Event event;
 		
 	SDL_ShowCursor(SDL_DISABLE);
@@ -82,6 +91,7 @@ void managing_event(){
 				case SDL_KEYDOWN:
 					switch (event.key.keysym.sym){	//openclassrooms.com/uploads/fr/ftp/mateo21/sdlkeysym.html
 						case SDLK_ESCAPE:
+							quit = 1;
         					break;
 						case SDLK_UP:
 							key[0] = 1;
@@ -127,6 +137,12 @@ void managing_event(){
 	
 	j++;
 	compute_tram(&j, &trame);
+
+	//SDL_GetWindowSize(main_screen,screen_w,screen_h);
+
+	
+	//pennemy->x = *screen_w /2- PXH_H / 2;
+	//pennemy->y = *screen_h / 2 - PXH_W / 2;
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pennemy);	
