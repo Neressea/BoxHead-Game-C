@@ -57,8 +57,8 @@ void managing_event(){
 	
 	pennemy->h = PXH_H;
 	pennemy->w = PXH_W;
-	pennemy->x = 0;
-	pennemy->y = 0;
+	pennemy->x = SCREEN_W /2- PXH_H / 2;
+	pennemy->y = SCREEN_H / 2 - PXH_W / 2;
 
 	int quit = 0;
 	int key[4] = {0};

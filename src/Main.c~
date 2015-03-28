@@ -57,8 +57,8 @@ void managing_event(){
 	
 	pennemy->h = PXH_H;
 	pennemy->w = PXH_W;
-	pennemy->x = 0;
-	pennemy->y = 0;
+	pennemy->x = SCREEN_H /2- PXH_H / 2;
+	pennemy->y = SCREEN_W / 2 - PXH_W / 2;
 
 	int quit = 0;
 	int key[4] = {0};
@@ -257,35 +257,24 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 	
 	if (key[1] && key[2]){
 		*f = 15;
-		return tableau[15];
+		return tableau[15 + text_move(trame)];
 	}
 	if (key[1] && key[3]){
 		*f = 12;
-		return tableau[12];
+		return tableau[12 + text_move(trame)];
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
-		if (*trame == 0){
-			return tableau[0];
-		}
-		else if (*trame == 1){
-			return tableau[1];
-		}
-		else if (*trame == 2){
-			return tableau[0];
-		}
-		else {
-			return tableau[2];
-		}
+		return tableau[0 + text_move(trame)];
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
 		*f = 6;		
-		return tableau[6];
+		return tableau[6 + text_move(trame)];
 	}
 	if (key[3] && !key[0] && !key[1]){
 		*f = 9;
-		return tableau[9];
+		return tableau[9 + text_move(trame)];
 	}
 
 	return tableau[*f];
