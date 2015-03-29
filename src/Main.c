@@ -4,7 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include "../header/Main.h"
 
-
+int screen_h = SCREEN_H;
+int screen_w = SCREEN_W;
 
 int main(){
 
@@ -36,8 +37,6 @@ void managing_event(){
 	SDL_Rect *pheros = NULL;
 	SDL_Rect *pattack = NULL;
 	Map *map = malloc(sizeof(Map));
-	int *screen_h = NULL;
-	int *screen_w = NULL;
 	
 	int quit = 0;
 	int key[5] = {0};
@@ -67,26 +66,19 @@ SDL_WINDOW_RESIZABLE);
 
 	load(rendu, map, "./maps/map1");
 
-	screen_h = malloc(sizeof(int));
-	screen_w = malloc(sizeof(int));	
-
-	*screen_h = SCREEN_H;
-	*screen_w = SCREEN_W;	
-
 	pheros = malloc(sizeof(SDL_Rect));
 
 	pheros->h = PXH_H;
 	pheros->w = PXH_W;
-	pheros->x = *screen_w /2- PXH_W / 2;
-	pheros->y = *screen_h / 2 - PXH_H / 2;
+	pheros->x = screen_w /2- PXH_W / 2;
+	pheros->y = screen_h / 2 - PXH_H / 2;
 
 	pattack = malloc(sizeof(SDL_Rect));
 	
 	pattack->h = PXH_H;
 	pattack->w = PXH_W;
-	pattack->x = *screen_w /2- PXH_W / 2;
-	pattack->y = *screen_h / 2 - PXH_H / 2;
-
+	pattack->x = screen_w /2- PXH_W / 2;
+	pattack->y = screen_h / 2 - PXH_H / 2;
 
 	SDL_Event event;
 		
@@ -153,20 +145,22 @@ SDL_WINDOW_RESIZABLE);
 	j++;
 	compute_tram(&j, &trame);
 
-	SDL_GetWindowSize(main_screen,screen_w,screen_h);
+	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
 
-	pheros->x = *screen_w /2- PXH_W / 2;
-	pheros->y = *screen_h / 2 - PXH_H / 2;
+	pheros->x = screen_w /2- PXH_W / 2;
+	pheros->y = screen_h / 2 - PXH_H / 2;
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 
+	attack_heros(pattack,&f, rendu, texture_attack, key);
+
 	//test_key(key, pheros);
 	moveMap(map, key);	
 
 	//We manage the FPS
-
+	
 	test = SDL_GetTicks();	
 
 	if (limit > test){
@@ -344,20 +338,19 @@ int text_move(int *trame){
 
 void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *tableau[], int key[]){
 
-	if (key[5] == 1){
-		pattack->x = SCREEN_H;
-		pattack->y = SCREEN_W;
+	if (key[4]){
+		pattack->y = 0;
+		printf("Remise zéro\n");
 	}
 
-	if(pattack->x != SCREEN_H){
+	if(pattack->y < SCREEN_H){
 		SDL_RenderCopy(rendu, tableau[*f], NULL, pattack);
+		SDL_RenderPresent(rendu);
+		printf("Blit\n");
 	}
 
+	pattack->y += SPEED;
 	
-	
-
-
-
 
 }
 
