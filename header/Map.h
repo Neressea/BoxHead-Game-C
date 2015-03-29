@@ -48,7 +48,7 @@ void destroyMap(Map* map);
 * rendu : the renderer where we blit the map
 * map : the map tp blit on the renderer
 */
-void show(SDL_Renderer *rendu, Map* map);
+void show(SDL_Renderer *rendu, Map* map, int screen_w, int screen_h);
 
 /**
 * buildings : the lst of the buildings of the map

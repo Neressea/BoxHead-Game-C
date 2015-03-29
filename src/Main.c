@@ -140,7 +140,6 @@ SDL_WINDOW_RESIZABLE);
 	
 
 	SDL_RenderClear(rendu);
-	show(rendu, map);
 	
 	j++;
 	compute_tram(&j, &trame);
@@ -151,6 +150,7 @@ SDL_WINDOW_RESIZABLE);
 	pheros->y = screen_h /2 - PXH_H / 2;
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
+	show(rendu, map, screen_w, screen_h);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 

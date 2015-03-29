@@ -142,7 +142,7 @@ void destroyMap(Map* map){
 /**
 * Print the map on the screen
 */
-void show(SDL_Renderer *rendu, Map* map){
+void show(SDL_Renderer *rendu, Map* map, int screen_w, int screen_h){
 
 	//We compute the shift bewteen the map and the view
 	int shift_x = map->corner->x % PX_W;
@@ -154,8 +154,8 @@ void show(SDL_Renderer *rendu, Map* map){
 	int begin_x = map->corner->x - shift_x - (NB_SPRITES_BLITTED * PX_W);
 	int begin_y = map->corner->y - shift_y - (NB_SPRITES_BLITTED * PX_H);
 
-	int end_x = begin_x + (SCREEN_W - SCREEN_W % PX_W) + NB_SPRITES_BLITTED * PX_W * 2;
-	int end_y = begin_y + (SCREEN_H - SCREEN_H % PX_H) + NB_SPRITES_BLITTED * PX_H * 2;
+	int end_x = begin_x + (screen_w - screen_w % PX_W) + NB_SPRITES_BLITTED * PX_W * 2;
+	int end_y = begin_y + (screen_h - screen_h % PX_H) + NB_SPRITES_BLITTED * PX_H * 2;
 
 	//We compute the position where we blit the surface
 	SDL_Rect* blit_pos = malloc(sizeof(SDL_Rect));
