@@ -12,16 +12,18 @@
 */
 typedef struct{
 	int hp;
-	int pos_x, pos_y;
+	int x, y;
 	int attack;
 	int defense;
 }Building;
 
 typedef struct ListBuilding ListBuilding;
 struct ListBuilding{
-	Building current;
+	Building* current;
 	struct ListBuilding* next;
 };
+
+Building* createBuilding(int hp, int x, int y, int attack, int defense);
 
 //void attackFromBuildToChar(Building b, Character p);
 

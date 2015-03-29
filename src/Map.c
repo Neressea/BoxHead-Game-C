@@ -1,29 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
 #include "../header/Map.h"
-
-//To test the functions
-/*int main(int argc, char** argv){
-
-	if(argc != 2){
-		fprintf(stderr, "Wrong number of args\n");
-		exit (42);
-	}
-	Map m;
-	m = load(argv[1]);
-
-	printf("%s\n", m.background);
-
-	ListBuilding *lb = m.buildings;
-	while(lb != NULL){
-		printf("%d %d %d %d %d\n", lb->current.hp, lb->current.pos_x, lb->current.pos_y, lb->current.attack, lb->current.defense);
-
-		lb = lb->next;
-	}
-}*/
 
 /**
 * Load a map from a text file.
@@ -98,14 +73,10 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 		while(line[i] != '\0'){
 			if(line[i] == '1'){
 				ListBuilding* lb = malloc(sizeof(ListBuilding));
-				Building b;
+				Building* b;
 
 				//We add the new building to the list
-				b.hp = -1; //They are unbreakable
-				b.attack = -1; //They don't attack
-				b.defense = -1;
-				b.pos_x = x * PX_W;
-				b.pos_y = y * PX_H;
+				b = createBuilding(-1, x * PX_W, y * PX_H, -1, -1);
 
 				lb->current = b;
 
@@ -149,6 +120,7 @@ void destroyMap(Map* map){
 	ListBuilding *nextB = NULL;
 	while(b != NULL){
 		nextB = b->next;
+		free(b->current);
 		free(b);
 		b = nextB;
 	}
@@ -226,12 +198,12 @@ int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(is==0 && b != NULL){
 
-		if(b->current.pos_x == pos->x && b->current.pos_y == pos->y){
+		if(b->current->x == pos->x && b->current->y == pos->y){
 			is = 1;
 		}
 
 		//If we are after the position of the case, it is not a building
-		if(b->current.pos_x < pos->x && b->current.pos_y < pos->y)
+		if(b->current->x < pos->x && b->current->y < pos->y)
 			break;
 
 		b = b->next;
