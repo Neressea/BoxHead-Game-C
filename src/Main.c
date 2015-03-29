@@ -108,7 +108,7 @@ SDL_WINDOW_RESIZABLE);
 						case SDLK_RIGHT:
 							key[3] = 1;
 						break;
-						case SDLK_BACKSPACE:
+						case SDLK_SPACE:
 							key[4] = 1;
 						break;
 						}
@@ -129,7 +129,7 @@ SDL_WINDOW_RESIZABLE);
 						case SDLK_RIGHT:
 							key[3] = 0;
 						break;
-						case SDLK_BACKSPACE:
+						case SDLK_SPACE:
 							key[4] = 0;
 						break;
 						}
@@ -339,17 +339,18 @@ int text_move(int *trame){
 void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *tableau[], int key[]){
 
 	if (key[4]){
-		pattack->y = 0;
+		pattack->y = screen_h / 2 - PXH_H / 2;
 		printf("Remise zéro\n");
 	}
 
-	if(pattack->y < SCREEN_H){
+	if(pattack->y < screen_h){
 		SDL_RenderCopy(rendu, tableau[*f], NULL, pattack);
 		SDL_RenderPresent(rendu);
 		printf("Blit\n");
+		pattack->y += SPEED;
 	}
 
-	pattack->y += SPEED;
+	
 	
 
 }
