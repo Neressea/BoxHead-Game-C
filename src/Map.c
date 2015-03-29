@@ -144,8 +144,20 @@ void destroyMap(Map* map){
 */
 void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
+	//We check if the size of the screen has changed
 	static int screen_h = SCREEN_H, screen_w = SCREEN_W;
-	SDL_GetWindowSize(screen,&screen_w,&screen_h);
+	int new_w, new_h;
+
+	//We compute the difference bewteen teh two. If there isn't, it's 0.
+	SDL_GetWindowSize(screen,&new_w,&new_h);
+	int diff_h = new_h - screen_h, diff_w = new_w - screen_w;
+
+	//We update the left up corner and teh size of the screen for the view.
+	screen_h = new_h;
+	screen_w = new_w;
+	
+	map->corner->x -= (int) diff_w/2;
+	map->corner->y -= (int) diff_h/2;
 
 	//We compute the shift bewteen the map and the view
 	int shift_x = map->corner->x % PX_W;
