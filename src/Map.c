@@ -142,7 +142,7 @@ void destroyMap(Map* map){
 /**
 * Print the map on the screen
 */
-void show(SDL_Renderer *rendu, Map* map, int screen_w, int screen_h){
+void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
 	//We compute the shift bewteen the map and the view
 	int shift_x = map->corner->x % PX_W;
