@@ -344,16 +344,16 @@ int text_move(int *trame){
 
 void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *tableau[], int key[]){
 
+	
+
 	if (key[5] == 1){
-		pattack->x = SCREEN_H;
-		pattack->y = SCREEN_W;
+
+
 	}
 
 	if(pattack->x != SCREEN_H){
 		SDL_RenderCopy(rendu, tableau[*f], NULL, pattack);
 	}
-
-	
 	
 
 
