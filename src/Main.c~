@@ -129,7 +129,7 @@ SDL_WINDOW_RESIZABLE);
 						case SDLK_RIGHT:
 							key[3] = 0;
 						break;
-						case SDLK_BACKSPACE:
+						case SDLK_SPACE:
 							key[4] = 0;
 						break;
 						}
