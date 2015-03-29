@@ -144,6 +144,9 @@ void destroyMap(Map* map){
 */
 void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
+	static int screen_h = SCREEN_H, screen_w = SCREEN_W;
+	SDL_GetWindowSize(screen,&screen_w,&screen_h);
+
 	//We compute the shift bewteen the map and the view
 	int shift_x = map->corner->x % PX_W;
 	int shift_y = map->corner->y % PX_H;

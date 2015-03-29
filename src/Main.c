@@ -150,7 +150,7 @@ SDL_WINDOW_RESIZABLE);
 	pheros->y = screen_h /2 - PXH_H / 2;
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
-	show(screen, rendu, map);
+	show(main_screen, rendu, map);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 
@@ -346,7 +346,6 @@ void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *ta
 	if(pattack->y < screen_h){
 		SDL_RenderCopy(rendu, tableau[*f], NULL, pattack);
 		SDL_RenderPresent(rendu);
-		printf("Blit\n");
 		pattack->y += SPEED;
 	}
 
