@@ -66,17 +66,20 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 
 	//Then we read the other lines that represents each "line" of the map
 	int x=0, y=0;
+	Building* b;
+	ListBuilding* lb;
 	while(fgets(line, 100, file) != NULL){
 		line[strlen(line)] = '\0';
 		int i=0;
 		x=0;
+
 		while(line[i] != '\0'){
+
 			if(line[i] == '1'){
-				ListBuilding* lb = malloc(sizeof(ListBuilding));
-				Building* b;
+				lb = malloc(sizeof(ListBuilding));
 
 				//We add the new building to the list
-				b = createBuilding(-1, x * PX_W, y * PX_H, -1, -1);
+				b = createBuilding(x * PX_W, y * PX_H,-1, -1, -1);
 
 				lb->current = b;
 
@@ -87,6 +90,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 			i++;
 			x++;
 		}
+
 		y++;
 	}
 
@@ -248,6 +252,14 @@ void moveMap(Map* map, int key[]){
 	if (key[3] && !key[0] && !key[1]){
 		map->corner->x += SPEED;
 	}
+}
+
+void addWall(Map *map, int x, int y){
+	Building* b = createBuilding((x-1) * PX_W, y * PX_H, -1, -1, -1);
+	ListBuilding* lb = malloc(sizeof(ListBuilding));
+	lb->current=b;
+	lb->next = map->buildings;
+	map->buildings = lb;
 }
 
 

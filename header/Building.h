@@ -23,7 +23,7 @@ struct ListBuilding{
 	struct ListBuilding* next;
 };
 
-Building* createBuilding(int hp, int x, int y, int attack, int defense);
+Building* createBuilding(int x, int y, int hp, int attack, int defense);
 
 //void attackFromBuildToChar(Building b, Character p);
 
