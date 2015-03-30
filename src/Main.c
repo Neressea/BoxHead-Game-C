@@ -343,7 +343,9 @@ void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 		else if(*f == 3){
 			pattack[1]->y = screen_h / 2 - PXH_H / 2;
 		}
-
+		else if(*f == 6){
+			pattack[2]->x = screen_w / 2 - PXH_W / 2;
+		}
 	}
 
 	
@@ -364,6 +366,13 @@ void blit_attack(SDL_Rect *pattack[], SDL_Renderer *rendu, SDL_Texture *tableau[
 		SDL_RenderPresent(rendu);
 		pattack[1]->y -= SPEED;
 	}
+
+	if(pattack[2]->x > 0){
+		SDL_RenderCopy(rendu, tableau[0], NULL, pattack[2]);
+		SDL_RenderPresent(rendu);
+		pattack[2]->x -= SPEED;
+	}
+
 }
 
 void init_attack(SDL_Rect *pattack[]){
@@ -380,6 +389,8 @@ void init_attack(SDL_Rect *pattack[]){
 	pattack[0]->y = screen_h;
 	pattack[1]->x = screen_w /2 - PXH_W / 2;
 	pattack[1]->y = 0;
+	pattack[2]->x = 0;
+	pattack[2]->y = screen_h /2 - PXH_H / 2;
 	
 
 }
