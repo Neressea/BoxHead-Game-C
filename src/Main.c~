@@ -145,17 +145,17 @@ SDL_WINDOW_RESIZABLE);
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h /2 - PXH_H / 2;
 
+
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	show(main_screen, rendu, map);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 
-	//attack_heros(pattack,&f, rendu, texture_attack, key);
-	compute_attack(pattack,  &f, key);
+	compute_attack(pattack,  &f, key);	
 	blit_attack(pattack, rendu, texture_attack);
-
-	//test_key(key, pheros);
+	
 	moveMap(map, key);	
+	
 
 	//We manage the FPS
 	
@@ -337,7 +337,7 @@ int text_move(int *trame){
 void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
 	if(key[4]){
-		if (*f == 0 && pattack[0]->y <= screen_h){
+		if (*f == 0 && pattack[0]->y >= screen_h){
 			pattack[0]->y = screen_h / 2 - PXH_H / 2;
 		}
 		else if(*f == 3){
