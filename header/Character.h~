@@ -20,7 +20,7 @@ typedef struct{
 	int level; //?
 	int xp;
 	int pos_x, pos_y;
-	Spell* spell;
+	Weapon* weapon;
 }Character;
 
 typedef struct ListChar ListChar;

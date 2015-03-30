@@ -21,7 +21,7 @@
 #	rm -fr ${EXEC}
 
 # Création de l'exécutable 'Light'
-all: create Map.o Building.o Character.o Game.o Spell.o Main.o
+all: create Map.o Building.o Character.o Game.o Weapon.o Main.o
 	gcc -Wall -Werror -Wextra ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
 
  
@@ -45,8 +45,8 @@ Character.o: ./src/Character.c ./header/*.h
 Game.o: ./src/Game.c ./header/*.h
 	gcc -Wall -c ./src/Game.c -o ./bin/Game.o  -lSDL2-2.0 -lSDL2_image
 
-Spell.o: ./src/Spell.c ./header/*.h
-	gcc -Wall -c ./src/Spell.c -o ./bin/Spell.o -lSDL2-2.0 -lSDL2_image
+Weapon.o: ./src/Weapon.c ./header/*.h
+	gcc -Wall -c ./src/Weapon.c -o ./bin/Weapon.o -lSDL2-2.0 -lSDL2_image
  
 # Suppression des fichiers temporaires
 clean:

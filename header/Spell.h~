@@ -1,5 +1,5 @@
-#ifndef weapon_h
-#define weapon_h
+#ifndef spell_h
+#define spell_h
 
 
 /**
