@@ -144,7 +144,7 @@ SDL_WINDOW_RESIZABLE);
 
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h /2 - PXH_H / 2;
-
+	
 
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	show(main_screen, rendu, map);
@@ -153,6 +153,7 @@ SDL_WINDOW_RESIZABLE);
 	
 	moveMap(map, key);
 
+	pattack[0]->x = screen_w /2 - PXH_W / 2;
 	compute_attack(pattack,  &f, key);	
 	blit_attack(pattack, rendu, texture_attack);	
 	
