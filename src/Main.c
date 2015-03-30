@@ -35,7 +35,7 @@ void managing_event(){
 	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
-	SDL_Rect *pattack = NULL;
+	SDL_Rect *pattack[NB_SPRITES_A] = {NULL};
 	Map *map = malloc(sizeof(Map));
 	
 	int quit = 0;
@@ -73,12 +73,8 @@ SDL_WINDOW_RESIZABLE);
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h / 2 - PXH_H / 2;
 
-	pattack = malloc(sizeof(SDL_Rect));
 	
-	pattack->h = PXH_H;
-	pattack->w = PXH_W;
-	pattack->x = screen_w /2- PXH_W / 2;
-	pattack->y = screen_h / 2 - PXH_H / 2;
+	init_attack(pattack);	
 
 	SDL_Event event;
 		
@@ -154,7 +150,9 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 
-	attack_heros(pattack,&f, rendu, texture_attack, key);
+	//attack_heros(pattack,&f, rendu, texture_attack, key);
+	compute_attack(pattack,  &f, key);
+	blit_attack(pattack, rendu, texture_attack);
 
 	//test_key(key, pheros);
 	moveMap(map, key);	
@@ -336,22 +334,55 @@ int text_move(int *trame){
 
 }
 
-void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *tableau[], int key[]){
+void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
-	if (key[4]){
-		pattack->y = screen_h / 2 - PXH_H / 2;
-		printf("Remise zéro\n");
-	}
+	if(key[4]){
+		if (*f == 0){
+			pattack[0]->y = screen_h / 2 - PXH_H / 2;
+		}
+		else if(*f == 3){
+			pattack[1]->y = screen_h / 2 - PXH_H / 2;
+		}
 
-	if(pattack->y < screen_h){
-		SDL_RenderCopy(rendu, tableau[*f], NULL, pattack);
-		SDL_RenderPresent(rendu);
-		pattack->y += SPEED;
 	}
 
 	
 	
 
 }
+
+void blit_attack(SDL_Rect *pattack[], SDL_Renderer *rendu, SDL_Texture *tableau[]){
+	
+	if(pattack[0]->y < screen_h){
+		SDL_RenderCopy(rendu, tableau[0], NULL, pattack[0]);
+		SDL_RenderPresent(rendu);
+		pattack[0]->y += SPEED;
+	}
+
+	if(pattack[1]->y > 0){
+		SDL_RenderCopy(rendu, tableau[0], NULL, pattack[1]);
+		SDL_RenderPresent(rendu);
+		pattack[1]->y -= SPEED;
+	}
+}
+
+void init_attack(SDL_Rect *pattack[]){
+	int i;
+
+	for (i=0; i < NB_SPRITES_A ;i++){
+		pattack[i] = malloc(sizeof(SDL_Rect));
+
+		pattack[i]->h = PXH_H;
+		pattack[i]->w = PXH_W;
+	}
+	
+	pattack[0]->x = screen_w /2 - PXH_W / 2;
+	pattack[0]->y = screen_h;
+	pattack[1]->x = screen_w /2 - PXH_W / 2;
+	pattack[1]->y = 0;
+	
+
+}
+
 
 
