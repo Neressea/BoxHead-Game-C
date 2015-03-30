@@ -340,7 +340,6 @@ void attack_heros(SDL_Rect *pattack,int *f, SDL_Renderer *rendu, SDL_Texture *ta
 
 	if (key[4]){
 		pattack->y = screen_h / 2 - PXH_H / 2;
-		printf("Remise zéro\n");
 	}
 
 	if(pattack->y < screen_h){
