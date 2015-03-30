@@ -337,7 +337,7 @@ int text_move(int *trame){
 void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
 	if(key[4]){
-		if (*f == 0){
+		if (*f == 0 && pattack[0]->y >= screen_h){
 			pattack[0]->y = screen_h / 2 - PXH_H / 2;
 		}
 		else if(*f == 3){
