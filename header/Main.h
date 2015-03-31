@@ -1,18 +1,11 @@
 #ifndef main_h 
 
-#define main_h
-#define SPEED 4
-#define SPEED_TRAME 15
-#define SCREEN_W 640
-#define SCREEN_H 480
-#define PX_H 50
-#define PX_W 50
-#define PXH_H 100
-#define PXH_W 70
-#define NB_SPRITES_H 24
-#define NB_SPRITES_A 9
-#define FPS 10
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Map.h"
+#include "Globals.h"
 
 int main();
 void managing_event();

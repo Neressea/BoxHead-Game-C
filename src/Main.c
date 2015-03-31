@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include "../header/Main.h"
 
 int screen_h = SCREEN_H;

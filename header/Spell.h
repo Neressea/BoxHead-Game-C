@@ -1,12 +1,10 @@
 #ifndef spell_h
 #define spell_h
 
-#define NB_SPRITES_A 9
-#define PXH_H 100
-#define PXH_W 70
-#define SPEED 4
-#define SCREEN_W 640
-#define SCREEN_H 480
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#include "Globals.h"
 
 
 /**

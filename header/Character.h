@@ -1,8 +1,12 @@
 #ifndef char_h
 #define char_h
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
 #include "Spell.h"
 #include "Building.h"
+#include "Globals.h"
 
 /**
 * This struct defines what a character is, for the main char and ennemies.

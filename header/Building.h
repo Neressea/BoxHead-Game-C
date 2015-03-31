@@ -1,7 +1,10 @@
 #ifndef building_h
 #define building_h
 
-//#include "Character.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#include "Globals.h"
 
 /**
 * Struct that defines the buildings of the map.
@@ -24,7 +27,5 @@ struct ListBuilding{
 };
 
 Building* createBuilding(int x, int y, int hp, int attack, int defense);
-
-//void attackFromBuildToChar(Building b, Character p);
 
 #endif

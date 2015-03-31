@@ -10,9 +10,7 @@
 #include "Building.h"
 #include "Character.h"
 #include "Main.h"
-
-#define NB_TEXTS_MAP 2
-#define NB_SPRITES_BLITTED 2
+#include "Globals.h"
 
 /**
 * Defines what the map is.

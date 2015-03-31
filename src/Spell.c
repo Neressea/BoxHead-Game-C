@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL2/SDL.h>
-
 #include "../header/Spell.h"
 
 int screen_h1 = SCREEN_H;
