@@ -31,7 +31,6 @@ void managing_event(){
 	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
-	SDL_Rect *pattack[NB_SPRITES_A] = {NULL};
 	Map *map = malloc(sizeof(Map));
 	
 	int quit = 0;
@@ -281,6 +280,7 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
+		printf("%d", text_move(trame));
 		return tableau[0 + text_move(trame)];
 	}
 		
@@ -302,7 +302,7 @@ void compute_tram(int *j, int *trame){
 		*j = 0;
 	}
 
-	*trame = *j % SPEED_TRAME;
+	*trame = (*j /SPEED_TRAME) % 4;
 
 }
 

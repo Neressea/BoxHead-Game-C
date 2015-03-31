@@ -301,7 +301,7 @@ void compute_tram(int *j, int *trame){
 		*j = 0;
 	}
 
-	*trame = *j % SPEED_TRAME;
+	*trame = (*j /SPEED_TRAME) % 4;
 
 }
 
