@@ -1,5 +1,5 @@
 #ifndef main_h 
-#include "Map.h"
+
 #define main_h
 #define SPEED 4
 #define SPEED_TRAME 15
@@ -12,6 +12,7 @@
 #define NB_SPRITES_H 24
 #define NB_SPRITES_A 9
 #define FPS 10
+#include "Map.h"
 
 int main();
 void managing_event();

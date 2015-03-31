@@ -1,8 +1,14 @@
 #ifndef spell_h
 #define spell_h
 
-#include "Main.h"
-#include "Character.h"
+#define NB_SPRITES_A 9
+#define PXH_H 100
+#define PXH_W 70
+#define SPEED 4
+#define SCREEN_W 640
+#define SCREEN_H 480
+
+
 /**
 * Defines what a spell is.
 * attack : points of attack
@@ -14,5 +20,10 @@ typedef struct{
 	int ammo;
 	int rate; //?
 }Spell;
+
+void compute_attack(SDL_Rect *pattack[],int *f, int key[]);
+void blit_attack(SDL_Rect *pattack[], SDL_Renderer *rendu, SDL_Texture *tableau[]);
+void init_attack(SDL_Rect *pattack[]);
+
 
 #endif

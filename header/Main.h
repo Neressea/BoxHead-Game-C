@@ -23,8 +23,5 @@ void destroy_texture(int taille, SDL_Texture *tableau[]);
 SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f);
 void compute_tram(int *j, int *trame);
 int text_move(int *trame);
-void compute_attack(SDL_Rect *pattack[],int *f, int key[]);
-void blit_attack(SDL_Rect *pattack[], SDL_Renderer *rendu, SDL_Texture *tableau[]);
-void init_attack(SDL_Rect *pattack[]);
 
 #endif
