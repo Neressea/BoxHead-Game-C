@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include "../header/Main.h"
 
-//int screen_h = SCREEN_H;
-//int screen_w = SCREEN_W;
+int screen_h = SCREEN_H;
+int screen_w = SCREEN_W;
 
 int main(){
 
@@ -72,9 +68,7 @@ SDL_WINDOW_RESIZABLE);
 	pheros->w = PXH_W;
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h / 2 - PXH_H / 2;
-
 	
-	init_attack(pattack);	
 
 	SDL_Event event;
 		
@@ -152,10 +146,6 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderPresent(rendu);
 	
 	moveMap(map, key);
-
-	compute_attack(pattack,  &f, key);	
-	blit_attack(pattack, rendu, texture_attack);	
-	
 
 	//We manage the FPS
 	

@@ -31,7 +31,6 @@ void managing_event(){
 	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
-	SDL_Rect *pattack[NB_SPRITES_A] = {NULL};
 	Map *map = malloc(sizeof(Map));
 	
 	int quit = 0;
@@ -68,9 +67,7 @@ SDL_WINDOW_RESIZABLE);
 	pheros->w = PXH_W;
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h / 2 - PXH_H / 2;
-
 	
-	init_attack(pattack);	
 
 	SDL_Event event;
 		
@@ -148,10 +145,6 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderPresent(rendu);
 	
 	moveMap(map, key);
-
-	compute_attack(pattack,  &f, key);	
-	blit_attack(pattack, rendu, texture_attack);	
-	
 
 	//We manage the FPS
 	
