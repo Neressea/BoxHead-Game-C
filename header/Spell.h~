@@ -1,9 +1,10 @@
 #ifndef spell_h
 #define spell_h
 
+#include "Main.h"
 
 /**
-* Defines what a weapon is.
+* Defines what a spell is.
 * attack : points of attack
 * ammo : number of ammo left
 * rate : rate of fire if a gun, -1 else.
@@ -12,6 +13,6 @@ typedef struct{
 	int attack;
 	int ammo;
 	int rate; //?
-}Weapon;
+}Spell;
 
 #endif

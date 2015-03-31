@@ -1,7 +1,8 @@
 #ifndef spell_h
 #define spell_h
 
-
+#include "Main.h"
+#include "Character.h"
 /**
 * Defines what a spell is.
 * attack : points of attack
