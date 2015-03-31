@@ -4,7 +4,7 @@
 	//Globals for the main
 	#define main_h
 	#define SPEED 4
-	#define SPEED_TRAME 4
+	#define SPEED_TRAME 8
 	#define SCREEN_W 640
 	#define SCREEN_H 480
 	#define PX_H 50

@@ -20,11 +20,5 @@
 	#define NB_SPRITES_BLITTED 2
 
 	//Globals for the spell
-	#define NB_SPRITES_A 9
-	#define PXH_H 100
-	#define PXH_W 70
-	#define SPEED 4
-	#define SCREEN_W 640
-	#define SCREEN_H 480
 
 #endif
