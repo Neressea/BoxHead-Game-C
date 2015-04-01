@@ -1,24 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL2/SDL.h>
-
 #include "../header/Spell.h"
 
-int screen_h = SCREEN_H;
-int screen_w = SCREEN_W;
+int screen_h1 = SCREEN_H;
+int screen_w1 = SCREEN_W;
 
 
-void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
+/*void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
 	if(key[4]){
-		if (*f == 0 && pattack[0]->y >= screen_h){
-			pattack[0]->y = screen_h / 2 - PXH_H / 2;
+		if (*f == 0 && pattack[0]->y >= screen_h1){
+			pattack[0]->y = screen_h1 / 2 - PXH_H / 2;
 		}
 		else if(*f == 3){
-			pattack[1]->y = screen_h / 2 - PXH_H / 2;
+			pattack[1]->y = screen_h1 / 2 - PXH_H / 2;
 		}
 		else if(*f == 6){
-			pattack[2]->x = screen_w / 2 - PXH_W / 2;
+			pattack[2]->x = screen_w1 / 2 - PXH_W / 2;
 		}
 	}
 
@@ -29,7 +25,7 @@ void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
 void blit_attack(SDL_Rect *pattack[], SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	
-	if(pattack[0]->y < screen_h){
+	if(pattack[0]->y < screen_h1){
 		SDL_RenderCopy(rendu, tableau[0], NULL, pattack[0]);
 		SDL_RenderPresent(rendu);
 		pattack[0]->y += SPEED;
@@ -59,13 +55,27 @@ void init_attack(SDL_Rect *pattack[]){
 		pattack[i]->w = PXH_W;
 	}
 	
-	pattack[0]->x = screen_w /2 - PXH_W / 2;
-	pattack[0]->y = screen_h;
-	pattack[1]->x = screen_w /2 - PXH_W / 2;
+	pattack[0]->x = screen_w1 /2 - PXH_W / 2;
+	pattack[0]->y = screen_h1;
+	pattack[1]->x = screen_w1 /2 - PXH_W / 2;
 	pattack[1]->y = 0;
 	pattack[2]->x = 0;
-	pattack[2]->y = screen_h /2 - PXH_H / 2;
+	pattack[2]->y = screen_h1 /2 - PXH_H / 2;
 	
+
+}*/
+
+Spell* createSpell(TypeSpell *type, int direction, int x, int y){
+	Spell *c = malloc(sizeof(Spell));
+	c->type = type;
+	c->direction = direction;
+	c->*pspell = malloc(sizeof(SDL_Rect));
+	c->pspell->h = PX_H;
+	c->pspell->w = PX_W;
+	c->pspell->x = x;
+	c->pspell->y = y;
+
+	return c;
 
 }
 

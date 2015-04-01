@@ -4,7 +4,7 @@ int screen_h1 = SCREEN_H;
 int screen_w1 = SCREEN_W;
 
 
-void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
+/*void compute_attack(SDL_Rect *pattack[], int *f, int key[]){
 
 	if(key[4]){
 		if (*f == 0 && pattack[0]->y >= screen_h1){
@@ -62,6 +62,20 @@ void init_attack(SDL_Rect *pattack[]){
 	pattack[2]->x = 0;
 	pattack[2]->y = screen_h1 /2 - PXH_H / 2;
 	
+
+}*/
+
+Spell* createSpell(TypeSpell *type, int direction, int x, int y){
+	Spell *c = malloc(sizeof(Spell));
+	c->type = type;
+	c->direction = direction;
+	c->pspell = malloc(sizeof(SDL_Rect));
+	c->pspell->h = PX_H;
+	c->pspell->w = PX_W;
+	c->pspell->x = x;
+	c->pspell->y = y;
+
+	return c;
 
 }
 
