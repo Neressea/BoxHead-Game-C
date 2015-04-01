@@ -34,5 +34,6 @@ struct ListSpell{
 };
 
 Spell* createSpell(TypeSpell *type, int direction, int x, int y);
+void updateSpell(ListSpell current_list);
 
 #endif

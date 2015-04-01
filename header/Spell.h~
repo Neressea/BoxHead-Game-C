@@ -33,6 +33,7 @@ struct ListSpell{
 	struct ListSpell* nextSpell;
 };
 
-Spell* createSpell(TypeSpell *type, int time, int direction, int x, int y);
+Spell* createSpell(TypeSpell *type, int direction, int x, int y);
+void updateSpell();
 
 #endif

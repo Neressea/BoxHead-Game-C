@@ -69,7 +69,7 @@ Spell* createSpell(TypeSpell *type, int direction, int x, int y){
 	Spell *c = malloc(sizeof(Spell));
 	c->type = type;
 	c->direction = direction;
-	c->*pspell = malloc(sizeof(SDL_Rect));
+	c->pspell = malloc(sizeof(SDL_Rect));
 	c->pspell->h = PX_H;
 	c->pspell->w = PX_W;
 	c->pspell->x = x;
@@ -77,6 +77,12 @@ Spell* createSpell(TypeSpell *type, int direction, int x, int y){
 
 	return c;
 
+}
+
+void updateSpell(ListSpell current_list){
+	while(current_list->currentSpell != NULL){
+
+	}
 }
 
 
