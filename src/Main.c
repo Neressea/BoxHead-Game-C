@@ -129,7 +129,7 @@ SDL_WINDOW_RESIZABLE);
 								
 			}
 
-	
+	printf("%d\n",key[4]);
 
 	SDL_RenderClear(rendu);
 	
@@ -147,7 +147,7 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 	
-	lanceattack(liste_spell, f, bouledefeu, key);
+	lanceattack(liste_spell, &f, bouledefeu, key);
 	updateSpell(liste_spell);
 	Blit_attack(liste_spell,rendu, texture_attack);
 

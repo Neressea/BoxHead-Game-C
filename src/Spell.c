@@ -65,10 +65,10 @@ void init_attack(SDL_Rect *pattack[]){
 
 }*/
 
-Spell* createSpell(TypeSpell *type, int direction, int x, int y){
+Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	Spell *c = (Spell*) malloc(sizeof(Spell));
 	c->type = type;
-	c->direction = direction;
+	c->direction = *direction;
 	c->time = SDL_GetTicks();
 	c->pspell = malloc(sizeof(SDL_Rect));
 	c->pspell->h = 100;
@@ -140,7 +140,7 @@ void deleteSpell(ListSpell *current_list){
 	}
 }
 
-void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]){
+void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
 	
 	ListSpell *cursor = current_list->nextSpell;	
 	ListSpell *cursor_type = NULL;
