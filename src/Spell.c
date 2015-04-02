@@ -136,4 +136,20 @@ TypeSpell *init_typeSpell(int attack, int ammo, int rate){
 	return t;
 }
 
+void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]){
+        
+        ListSpell *cursor = current_list->nextSpell;
+	
+	while(cursor != NULL){
+		
+                SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction], NULL, cursor->currentSpell->pspell);
+		SDL_RenderPresent(rendu);
+		
+		cursor = cursor->nextSpell;		
+
+	}
+
+
+}
+
 

@@ -126,4 +126,30 @@ void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int ke
 	}
 }
 
+TypeSpell *init_typeSpell(int attack, int ammo, int rate){
+	TypeSpell *t= malloc(sizeof(TypeSpell));
+
+	t->attack = attack;
+	t->ammo = ammo;
+	t->rate = rate;
+
+	return t;
+}
+
+void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]){
+        
+        ListSpell *cursor = current_list->nextSpell;
+	
+	while(cursor != NULL){
+		
+                SDL_RenderCopy(rendu, tableau[0], NULL, pattack[2]);
+		SDL_RenderPresent(rendu);
+		
+		cursor = cursor->nextSpell;		
+
+	}
+
+
+}
+
 
