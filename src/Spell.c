@@ -118,6 +118,7 @@ void deleteSpell(ListSpell *current_list){
 void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]){
 	
 	ListSpell *cursor = current_list->nextSpell;	
+	ListSpell *cursor_type = NULL;
 
 	if (key[4]){
 		
@@ -132,9 +133,17 @@ void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int ke
 			
 			while(cursor->nextSpell != NULL){
 				cursor = cursor->nextSpell;
+				if(cursor->currentSpell->type == current_type){
+					cursor_type = cursor;
+				}
 			}
+			
+			if (cursor_type != NULL && SDL_GetTicks() - cursor_type->currentSpell->time < current_type-> rate){
 
-			cursor->nextSpell = newlist;
+			}else{
+				cursor->nextSpell = newlist;
+			}  
+
 		}		
 	}
 }

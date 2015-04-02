@@ -118,6 +118,7 @@ void deleteSpell(ListSpell *current_list){
 void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]){
 	
 	ListSpell *cursor = current_list->nextSpell;	
+	ListSpell *cursor_type = NULL;
 
 	if (key[4]){
 		
@@ -127,14 +128,16 @@ void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int ke
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
-			printf("OK1");
 		}
 		else{
 			
 			while(cursor->nextSpell != NULL){
 				cursor = cursor->nextSpell;
+				if(cursor->currentSpell->type == current_type){
+					cursor_type = cursor;
+				}
 			}
-			printf("OK2");
+
 			cursor->nextSpell = newlist;
 		}		
 	}
