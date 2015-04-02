@@ -93,8 +93,9 @@ void updateSpell(ListSpell *current_list){
 		current_direction = cursor->currentSpell->direction;		
 
 		if (current_direction == 0){
-			cursor->currentSpell->pspell->y ++;
+			cursor->currentSpell->pspell->y += SPEED;
 		}
+		cursor = cursor->nextSpell;
 	}
 }
 
@@ -120,7 +121,7 @@ void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int ke
 		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
 		ListSpell * newlist = malloc(sizeof(ListSpell));
 		newlist->currentSpell = new;
-		newlist->nextSpell = NULL;
+		newlist->nextSpell = NULL; // Ici, il faut mettre le new sort A LA FIN DE LA FUCK*** LIST
 		current_list->nextSpell = newlist;
 
 	}
@@ -142,7 +143,7 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	
 	while(cursor != NULL){
 		
-                SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction], NULL, cursor->currentSpell->pspell);
+                SDL_RenderCopy(rendu, tableau[0], NULL, cursor->currentSpell->pspell);
 		SDL_RenderPresent(rendu);
 		
 		cursor = cursor->nextSpell;		
@@ -150,6 +151,14 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	}
 
 
+}
+
+ListSpell *init_listspell(){
+	ListSpell *list = malloc(sizeof(ListSpell));	
+	list->currentSpell = NULL;
+	list->nextSpell = NULL;
+
+	return list;
 }
 
 

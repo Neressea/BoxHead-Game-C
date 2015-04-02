@@ -32,6 +32,9 @@ void managing_event(){
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
 	Map *map = malloc(sizeof(Map));
+	ListSpell *liste_spell = init_listspell();
+	TypeSpell *bouledefeu = init_typeSpell(100,200,3);
+
 	
 	int quit = 0;
 	int key[5] = {0};
@@ -144,6 +147,12 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 	
+	lanceattack(liste_spell, f, bouledefeu, key);
+	updateSpell(liste_spell);
+	//Blit_attack(liste_spell,rendu, texture_attack);
+
+
+
 	moveMap(map, key);
 
 	//We manage the FPS
