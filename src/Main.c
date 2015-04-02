@@ -78,7 +78,7 @@ SDL_WINDOW_RESIZABLE);
 	
 	while(quit == 0){
 
-		SDL_PollEvent(&event);
+		SDL_PollEvent(&event)
 			switch(event.type){
 				case SDL_QUIT:
 					quit = 1;
@@ -126,10 +126,9 @@ SDL_WINDOW_RESIZABLE);
 						break;
 						}
 				break;
-								
+							
 			}
 
-	printf("%d\n",key[4]);
 
 	SDL_RenderClear(rendu);
 	
