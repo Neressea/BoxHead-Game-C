@@ -252,7 +252,7 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 }
 
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/tower.png");
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/attck0_fireball.png");
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
