@@ -280,7 +280,6 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
-		printf("%d", text_move(trame));
 		return tableau[0 + text_move(trame)];
 	}
 		

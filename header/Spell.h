@@ -24,7 +24,7 @@ typedef struct{
 	int direction;
 	int time;	
 	TypeSpell *type;
-	SDL_Rect *pspell; //?
+	SDL_Rect *pspell;
 }Spell;
 
 typedef struct ListSpell ListSpell;
@@ -35,5 +35,8 @@ struct ListSpell{
 
 Spell* createSpell(TypeSpell *type, int direction, int x, int y);
 void updateSpell(ListSpell *current_list);
+void deleteSpell(ListSpell *current_list);
+void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]);
+TypeSpell *init_typeSpell(int attack, int ammo, int rate);
 
 #endif

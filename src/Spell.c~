@@ -66,9 +66,10 @@ void init_attack(SDL_Rect *pattack[]){
 }*/
 
 Spell* createSpell(TypeSpell *type, int direction, int x, int y){
-	Spell *c = malloc(sizeof(Spell));
+	Spell *c = (Spell*) malloc(sizeof(Spell));
 	c->type = type;
 	c->direction = direction;
+	c->time = SDL_GetTicks();
 	c->pspell = malloc(sizeof(SDL_Rect));
 	c->pspell->h = PX_H;
 	c->pspell->w = PX_W;
@@ -81,10 +82,48 @@ Spell* createSpell(TypeSpell *type, int direction, int x, int y){
 
 void updateSpell(ListSpell *current_list){
 	
-	while(current_list->nextSpell != NULL){
-		
+	deleteSpell(current_list);
+
+	ListSpell *cursor = current_list->nextSpell;
+
+	int current_direction = 0;
+
+	while(cursor != NULL){
+
+		current_direction = cursor->currentSpell->direction;		
+
+		if (current_direction == 0){
+			cursor->currentSpell->pspell->y ++;
+		}
 	}
 }
 
+void deleteSpell(ListSpell *current_list){
+	
+	ListSpell *cursor = current_list->nextSpell;
+	
+	while(cursor != NULL){
+		if (SDL_GetTicks() - cursor->currentSpell->time > LIFEEXPANC){
+			current_list->nextSpell = cursor->nextSpell;
+			free(cursor);
+			cursor = current_list;
+		}
+		
+		cursor = cursor->nextSpell;		
+
+	}
+}
+
+void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]){
+	if (key[4]){
+		
+		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
+		ListSpell * newlist = malloc(sizeof(ListSpell));
+		newlist->currentSpell = new;
+		newlist->nextSpell = NULL;
+		current_list->nextSpell = newlist;
+
+	}
+}
 
 

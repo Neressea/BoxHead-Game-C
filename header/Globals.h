@@ -20,5 +20,6 @@
 	#define NB_SPRITES_BLITTED 2
 
 	//Globals for the spell
+	#define LIFEEXPANC 4
 
 #endif

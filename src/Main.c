@@ -33,6 +33,7 @@ void managing_event(){
 	SDL_Rect *pheros = NULL;
 	Map *map = malloc(sizeof(Map));
 	
+	
 	int quit = 0;
 	int key[5] = {0};
 	int j = 0;
