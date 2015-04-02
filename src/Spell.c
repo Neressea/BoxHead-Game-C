@@ -95,6 +95,9 @@ void updateSpell(ListSpell *current_list){
 		if (current_direction == 0){
 			cursor->currentSpell->pspell->y += SPEED;
 		}
+		if (current_direction == 3){
+			cursor->currentSpell->pspell->y -= SPEED;
+		}
 		cursor = cursor->nextSpell;
 	}
 }
