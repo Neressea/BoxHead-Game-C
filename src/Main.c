@@ -151,8 +151,7 @@ SDL_WINDOW_RESIZABLE);
 	updateSpell(liste_spell);
 	Blit_attack(liste_spell,rendu, texture_attack);
 
-
-
+	
 	moveMap(map, key);
 
 	//We manage the FPS
@@ -253,6 +252,14 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/attck0_fireball.png");
+	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/attck1_fireball.png");
+	tableau[2] = IMG_LoadTexture(rendu, "./images/sprites/attck2_fireball.png");
+	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/attck3_fireball.png");
+	tableau[4] = IMG_LoadTexture(rendu, "./images/sprites/attck4_fireball.png");
+	tableau[5] = IMG_LoadTexture(rendu, "./images/sprites/attck5_fireball.png");
+	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/attck6_fireball.png");
+	tableau[7] = IMG_LoadTexture(rendu, "./images/sprites/attck7_fireball.png");
+
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){

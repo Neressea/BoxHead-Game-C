@@ -98,6 +98,28 @@ void updateSpell(ListSpell *current_list){
 		if (current_direction == 3){
 			cursor->currentSpell->pspell->y -= SPEED;
 		}
+		if (current_direction == 6){
+			cursor->currentSpell->pspell->x -= SPEED;
+		}
+		if (current_direction == 9){
+			cursor->currentSpell->pspell->x += SPEED;
+		}
+		if (current_direction == 12){
+			cursor->currentSpell->pspell->y += SPEED;
+			cursor->currentSpell->pspell->x += SPEED;
+		}
+		if (current_direction == 15){
+			cursor->currentSpell->pspell->y += SPEED;
+			cursor->currentSpell->pspell->x -= SPEED;
+		}
+		if (current_direction == 18){
+			cursor->currentSpell->pspell->y -= SPEED;
+			cursor->currentSpell->pspell->x += SPEED;
+		}
+		if (current_direction == 21){
+			cursor->currentSpell->pspell->y -= SPEED;
+			cursor->currentSpell->pspell->x -= SPEED;
+		}
 		cursor = cursor->nextSpell;
 	}
 }
@@ -167,7 +189,7 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	
 	while(cursor != NULL){
 		
-                SDL_RenderCopy(rendu, tableau[0], NULL, cursor->currentSpell->pspell);
+                SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
 		SDL_RenderPresent(rendu);
 		
 		cursor = cursor->nextSpell;		

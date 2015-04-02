@@ -12,7 +12,7 @@
 	#define PXH_H 100
 	#define PXH_W 70
 	#define NB_SPRITES_H 24
-	#define NB_SPRITES_A 9
+	#define NB_SPRITES_A 8
 	#define FPS 10
 
 	//GLobals for the map
