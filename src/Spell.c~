@@ -116,14 +116,27 @@ void deleteSpell(ListSpell *current_list){
 }
 
 void lanceattack(ListSpell *current_list, int f, TypeSpell *current_type, int key[]){
+	
+	ListSpell *cursor = current_list->nextSpell;	
+
 	if (key[4]){
 		
 		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
 		ListSpell * newlist = malloc(sizeof(ListSpell));
 		newlist->currentSpell = new;
-		newlist->nextSpell = NULL;
-		current_list->nextSpell = newlist;
-
+		newlist->nextSpell = NULL; 
+		if (cursor == NULL){
+			current_list->nextSpell = newlist;
+			printf("OK1");
+		}
+		else{
+			
+			while(cursor->nextSpell != NULL){
+				cursor = cursor->nextSpell;
+			}
+			printf("OK2");
+			cursor->nextSpell = newlist;
+		}		
 	}
 }
 
