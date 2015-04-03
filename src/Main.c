@@ -34,6 +34,7 @@ void managing_event(){
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
 	TypeSpell *bouledefeu = init_typeSpell(100,200,500);
+	TypeSpell *current_type = bouledefeu;
 
 	
 	int quit = 0;
@@ -78,7 +79,7 @@ SDL_WINDOW_RESIZABLE);
 	
 	while(quit == 0){
 
-		SDL_PollEvent(&event)
+		SDL_PollEvent(&event);
 			switch(event.type){
 				case SDL_QUIT:
 					quit = 1;
@@ -146,7 +147,7 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 	
-	lanceattack(liste_spell, &f, bouledefeu, key);
+	lanceattack(liste_spell, &f, current_type, key);
 	updateSpell(liste_spell);
 	Blit_attack(liste_spell,rendu, texture_attack);
 
