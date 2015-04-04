@@ -69,5 +69,12 @@ void save(Map* m);
 */
 void moveMap(Map* map, int key[]);
 
+void addWall(Map *map, int x, int y);
+
+/**
+* Encircle a map whose size are defined
+*/
+void encircleMap(Map* map);
+
 #endif
 

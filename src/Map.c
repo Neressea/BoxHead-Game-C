@@ -66,36 +66,31 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 
 	//Then we read the other lines that represents each "line" of the map
 	int x=0, y=0;
-	Building* b;
-	ListBuilding* lb;
 	while(fgets(line, 100, file) != NULL){
 		line[strlen(line)] = '\0';
 		int i=0;
 		x=0;
 
+		//We add a wall at the first column
+		addWall(map, -1, y);
+
 		while(line[i] != '\0'){
-
 			if(line[i] == '1'){
-				lb = malloc(sizeof(ListBuilding));
-
-				//We add the new building to the list
-				b = createBuilding(x * PX_W, y * PX_H,-1, -1, -1);
-
-				lb->current = b;
-
-				//We change the head of the list
-				lb->next = map->buildings;
-				map->buildings = lb;
+				addWall(map, x, y);
 			}
 			i++;
 			x++;
 		}
 
+		//We add a wall at the last column
+		addWall(map, x-1, y);
 		y++;
 	}
 
-	map->width=PX_W * x;
-	map->height=PX_H * y;
+	map->width=PX_W * (x-1);
+	map->height=PX_H * (y-1);
+
+	encircleMap(map);
 
 	//We set the left up corner of the map
 	map->corner->x = (int) (map->width / 2 - SCREEN_W/2);
@@ -222,8 +217,8 @@ int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 		}
 
 		//If we are after the position of the case, it is not a building
-		if(b->current->x < pos->x && b->current->y < pos->y)
-			break;
+		//if(b->current->x < pos->x && b->current->y < pos->y)
+		//	break;
 
 		b = b->next;
 	}
@@ -275,6 +270,20 @@ void addWall(Map *map, int x, int y){
 	lb->current=b;
 	lb->next = map->buildings;
 	map->buildings = lb;
+}
+
+void encircleMap(Map* map){
+
+	int i;
+	for (i = -1; i <= map->height/PX_H+1; ++i){
+		addWall(map, -1, i);
+		addWall(map, map->width/PX_W, i);
+	}
+
+	for (i = -1; i < map->width/PX_W; ++i){
+		addWall(map, i, -1);
+		addWall(map, i, map->height/PX_H+1);
+	}
 }
 
 
