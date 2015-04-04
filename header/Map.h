@@ -76,5 +76,7 @@ void addWall(Map *map, int x, int y);
 */
 void encircleMap(Map* map);
 
+int cantMove(ListBuilding* lb, SDL_Rect* pos);
+
 #endif
 

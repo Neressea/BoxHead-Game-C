@@ -232,6 +232,8 @@ void saveMap(Map *map){
 
 void moveMap(Map* map, int key[]){
 
+	int prev_x=map->corner->x, prev_y=map->corner->y;
+
 	if (key[0] && key[2]){
 		map->corner->y -= SPEED;
 		map->corner->x -= SPEED;
@@ -262,6 +264,37 @@ void moveMap(Map* map, int key[]){
 	if (key[3] && !key[0] && !key[1]){
 		map->corner->x += SPEED;
 	}
+
+	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
+	chara->x = map->corner->x + map->width/2 - PXH_W/2;
+	chara->y = map->corner->y + map->height/2 - PXH_H/2;
+
+	printf("%d %d\n", chara->x, chara->y);
+
+	if(cantMove(map->buildings, chara)){
+		map->corner->x=prev_x;
+		map->corner->y=prev_y;
+		printf("%d %d\n", prev_x, prev_y);
+	}
+
+}
+
+int cantMove(ListBuilding* lb, SDL_Rect* pos){
+	int is = 0;
+
+	ListBuilding* b = lb;
+
+	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
+	while(is==0 && b != NULL){
+
+		if(b->current->x >= pos->x && b->current->x<=pos->x+PX_W && b->current->y >= pos->y && b->current->y <= pos->y+PX_H){
+			is = 1;
+		}
+
+		b = b->next;
+	}
+
+	return is;
 }
 
 void addWall(Map *map, int x, int y){
