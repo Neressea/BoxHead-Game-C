@@ -142,6 +142,8 @@ SDL_WINDOW_RESIZABLE);
 	pheros->y = screen_h /2 - PXH_H / 2;
 	
 
+	
+
 	current_texture = update_heros(key, texture_heros, &trame, &f);
 	show(main_screen, rendu, map);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
@@ -149,9 +151,10 @@ SDL_WINDOW_RESIZABLE);
 	
 	lanceattack(liste_spell, &f, current_type, key);
 	updateSpell(liste_spell);
-	Blit_attack(liste_spell,rendu, texture_attack);
-
 	
+	Blit_attack(liste_spell,rendu, texture_attack);
+	
+
 	moveMap(map, key);
 
 	//We manage the FPS
