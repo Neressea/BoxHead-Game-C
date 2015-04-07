@@ -230,7 +230,7 @@ void saveMap(Map *map){
 	map->corner = NULL; //temp
 }
 
-void moveMap(Map* map, int key[]){
+void moveMap(Map* map, int key[], Move* move){
 
 	int prev_x=map->corner->x, prev_y=map->corner->y;
 
@@ -275,8 +275,10 @@ void moveMap(Map* map, int key[]){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
 		printf("%d %d\n", prev_x, prev_y);
+	}else{
+		move->x = map->corner->x - prev_x;
+		move->y = map->corner->y - prev_y;
 	}
-
 }
 
 int cantMove(ListBuilding* lb, SDL_Rect* pos){

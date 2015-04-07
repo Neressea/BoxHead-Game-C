@@ -35,6 +35,7 @@ void managing_event(){
 	ListSpell *liste_spell = init_listspell();
 	TypeSpell *bouledefeu = init_typeSpell(100,200,500);
 	TypeSpell *current_type = bouledefeu;
+	Move *move = malloc(sizeof(Move));
 
 	
 	int quit = 0;
@@ -154,8 +155,9 @@ SDL_WINDOW_RESIZABLE);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 	
-
-	moveMap(map, key);
+	move->x = 0;
+	move->y = 0;
+	moveMap(map, key, move);
 
 	//We manage the FPS
 	

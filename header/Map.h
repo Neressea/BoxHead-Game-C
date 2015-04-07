@@ -28,6 +28,10 @@ typedef struct{
 	SDL_Rect *corner;
 }Map;
 
+typedef struct {
+	int x, y;
+}Move;
+
 /**
 * Load a map from a text file.
 * rendu : the renderer for which we load a map
@@ -67,7 +71,7 @@ void save(Map* m);
 * map : the map to move
 * key : the input events
 */
-void moveMap(Map* map, int key[]);
+void moveMap(Map* map, int key[], Move* move);
 
 void addWall(Map *map, int x, int y);
 
