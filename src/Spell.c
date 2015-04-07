@@ -80,7 +80,7 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 
 }
 
-void updateSpell(ListSpell *current_list){
+void updateSpell(ListSpell *current_list, Move* move){
 	
 	deleteSpell(current_list);
 
@@ -90,7 +90,8 @@ void updateSpell(ListSpell *current_list){
 
 	while(cursor != NULL){
 
-		current_direction = cursor->currentSpell->direction;		
+		current_direction = cursor->currentSpell->direction;
+		update_blitmap(move, cursor->currentSpell->pspell);
 
 		if (current_direction == 0){
 			cursor->currentSpell->pspell->y += SPEED;
@@ -209,8 +210,8 @@ ListSpell *init_listspell(){
 }
 
 void update_blitmap (Move* move, SDL_Rect *position){
-	position->x += move ->x;
-	position->y += move ->y;
+	position->x -= move ->x;
+	position->y -= move ->y;
 
 
 }

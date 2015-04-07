@@ -90,7 +90,8 @@ void updateSpell(ListSpell *current_list, Move* move){
 
 	while(cursor != NULL){
 
-		current_direction = cursor->currentSpell->direction;		
+		current_direction = cursor->currentSpell->direction;
+		update_blitmap(move, cursor->currentSpell->pspell);
 
 		if (current_direction == 0){
 			cursor->currentSpell->pspell->y += SPEED;
