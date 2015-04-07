@@ -173,11 +173,12 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 	}
 }
 
-TypeSpell *init_typeSpell(int attack, int ammo, int rate){
+TypeSpell *init_typeSpell(int attack, int id, int rate){
 	TypeSpell *t= malloc(sizeof(TypeSpell));
 
+	t->id = id;
 	t->attack = attack;
-	t->ammo = ammo;
+	t->ammo = 20;
 	t->rate = rate;
 
 	return t;
@@ -207,4 +208,10 @@ ListSpell *init_listspell(){
 	return list;
 }
 
+void update_blitmap (Move* move, SDL_Rect *position){
+	position->x += move ->x;
+	position->y += move ->y;
+
+
+}
 

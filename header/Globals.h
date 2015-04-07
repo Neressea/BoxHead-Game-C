@@ -18,8 +18,14 @@
 	//GLobals for the map
 	#define NB_TEXTS_MAP 2
 	#define NB_SPRITES_BLITTED 2
+	
 
 	//Globals for the spell
 	#define LIFEEXPANC 10000
+
+
+	typedef struct {
+	int x, y;
+}Move;
 
 #endif

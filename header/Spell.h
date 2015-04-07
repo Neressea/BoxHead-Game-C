@@ -6,7 +6,6 @@
 #include <SDL2/SDL.h>
 #include "Globals.h"
 
-
 /**
 * Defines what a spell is.
 * attack : points of attack
@@ -18,6 +17,7 @@ typedef struct{
 	int attack;
 	int ammo;
 	int rate;
+	int id;
 }TypeSpell;
 
 typedef struct{
@@ -37,8 +37,9 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y);
 void updateSpell(ListSpell *current_list);
 void deleteSpell(ListSpell *current_list);
 void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]);
-TypeSpell *init_typeSpell(int attack, int ammo, int rate);
+TypeSpell *init_typeSpell(int attack, int id, int rate);
 void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]);
 ListSpell *init_listspell();
+void update_blitmap (Move* move, SDL_Rect *position);
 
 #endif

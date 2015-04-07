@@ -80,7 +80,7 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 
 }
 
-void updateSpell(ListSpell *current_list){
+void updateSpell(ListSpell *current_list, Move* move){
 	
 	deleteSpell(current_list);
 
@@ -173,11 +173,12 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 	}
 }
 
-TypeSpell *init_typeSpell(int attack, int ammo, int rate){
+TypeSpell *init_typeSpell(int attack, int id, int rate){
 	TypeSpell *t= malloc(sizeof(TypeSpell));
 
+	t->id = id;
 	t->attack = attack;
-	t->ammo = ammo;
+	t->ammo = 20;
 	t->rate = rate;
 
 	return t;
@@ -188,8 +189,7 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
         ListSpell *cursor = current_list->nextSpell;
 	
 	while(cursor != NULL){
-		
-		SDL_RenderClear(rendu);                
+		                
 		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
 		SDL_RenderPresent(rendu);
 		
@@ -208,4 +208,10 @@ ListSpell *init_listspell(){
 	return list;
 }
 
+void update_blitmap (Move* move, SDL_Rect *position){
+	position->x += move ->x;
+	position->y += move ->y;
+
+
+}
 

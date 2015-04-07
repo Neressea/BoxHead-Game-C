@@ -28,6 +28,9 @@ typedef struct{
 	SDL_Rect *corner;
 }Map;
 
+typedef struct {
+	int x, y;
+}Move;
 
 /**
 * Load a map from a text file.
