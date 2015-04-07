@@ -192,11 +192,13 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	while(cursor != NULL){
 		                
 		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
-		SDL_RenderPresent(rendu);
+		
 		
 		cursor = cursor->nextSpell;		
 
 	}
+
+	SDL_RenderPresent(rendu);
 
 
 }

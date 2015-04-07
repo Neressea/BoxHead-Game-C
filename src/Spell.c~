@@ -210,8 +210,8 @@ ListSpell *init_listspell(){
 }
 
 void update_blitmap (Move* move, SDL_Rect *position){
-	position->x += move ->x;
-	position->y += move ->y;
+	position->x -= move ->x;
+	position->y -= move ->y;
 
 
 }
