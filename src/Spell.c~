@@ -80,8 +80,10 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 
 }
 
-void updateSpell(ListSpell *current_list, Move* move){
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 	
+	SDL_GetWindowSize(main_screen,&screen_w1,&screen_h1);	
+
 	deleteSpell(current_list);
 
 	ListSpell *cursor = current_list->nextSpell;
@@ -192,11 +194,13 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	while(cursor != NULL){
 		                
 		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
-		SDL_RenderPresent(rendu);
+		
 		
 		cursor = cursor->nextSpell;		
 
 	}
+
+	SDL_RenderPresent(rendu);
 
 
 }
