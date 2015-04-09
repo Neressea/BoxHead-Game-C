@@ -382,7 +382,7 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 
 	for (i = 5 ; i < NB_TYP_SPELL + 5; i ++){
 		if (key[i] == 1){			
-			current_type = tab_typeSpell[i-5];
+			*current_type = tab_typeSpell[i-5];
 		}
 	}
 

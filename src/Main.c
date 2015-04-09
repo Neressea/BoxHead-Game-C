@@ -170,7 +170,7 @@ SDL_WINDOW_RESIZABLE);
 	
 	move->x = 0;
 	move->y = 0;
-	moveMap(map, key, move);
+	moveMap(main_screen, map, key, move);
 
 	updateSpell(liste_spell, move, main_screen);
 	
