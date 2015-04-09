@@ -33,13 +33,16 @@ void managing_event(){
 	SDL_Rect *pheros = NULL;
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
-	TypeSpell *bouledefeu = init_typeSpell(100,0,500,-1);
-	TypeSpell *current_type = bouledefeu;
+	
+	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
+	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
+	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
+	TypeSpell *current_type = tab_typeSpell[0];
+	
 	Move *move = malloc(sizeof(Move));
 
-	
 	int quit = 0;
-	int key[5] = {0};
+	int key[7] = {0};
 	int j = 0;
 	int f = 0;
 	int trame = 0;
@@ -105,6 +108,12 @@ SDL_WINDOW_RESIZABLE);
 						case SDLK_SPACE:
 							key[4] = 1;
 						break;
+						case SDLK_a:
+							key[5] = 1;
+						break;
+						case SDLK_z:
+							key[6] = 1;
+						break;
 						}
 				break;
 				case SDL_KEYUP:
@@ -125,6 +134,12 @@ SDL_WINDOW_RESIZABLE);
 						break;
 						case SDLK_SPACE:
 							key[4] = 0;
+						break;
+						case SDLK_a:
+							key[5] = 1;
+						break;
+						case SDLK_z:
+							key[6] = 1;
 						break;
 						}
 				break;
@@ -150,11 +165,12 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
 	SDL_RenderPresent(rendu);
 	
+	changeTypeSpell(key, tab_typeSpell,&current_type);
 	lanceattack(liste_spell, &f, current_type, key);
 	
 	move->x = 0;
 	move->y = 0;
-	moveMap(map, key, move);
+	moveMap(main_screen, map, key, move);
 
 	updateSpell(liste_spell, move, main_screen);
 	
@@ -358,6 +374,19 @@ int text_move(int *trame){
 	}
 
 	return 0;
+
+}
+
+void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type){
+	int i;
+
+	for (i = 5 ; i < NB_TYP_SPELL + 5; i ++){
+		if (key[i] == 1){			
+			*current_type = tab_typeSpell[i-5];
+		}
+	}
+
+	
 
 }
 
