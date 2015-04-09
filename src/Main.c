@@ -136,10 +136,10 @@ SDL_WINDOW_RESIZABLE);
 							key[4] = 0;
 						break;
 						case SDLK_a:
-							key[5] = 1;
+							key[5] = 0;
 						break;
 						case SDLK_z:
-							key[6] = 1;
+							key[6] = 0;
 						break;
 						}
 				break;
