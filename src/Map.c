@@ -99,8 +99,8 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	encircleMap(map);
 
 	//We set the left up corner of the map
-	map->corner->x = (int) (map->width / 2 - SCREEN_W/2);
-	map->corner->y = (int) (map->height / 2 - SCREEN_H/2);
+	map->corner->x = map->characters->current->pos_x * PX_W;
+	map->corner->y = map->characters->current->pos_y * PX_H;
 
 	fclose(file);
 }
