@@ -148,7 +148,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 	ListSpell *cursor = current_list->nextSpell;	
 	ListSpell *cursor_type = NULL;
 
-	if (key[4]){
+	if (key[4] && current_type->ammo > 0){
 		
 		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
 		ListSpell * newlist = malloc(sizeof(ListSpell));
@@ -156,6 +156,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
+			current_type->ammo --;
 		}
 		else{
 			
@@ -170,6 +171,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 
 			}else{
 				cursor->nextSpell = newlist;
+				current_type->ammo --;
 			}  
 
 		}		

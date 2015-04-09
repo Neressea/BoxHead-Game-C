@@ -156,7 +156,7 @@ SDL_WINDOW_RESIZABLE);
 	move->y = 0;
 	moveMap(map, key, move);
 
-	updateSpell(liste_spell, move);
+	updateSpell(liste_spell, move, main_screen);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 	
