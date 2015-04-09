@@ -33,7 +33,7 @@ void managing_event(){
 	SDL_Rect *pheros = NULL;
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
-	TypeSpell *bouledefeu = init_typeSpell(100,200,500);
+	TypeSpell *bouledefeu = init_typeSpell(100,0,500);
 	TypeSpell *current_type = bouledefeu;
 	Move *move = malloc(sizeof(Move));
 

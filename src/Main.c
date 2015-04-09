@@ -27,13 +27,13 @@ void managing_event(){
 
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
-	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};
+	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
-	TypeSpell *bouledefeu = init_typeSpell(100,0,500);
+	TypeSpell *bouledefeu = init_typeSpell(100,0,500,-1);
 	TypeSpell *current_type = bouledefeu;
 	Move *move = malloc(sizeof(Move));
 
@@ -255,7 +255,14 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[21] = IMG_LoadTexture(rendu, "./images/sprites/heros21.png");
 	tableau[22] = IMG_LoadTexture(rendu, "./images/sprites/heros22.png");
 	tableau[23] = IMG_LoadTexture(rendu, "./images/sprites/heros23.png");
-	
+	tableau[24] = IMG_LoadTexture(rendu, "./images/sprites/heros24.png");
+	tableau[25] = IMG_LoadTexture(rendu, "./images/sprites/heros25.png");
+	tableau[26] = IMG_LoadTexture(rendu, "./images/sprites/heros26.png");
+	tableau[27] = IMG_LoadTexture(rendu, "./images/sprites/heros27.png");
+	tableau[28] = IMG_LoadTexture(rendu, "./images/sprites/heros28.png");
+	tableau[29] = IMG_LoadTexture(rendu, "./images/sprites/heros29.png");
+	tableau[30] = IMG_LoadTexture(rendu, "./images/sprites/heros30.png");
+	tableau[31] = IMG_LoadTexture(rendu, "./images/sprites/heros31.png");
 }
 
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
@@ -281,6 +288,10 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f){
 	
+	if (key[4]){
+		return tableau[*f/3 + 24];
+	}	
+
 	if (key[0] && key[2]){
 		*f = 21;		
 		return tableau[21 + text_move(trame)];
@@ -304,7 +315,7 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 	}
 	if (key[1] && !key[3] && !key[2]){
 		*f = 0;
-		return tableau[0 + text_move(trame)];
+		return tableau[*f + text_move(trame)];
 	}
 		
 	if (key[2] && !key[0] && !key[1]){
@@ -316,7 +327,10 @@ SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f)
 		return tableau[9 + text_move(trame)];
 	}
 
-	return tableau[*f];
+	return tableau[*f];	
+	
+
+		
 
 }
 
