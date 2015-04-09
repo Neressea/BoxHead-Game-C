@@ -24,12 +24,12 @@ typedef struct{
 	int level; //?
 	int xp;
 	int pos_x, pos_y;
-	Spell* spell;
+	ListSpell* spells;
 }Character;
 
 typedef struct ListChar ListChar;
 struct ListChar{
-	Character current;
+	Character *current;
 	struct ListChar* next;
 };
 
@@ -48,5 +48,7 @@ void attackCharacter(Character p1, Character p2);
 * p attacks the building b
 */
 void attackBuilding(Character p, Building b);
+
+Character* createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, ListSpell *spell);
 
 #endif

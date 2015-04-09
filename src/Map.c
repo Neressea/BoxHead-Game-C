@@ -75,9 +75,15 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 		addWall(map, -1, y);
 
 		while(line[i] != '\0'){
+
 			if(line[i] == '1'){
 				addWall(map, x, y);
+			}else if(line[i] == '2'){
+				map->characters = malloc(sizeof(ListBuilding));
+				map->characters->current = createChar(250, 100, 80, 1, 0, x, y, NULL);
+				map->characters->next = NULL;
 			}
+
 			i++;
 			x++;
 		}
