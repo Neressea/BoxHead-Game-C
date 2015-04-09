@@ -103,7 +103,6 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	int pos_perso_px_y = map->characters->current->pos_y * PX_H + PXH_H/2;
 	map->corner->x = pos_perso_px_x - SCREEN_W / 2;
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
-	printf("%d %d %d %d\n", map->corner->x, map->corner->y, map->characters->current->pos_x, map->characters->current->pos_y );
 
 	fclose(file);
 }
@@ -225,10 +224,6 @@ int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 			is = 1;
 		}
 
-		//If we are after the position of the case, it is not a building
-		//if(b->current->x < pos->x && b->current->y < pos->y)
-		//	break;
-
 		b = b->next;
 	}
 
@@ -239,7 +234,7 @@ void saveMap(Map *map){
 	map->corner = NULL; //temp
 }
 
-void moveMap(Map* map, int key[], Move* move){
+void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 
 	int prev_x=map->corner->x, prev_y=map->corner->y;
 
@@ -277,6 +272,7 @@ void moveMap(Map* map, int key[], Move* move){
 	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
 	chara->x = map->corner->x + map->width/2 - PXH_W/2;
 	chara->y = map->corner->y + map->height/2 - PXH_H/2;
+	printf("%d %d %d %d\n", map->corner->x, map->corner->y, map->width, map->height);
 
 	if(cantMove(map->buildings, chara)){
 		map->corner->x=prev_x;
@@ -286,6 +282,8 @@ void moveMap(Map* map, int key[], Move* move){
 		move->x = map->corner->x - prev_x;
 		move->y = map->corner->y - prev_y;
 	}
+
+	free(chara);
 }
 
 int cantMove(ListBuilding* lb, SDL_Rect* pos){

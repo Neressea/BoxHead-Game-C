@@ -68,7 +68,7 @@ void save(Map* m);
 * map : the map to move
 * key : the input events
 */
-void moveMap(Map* map, int key[], Move* move);
+void moveMap(SDL_Window *screen,Map* map, int key[], Move* move);
 
 void addWall(Map *map, int x, int y);
 
