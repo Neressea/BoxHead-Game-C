@@ -269,9 +269,11 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		map->corner->x += SPEED;
 	}
 
+	int screen_h, screen_w;
+	SDL_GetWindowSize(screen,&screen_w,&screen_h);
 	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
-	chara->x = map->corner->x + map->width/2 - PXH_W/2;
-	chara->y = map->corner->y + map->height/2 - PXH_H/2;
+	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
+	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
 	printf("%d %d %d %d\n", map->corner->x, map->corner->y, map->width, map->height);
 
 	if(cantMove(map->buildings, chara)){
