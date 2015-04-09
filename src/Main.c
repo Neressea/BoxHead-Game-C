@@ -29,8 +29,10 @@ void managing_event(){
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
+	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
+	SDL_Rect *pattack = NULL;
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
 	
@@ -58,7 +60,8 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
-	init_texture_attack(rendu, texture_attack); 
+	init_texture_attack(rendu, texture_attack);
+	init_type_attack(rendu, texture_type);
 	
 	current_texture = texture_heros[0];
 
@@ -76,6 +79,12 @@ SDL_WINDOW_RESIZABLE);
 	pheros->x = screen_w /2- PXH_W / 2;
 	pheros->y = screen_h / 2 - PXH_H / 2;
 	
+	pattack = malloc(sizeof(SDL_Rect));
+
+	pattack->h = PX_H;
+	pattack->w = PX_W;
+	pattack->x = 10;
+	pattack->y = screen_h- PX_W - 10;	
 
 	SDL_Event event;
 		
@@ -177,6 +186,8 @@ SDL_WINDOW_RESIZABLE);
 	Blit_attack(liste_spell,rendu, texture_attack);
 	
 	
+	SDL_RenderCopy(rendu, texture_type[current_type->id], NULL, pattack);	
+	SDL_RenderPresent(rendu);
 
 	//We manage the FPS
 	
@@ -291,6 +302,11 @@ void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/attck6_fireball.png");
 	tableau[7] = IMG_LoadTexture(rendu, "./images/sprites/attck7_fireball.png");
 
+}
+
+void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/typespell0.png");
+	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/typespell1.png");
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
