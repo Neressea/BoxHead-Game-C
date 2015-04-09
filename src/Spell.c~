@@ -80,8 +80,10 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 
 }
 
-void updateSpell(ListSpell *current_list, Move* move){
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 	
+	SDL_GetWindowSize(main_screen,&screen_w1,&screen_h1);	
+
 	deleteSpell(current_list);
 
 	ListSpell *cursor = current_list->nextSpell;
@@ -94,32 +96,32 @@ void updateSpell(ListSpell *current_list, Move* move){
 		update_blitmap(move, cursor->currentSpell->pspell);
 
 		if (current_direction == 0){
-			cursor->currentSpell->pspell->y += SPEED;
+			cursor->currentSpell->pspell->y += 2*SPEED;
 		}
 		if (current_direction == 3){
-			cursor->currentSpell->pspell->y -= SPEED;
+			cursor->currentSpell->pspell->y -= 2*SPEED;
 		}
 		if (current_direction == 6){
-			cursor->currentSpell->pspell->x -= SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
 		}
 		if (current_direction == 9){
-			cursor->currentSpell->pspell->x += SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
 		}
 		if (current_direction == 12){
-			cursor->currentSpell->pspell->y += SPEED;
-			cursor->currentSpell->pspell->x += SPEED;
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
 		}
 		if (current_direction == 15){
-			cursor->currentSpell->pspell->y += SPEED;
-			cursor->currentSpell->pspell->x -= SPEED;
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
 		}
 		if (current_direction == 18){
-			cursor->currentSpell->pspell->y -= SPEED;
-			cursor->currentSpell->pspell->x += SPEED;
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
 		}
 		if (current_direction == 21){
-			cursor->currentSpell->pspell->y -= SPEED;
-			cursor->currentSpell->pspell->x -= SPEED;
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
 		}
 		cursor = cursor->nextSpell;
 	}
@@ -146,7 +148,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 	ListSpell *cursor = current_list->nextSpell;	
 	ListSpell *cursor_type = NULL;
 
-	if (key[4]){
+	if (key[4] && current_type->ammo > 0){
 		
 		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
 		ListSpell * newlist = malloc(sizeof(ListSpell));
@@ -154,6 +156,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
+			current_type->ammo --;
 		}
 		else{
 			
@@ -192,11 +195,13 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	while(cursor != NULL){
 		                
 		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
-		SDL_RenderPresent(rendu);
+		
 		
 		cursor = cursor->nextSpell;		
 
 	}
+
+	SDL_RenderPresent(rendu);
 
 
 }
