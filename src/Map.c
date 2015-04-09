@@ -99,8 +99,11 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	encircleMap(map);
 
 	//We set the left up corner of the map
-	map->corner->x = map->characters->current->pos_x * PX_W;
-	map->corner->y = map->characters->current->pos_y * PX_H;
+	int pos_perso_px_x = map->characters->current->pos_x * PX_W + PXH_W/2;
+	int pos_perso_px_y = map->characters->current->pos_y * PX_H + PXH_H/2;
+	map->corner->x = pos_perso_px_x - SCREEN_W / 2;
+	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
+	printf("%d %d %d %d\n", map->corner->x, map->corner->y, map->characters->current->pos_x, map->characters->current->pos_y );
 
 	fclose(file);
 }
@@ -275,12 +278,10 @@ void moveMap(Map* map, int key[], Move* move){
 	chara->x = map->corner->x + map->width/2 - PXH_W/2;
 	chara->y = map->corner->y + map->height/2 - PXH_H/2;
 
-	printf("%d %d\n", chara->x, chara->y);
-
 	if(cantMove(map->buildings, chara)){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
-		printf("%d %d\n", prev_x, prev_y);
+		//printf("%d %d\n", prev_x, prev_y);
 	}else{
 		move->x = map->corner->x - prev_x;
 		move->y = map->corner->y - prev_y;
@@ -295,9 +296,16 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
 
-		if(b->current->x >= pos->x && b->current->x<=pos->x+PX_W && b->current->y >= pos->y && b->current->y <= pos->y+PX_H){
-			cant = 1;
+		//If we are between the x position of the building
+		if(pos->x >= b->current->x && pos->x <= b->current->x + PX_W){
+			if(pos->y >= b->current->y && pos->y <= b->current->y + PX_H){
+				cant=1;
+				//printf("%d %d %d %d\n", pos->x, pos->y, b->current->x, b->current->y);
+			}
 		}
+		/*if(b->current->x >= pos->x && b->current->x<=pos->x+PX_W && b->current->y >= pos->y && b->current->y <= pos->y+PX_H){
+			cant = 1;
+		}*/
 
 		b = b->next;
 	}
