@@ -288,21 +288,21 @@ void moveMap(Map* map, int key[], Move* move){
 }
 
 int cantMove(ListBuilding* lb, SDL_Rect* pos){
-	int is = 0;
+	int cant = 0;
 
 	ListBuilding* b = lb;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
-	while(is==0 && b != NULL){
+	while(cant==0 && b != NULL){
 
 		if(b->current->x >= pos->x && b->current->x<=pos->x+PX_W && b->current->y >= pos->y && b->current->y <= pos->y+PX_H){
-			is = 1;
+			cant = 1;
 		}
 
 		b = b->next;
 	}
 
-	return is;
+	return cant;
 }
 
 void addWall(Map *map, int x, int y){
