@@ -25,44 +25,10 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	}
 
 	//We read the file line by line : the first line is the name of the background
-	char* line = malloc(sizeof(char) * 100);
-	fgets(line, 100, file);
+	loadSprite(file, rendu, map->textures, 0);
+	loadSprite(file, rendu, map->textures, 1);
 
-	if(line == NULL){
-		fprintf(stderr, "Non well-formated file (background) : %s\n", filepath);
-		exit(2);
-	}
-
-	//We load the texture of the background
-	char path [120] = "./images/sprites/";
-	strcat(path, line);
-	path[strlen(path)-1] = '\0';
-	map->textures[0] = IMG_LoadTexture(rendu, path);
-
-	if(map->textures[0] == NULL){
-		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
-		exit(2);
-	}
-
-	fgets(line, 100, file);
-
-	if(line == NULL){
-		fprintf(stderr, "Non well-formated file (walls) : %s\n", filepath);
-		exit(2);
-	}
-
-	char path2[120] = "./images/sprites/";
-	strcat(path2, line);
-	path2[strlen(path2)-1] = '\0';
-	map->textures[1] = IMG_LoadTexture(rendu, path2);
-
-	if(map->textures[1] == NULL){
-		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
-		exit(2);
-	}
-
-	free(line);
-	line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
+	char *line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
 
 	//Then we read the other lines that represents each "line" of the map
 	int x=0, y=0;
@@ -105,6 +71,29 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
 
 	fclose(file);
+}
+
+void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i){
+	char* line = malloc(sizeof(char) * 100);
+	fgets(line, 100, file);
+
+	if(line == NULL){
+		fprintf(stderr, "Non well-formated file (background)\n");
+		exit(2);
+	}
+
+	//We load the texture of the background
+	char path [120] = "./images/sprites/";
+	strcat(path, line);
+	path[strlen(path)-1] = '\0';
+	text[i] = IMG_LoadTexture(rendu, path);
+
+	if(text[i] == NULL){
+		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
+		exit(2);
+	}
+
+	free(line);
 }
 
 /**
@@ -166,7 +155,7 @@ void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 	int shift_x = map->corner->x % PX_W;
 	int shift_y = map->corner->y % PX_H;
 
-	//We compute the position of the case in the map (the bounds)
+	//We compute the position of the first and lastb case in the map (the bounds)
 	SDL_Rect* map_pos = malloc(sizeof(SDL_Rect));
 
 	int begin_x = map->corner->x - shift_x - (NB_SPRITES_BLITTED * PX_W);
@@ -310,7 +299,7 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		b = b->next;
 	}
 
-	return cant;
+	return 0;
 }
 
 void addWall(Map *map, int x, int y){
@@ -322,7 +311,6 @@ void addWall(Map *map, int x, int y){
 }
 
 void encircleMap(Map* map){
-
 	int i;
 	for (i = -1; i <= map->height/PX_H+1; ++i){
 		addWall(map, -1, i);
@@ -334,8 +322,3 @@ void encircleMap(Map* map){
 		addWall(map, i, map->height/PX_H+1);
 	}
 }
-
-
-	
-
-
