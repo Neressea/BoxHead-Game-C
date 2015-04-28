@@ -9,8 +9,14 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	c->direction = *direction;
 	c->time = SDL_GetTicks();
 	c->pspell = malloc(sizeof(SDL_Rect));
-	c->pspell->h = 100;
-	c->pspell->w = 70;
+	if (*direction == 6 || *direction == 9){
+		c->pspell->h = 50;
+		c->pspell->w = 70;
+	}else{
+		c->pspell->h = 100;
+		c->pspell->w = 70;
+	}
+
 	c->pspell->x = x;
 	c->pspell->y = y;
 
