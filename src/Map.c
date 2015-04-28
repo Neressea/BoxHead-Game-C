@@ -263,12 +263,11 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
 	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
-	//printf("%d %d %d %d\n", map->corner->x, map->corner->y, chara->x, chara->y);
+	printf("COUCOU !!!!!!!!!!!!!! %d %d\n", map->corner->x, map->corner->y);
 
 	if(cantMove(map->buildings, chara)){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
-		//printf("%d %d\n", prev_x, prev_y);
 	}else{
 		move->x = map->corner->x - prev_x;
 		move->y = map->corner->y - prev_y;
@@ -289,16 +288,11 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		if(pos->x + PXH_W >= b->current->x && pos->x <= b->current->x + PX_W){
 			if(pos->y + PXH_H >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
-				printf("%d %d %d %d\n", pos->x, pos->y, b->current->x, b->current->y);
+				//printf("%d %d %d %d\n", pos->x, pos->y, b->current->x, b->current->y);
 			}
 		}
-		/*if(b->current->x >= pos->x && b->current->x<=pos->x+PX_W && b->current->y >= pos->y && b->current->y <= pos->y+PX_H){
-			cant = 1;
-		}*/
-
 		b = b->next;
 	}
-
 	return cant;
 }
 

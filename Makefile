@@ -14,14 +14,9 @@
 #	${CPP} $(CFLAGS) -o ${EXEC}.o -c ${EXEC}.c
 
 
-#clean:	
-#	rm -fr *.o
-
-#mrproper: clean
-#	rm -fr ${EXEC}
-
 # Création de l'exécutable 'Light'
 all: create Map.o Building.o Character.o Game.o Spell.o Main.o
+	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
 create:
