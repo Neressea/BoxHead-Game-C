@@ -37,7 +37,7 @@ struct ListChar{
 /**
 * Move the character
 */
-void move(Character p, int x, int y);
+void move(Character *p, int key[]);
 
 /**
 * p1 attacks p2
