@@ -299,7 +299,7 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		b = b->next;
 	}
 
-	return 0;
+	return cant;
 }
 
 void addWall(Map *map, int x, int y){

@@ -22,8 +22,6 @@
 
 # Création de l'exécutable 'Light'
 all: create Map.o Building.o Character.o Game.o Spell.o Main.o
-	gcc -Wall -Werror -Wextra ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
-
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
 create:
