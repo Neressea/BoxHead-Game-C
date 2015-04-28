@@ -12,13 +12,15 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	if (*direction == 6 || *direction == 9){
 		c->pspell->h = 50;
 		c->pspell->w = 70;
+		c->pspell->y = y + 20;
 	}else{
 		c->pspell->h = 100;
 		c->pspell->w = 70;
+		c->pspell->y = y;
 	}
 
 	c->pspell->x = x;
-	c->pspell->y = y;
+	
 
 	return c;
 
