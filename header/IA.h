@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "Map.h"
+#include "Character.h"
 
 void manageEnnemies(Map* map);
 Character* createEnnemy(int level);

@@ -2,7 +2,16 @@
 
 void manageEnnemies(Map* map){
 	int level = map->characters->current->level; //We get the level of the player to define the difficulty
+	int numberOfEnnemies = size(map->characters) - 1;
 
+	//If there is not enough ennemies, we add them
+	if(numberOfEnnemies < level * level){
+		int numberToAdd = level * level - numberOfEnnemies;
+		
+		for(int i = 0; i < numberToAdd; ++i){
+			
+		}
+	}
 }
 
 Character* createEnnemy(Map* map, int level){
@@ -20,11 +29,8 @@ Character* createEnnemy(Map* map, int level){
 
 	}while(!isBuilding(map->buildings, pos));
 
-	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, int pos_x, int pos_y, NULL);
+	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x, pos->y, NULL);
+	addChar(map->characters, ch);
 
 	return ch;
-}
-
-int numberOfEnnemies(Map* map){
-	
 }

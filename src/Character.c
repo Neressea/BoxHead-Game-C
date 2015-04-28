@@ -64,3 +64,27 @@ Character *createChar(int hp, int defense, int attack, int level, int xp, int po
 
 	return c;
 }
+
+int size(ListChar *characters){
+	int nb=0;
+
+	ListChar* ch = characters;
+	while(ch != NULL){
+		ch = ch->next;
+		nb++;
+	}
+
+	return nb;
+}
+
+void addChar(ListChar *characters, Character* ch){
+
+	ListChar *ennemy = malloc(sizeof(ListChar));
+
+	while(characters->next != NULL) characters = characters->next;
+
+	ennemy->current = ch;
+	ennemy->next = NULL;
+
+	characters->next = ennemy;
+}

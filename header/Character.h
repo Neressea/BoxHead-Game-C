@@ -51,4 +51,8 @@ void attackBuilding(Character p, Building b);
 
 Character* createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, ListSpell *spell);
 
+int size(ListChar *characters);
+
+void addChar(ListChar *characters, Character* ch);
+
 #endif
