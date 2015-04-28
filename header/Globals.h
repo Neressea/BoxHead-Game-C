@@ -7,8 +7,8 @@
 	#define SPEED_TRAME 8
 	#define SCREEN_W 640
 	#define SCREEN_H 480
-	#define PX_H 50
-	#define PX_W 50
+	#define PX_H 100
+	#define PX_W 100
 	#define PXH_H 100
 	#define PXH_W 70
 	#define NB_SPRITES_H 24
@@ -25,7 +25,7 @@
 	#define NB_TYP_SPELL 2
 
 
-	typedef struct {
+typedef struct {
 	int x, y;
 }Move;
 

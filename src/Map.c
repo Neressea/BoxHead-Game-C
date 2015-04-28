@@ -160,8 +160,10 @@ void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 	//We compute the position of the first and lastb case in the map (the bounds)
 	SDL_Rect* map_pos = malloc(sizeof(SDL_Rect));
 
-	int begin_x = map->corner->x - shift_x - (NB_SPRITES_BLITTED * PX_W);
-	int begin_y = map->corner->y - shift_y - (NB_SPRITES_BLITTED * PX_H);
+	int begin_x = map->corner->x - shift_x - PX_W;
+	int begin_y = map->corner->y - shift_y - PX_H;
+
+	printf("%d %d\n", begin_x, begin_y);
 
 	int end_x = begin_x + (screen_w - screen_w % PX_W) + NB_SPRITES_BLITTED * PX_W * 2;
 	int end_y = begin_y + (screen_h - screen_h % PX_H) + NB_SPRITES_BLITTED * PX_H * 2;
