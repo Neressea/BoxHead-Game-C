@@ -23,7 +23,7 @@ typedef struct{
 	int attack;
 	int level; //?
 	int xp;
-	int pos_x, pos_y;
+	SDL_Rect *pos;
 	ListSpell* spells;
 }Character;
 

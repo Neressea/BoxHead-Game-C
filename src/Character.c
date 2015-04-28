@@ -28,8 +28,9 @@ Character *createChar(int hp, int defense, int attack, int level, int xp, int po
 	c->attack = attack;
 	c->level = level;
 	c->xp = xp;
-	c->pos_x = pos_x;
-	c->pos_y = pos_y;
+	c->pos = malloc(sizeof(SDL_Rect));
+	c->pos->x = pos_x;
+	c->pos->y = pos_y;
 	c->spells = spells;
 
 	return c;

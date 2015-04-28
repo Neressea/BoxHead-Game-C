@@ -65,10 +65,12 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	encircleMap(map);
 
 	//We set the left up corner of the map
-	int pos_perso_px_x = map->characters->current->pos_x * PX_W + PXH_W/2;
-	int pos_perso_px_y = map->characters->current->pos_y * PX_H + PXH_H/2;
+	int pos_perso_px_x = map->characters->current->pos->x * PX_W + PXH_W/2;
+	int pos_perso_px_y = map->characters->current->pos->y * PX_H + PXH_H/2;
 	map->corner->x = pos_perso_px_x - SCREEN_W / 2;
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
+
+	printf("%d %d\n", map->characters->current->pos->x, map->characters->current->pos->y);
 
 	fclose(file);
 }
@@ -263,7 +265,7 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
 	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
-	printf("COUCOU !!!!!!!!!!!!!! %d %d\n", map->corner->x, map->corner->y);
+	//printf("COUCOU !!!!!!!!!!!!!! %d %d\n", map->corner->x, map->corner->y);
 
 	if(cantMove(map->buildings, chara)){
 		map->corner->x=prev_x;
