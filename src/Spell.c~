@@ -110,7 +110,6 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 			}else{
 				cursor->nextSpell = newlist;
 				current_type->ammo --;
-				printf("ammo left : %d\n", current_type->ammo);
 			}  
 
 		}		

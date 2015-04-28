@@ -28,7 +28,7 @@ void managing_event(){
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
-	SDL_Texture *texture_attack[NB_SPRITES_A] = {NULL};
+	SDL_Texture *texture_attack[2*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
@@ -84,7 +84,7 @@ SDL_WINDOW_RESIZABLE);
 	pattack->h = PX_H;
 	pattack->w = PX_W;
 	pattack->x = 10;
-	pattack->y = screen_h- 2*PX_W;	
+	pattack->y = screen_h- PX_W - 10;	
 
 	SDL_Event event;
 		
@@ -292,15 +292,23 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[31] = IMG_LoadTexture(rendu, "./images/sprites/heros31.png");
 }
 
-void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/attck0_fireball.png");
-	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/attck1_fireball.png");
-	tableau[2] = IMG_LoadTexture(rendu, "./images/sprites/attck2_fireball.png");
-	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/attck3_fireball.png");
-	tableau[4] = IMG_LoadTexture(rendu, "./images/sprites/attck4_fireball.png");
-	tableau[5] = IMG_LoadTexture(rendu, "./images/sprites/attck5_fireball.png");
-	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/attck6_fireball.png");
-	tableau[7] = IMG_LoadTexture(rendu, "./images/sprites/attck7_fireball.png");
+void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]){
+	tabl[0] = IMG_LoadTexture(rendu, "./images/sprites/attck0_fireball.png");
+	tabl[1] = IMG_LoadTexture(rendu, "./images/sprites/attck1_fireball.png");
+	tabl[2] = IMG_LoadTexture(rendu, "./images/sprites/attck2_fireball.png");
+	tabl[3] = IMG_LoadTexture(rendu, "./images/sprites/attck3_fireball.png");
+	tabl[4] = IMG_LoadTexture(rendu, "./images/sprites/attck4_fireball.png");
+	tabl[5] = IMG_LoadTexture(rendu, "./images/sprites/attck5_fireball.png");
+	tabl[6] = IMG_LoadTexture(rendu, "./images/sprites/attck6_fireball.png");
+	tabl[7] = IMG_LoadTexture(rendu, "./images/sprites/attck7_fireball.png");
+	tabl[8] = IMG_LoadTexture(rendu, "./images/sprites/attck0_frost.png");
+	tabl[9] = IMG_LoadTexture(rendu, "./images/sprites/attck1_frost.png");
+	tabl[10] = IMG_LoadTexture(rendu, "./images/sprites/attck2_frost.png");
+	tabl[11] = IMG_LoadTexture(rendu, "./images/sprites/attck3_frost.png");
+	tabl[12] = IMG_LoadTexture(rendu, "./images/sprites/attck4_frost.png");
+	tabl[13] = IMG_LoadTexture(rendu, "./images/sprites/attck5_frost.png");
+	tabl[14] = IMG_LoadTexture(rendu, "./images/sprites/attck6_frost.png");
+	tabl[15] = IMG_LoadTexture(rendu, "./images/sprites/attck7_frost.png");
 
 }
 

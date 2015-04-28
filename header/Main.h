@@ -10,7 +10,7 @@
 int main();
 void managing_event();
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]);
-void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]);
+void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]);
 void test_key(int key[], SDL_Rect *position);
 void destroy_texture(int taille, SDL_Texture *tableau[]);

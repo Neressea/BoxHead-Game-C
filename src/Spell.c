@@ -133,7 +133,7 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	
 	while(cursor != NULL){
 		                
-		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
+		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3 + (NB_SPRITES_A*cursor->currentSpell->type->id)], NULL, cursor->currentSpell->pspell);
 		
 		
 		cursor = cursor->nextSpell;		
