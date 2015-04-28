@@ -1,8 +1,12 @@
 #ifndef char_h
 #define char_h
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
 #include "Spell.h"
 #include "Building.h"
+#include "Globals.h"
 
 /**
 * This struct defines what a character is, for the main char and ennemies.
@@ -19,13 +23,13 @@ typedef struct{
 	int attack;
 	int level; //?
 	int xp;
-	int pos_x, pos_y;
-	Weapon* weapon;
+	SDL_Rect *pos;
+	ListSpell* spells;
 }Character;
 
 typedef struct ListChar ListChar;
 struct ListChar{
-	Character current;
+	Character *current;
 	struct ListChar* next;
 };
 
@@ -33,7 +37,7 @@ struct ListChar{
 /**
 * Move the character
 */
-void move(Character p, int x, int y);
+void move(Character p, int key[]);
 
 /**
 * p1 attacks p2
@@ -44,5 +48,7 @@ void attackCharacter(Character p1, Character p2);
 * p attacks the building b
 */
 void attackBuilding(Character p, Building b);
+
+Character* createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, ListSpell *spell);
 
 #endif

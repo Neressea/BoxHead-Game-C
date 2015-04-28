@@ -3,7 +3,7 @@
 /**
 * Move the character
 */
-void move(Character *p, int key[]){
+void move(Character p, int key[]){
 	if (key[0] && key[2]){
 		p->pos->y -= SPEED;
 		p->pos->x -= SPEED;
