@@ -9,10 +9,18 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	c->direction = *direction;
 	c->time = SDL_GetTicks();
 	c->pspell = malloc(sizeof(SDL_Rect));
-	c->pspell->h = 100;
-	c->pspell->w = 70;
+	if (*direction == 6 || *direction == 9){
+		c->pspell->h = 50;
+		c->pspell->w = 70;
+		c->pspell->y = y + 50;
+	}else{
+		c->pspell->h = 100;
+		c->pspell->w = 70;
+		c->pspell->y = y;
+	}
+
 	c->pspell->x = x;
-	c->pspell->y = y;
+	
 
 	return c;
 
@@ -133,7 +141,7 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 	
 	while(cursor != NULL){
 		                
-		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3], NULL, cursor->currentSpell->pspell);
+		SDL_RenderCopy(rendu, tableau[cursor->currentSpell->direction/3 + (NB_SPRITES_A*cursor->currentSpell->type->id)], NULL, cursor->currentSpell->pspell);
 		
 		
 		cursor = cursor->nextSpell;		
