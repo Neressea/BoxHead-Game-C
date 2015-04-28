@@ -30,6 +30,7 @@ void managing_event(){
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
+	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
@@ -62,6 +63,7 @@ SDL_WINDOW_RESIZABLE);
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
+	init_texture_ennemy(rendu, texture_ennemy);
 	init_texture_attack(rendu, texture_attack);
 	init_type_attack(rendu, texture_type);
 	
@@ -292,6 +294,10 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[29] = IMG_LoadTexture(rendu, "./images/sprites/heros29.png");
 	tableau[30] = IMG_LoadTexture(rendu, "./images/sprites/heros30.png");
 	tableau[31] = IMG_LoadTexture(rendu, "./images/sprites/heros31.png");
+}
+
+void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]){
+	tabl[0] = IMG_LoadTexture(rendu, "./images/sprites/monstre0.png");
 }
 
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]){

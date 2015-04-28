@@ -4,6 +4,8 @@ int screen_h = SCREEN_H;
 int screen_w = SCREEN_W;
 
 int main(){
+	
+	srand(time(NULL));
 
 	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
@@ -28,7 +30,8 @@ void managing_event(){
 	SDL_Window *main_screen = NULL;
 	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
-	SDL_Texture *texture_attack[2*NB_SPRITES_A] = {NULL};
+	SDL_Texture *texture_heros[NB_SPRITES_H] = {NULL};	
+	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	SDL_Rect *pheros = NULL;
