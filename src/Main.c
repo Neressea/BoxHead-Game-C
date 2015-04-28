@@ -4,6 +4,8 @@ int screen_h = SCREEN_H;
 int screen_w = SCREEN_W;
 
 int main(){
+	
+	srand(time(NULL));
 
 	if (SDL_Init(SDL_INIT_VIDEO) == -1){
 		fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); // managing SDL loading error 
