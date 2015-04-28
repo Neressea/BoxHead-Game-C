@@ -70,7 +70,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	map->corner->x = pos_perso_px_x - SCREEN_W / 2;
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
 
-	printf("%d %d\n", map->characters->current->pos->x, map->characters->current->pos->y);
+	//printf("%d %d\n", pos_perso_px_x, pos_perso_px_y);
 
 	fclose(file);
 }
