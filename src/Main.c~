@@ -36,6 +36,7 @@ int main(){
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
 
 	int screen = 0;
+	int test = 0;
 	
 
 	while(screen == 0){
@@ -54,16 +55,24 @@ int main(){
 
 		SDL_RenderCopy(rendu, Text_title, NULL, title );
 
-		//SDL_RenderPresent(rendu);
-
-		title->h = 200;
+		title->h = 100;
 		title->w = 300;	
 		title->x = screen_w/2 - title->w/2;
 		title->y = screen_h/2 - title->h/2 + 100;
 
-		SDL_RenderCopy(rendu, Text_subtitle, NULL, title );
+		
+
+		if(SDL_GetTicks() - test>50){
+			if(SDL_GetTicks()- test>250){
+				test = SDL_GetTicks();
+			}
+			SDL_RenderCopy(rendu, Text_subtitle, NULL, title );	
+		}else{
+	
+		}
 
 		SDL_RenderPresent(rendu);
+
 	
 	}
 
