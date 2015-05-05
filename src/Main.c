@@ -28,6 +28,7 @@ int main(){
 	SDL_Rect *title = malloc(sizeof(SDL_Rect));
 	SDL_Color textColor = { 255, 255, 255, 255 }; 
 	SDL_Event event;
+	SDL_Event event1;
 
 	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
     	SDL_Surface *Surface_Title = TTF_RenderText_Solid (font, "The Game", textColor);
@@ -36,6 +37,9 @@ int main(){
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
 
 	int screen = 0;
+	int quit = 0;
+	int play = 0;
+	int option = 0;
 	int test = 0;
 	
 
@@ -76,8 +80,58 @@ int main(){
 	
 	}
 
-	managing_event(main_screen,rendu);
+	Surface_Title = TTF_RenderText_Solid (font, "New Game", textColor);
+	Surface_Tsubtitle = TTF_RenderText_Solid (font, "Options", textColor);
+	SDL_Surface *Surface_Tsubtitle2 = TTF_RenderText_Solid (font, "Quit", textColor);
+	Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
+	Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
+	SDL_Texture *Text_subtitle2 = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle2);
 
+	while(quit == 0){
+		SDL_PollEvent(&event1);
+			switch(event1.type){
+				case SDL_QUIT:
+					quit = 1;
+				break;
+				case SDL_KEYDOWN:
+					switch (event1.key.keysym.sym){
+						case SDLK_UP:
+							quit = 1;							
+							play = 1;
+						break;
+						case SDLK_DOWN:
+							option = 1;
+							quit = 1;
+						break;
+						
+						}
+				break;
+			}
+
+		title->y = screen_h/2 - title->h/2 - 120;
+
+		SDL_RenderClear(rendu);
+		SDL_RenderCopy(rendu, Text_title, NULL, title );
+	
+		title->y = screen_h/2 - title->h/2;
+
+		SDL_RenderCopy(rendu, Text_subtitle, NULL, title );
+
+		title->y = screen_h/2 - title->h/2 + 120;
+
+		SDL_RenderCopy(rendu, Text_subtitle2, NULL, title );
+		SDL_RenderPresent(rendu);
+		
+	}
+
+	if (option == 1){
+
+	}
+
+	if (play == 1){
+		managing_event(main_screen,rendu);
+	}
+	
 	free(title);
 	TTF_CloseFont(font);	
 	IMG_Quit();
@@ -219,12 +273,12 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	move->y = 0;
 	moveMap(main_screen, map, key, move);
 
+	SDL_RenderCopy(rendu, texture_type[current_type->id], NULL, pattack);
+
 	updateSpell(liste_spell, move, main_screen);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
-	
-	
-	SDL_RenderCopy(rendu, texture_type[current_type->id], NULL, pattack);	
+		
 	SDL_RenderPresent(rendu);
 
 	//We manage the FPS
