@@ -7,6 +7,8 @@
 #include "Spell.h"
 #include "Building.h"
 #include "Globals.h"
+#include "Main.h"
+
 
 /**
 * This struct defines what a character is, for the main char and ennemies.
@@ -49,10 +51,18 @@ void attackCharacter(Character p1, Character p2);
 */
 void attackBuilding(Character p, Building b);
 
-Character* createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, ListSpell *spell);
+Character* createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, int w, int h, ListSpell *spell);
 
 int size(ListChar *characters);
 
 void addChar(ListChar *characters, Character* ch);
+
+void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect *corner, SDL_Texture*** texture_chara, int key[], int* direction);
+
+SDL_Texture* update_texture(int key[], SDL_Texture *tableau[], int *trame, int *f);
+
+int text_move(int *trame);
+
+void compute_tram(int *j, int *trame);
 
 #endif

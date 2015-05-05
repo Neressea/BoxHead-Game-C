@@ -34,7 +34,6 @@ void managing_event(){
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
-	SDL_Rect *pheros = NULL;
 	SDL_Rect *pattack = NULL;
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
@@ -45,12 +44,11 @@ void managing_event(){
 	TypeSpell *current_type = tab_typeSpell[0];
 	
 	Move *move = malloc(sizeof(Move));
+	SDL_Texture** texture_chara[] = {texture_heros, texture_ennemy};
 
 	int quit = 0;
 	int key[7] = {0};
-	int j = 0;
-	int f = 0;
-	int trame = 0;
+	int direction = 0;
 	int limit = 0;
 	int test = 0;
 	
@@ -75,13 +73,6 @@ SDL_WINDOW_RESIZABLE);
 	}
 
 	load(rendu, map, "./maps/map1");
-
-	pheros = malloc(sizeof(SDL_Rect));
-
-	pheros->h = PXH_H;
-	pheros->w = PXH_W;
-	pheros->x = screen_w /2- PXH_W / 2;
-	pheros->y = screen_h / 2 - PXH_H / 2;
 	
 	pattack = malloc(sizeof(SDL_Rect));
 
@@ -161,25 +152,14 @@ SDL_WINDOW_RESIZABLE);
 
 
 	SDL_RenderClear(rendu);
-	
-	j++;
-	compute_tram(&j, &trame);
 
 	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
 
-	pheros->x = screen_w /2- PXH_W / 2;
-	pheros->y = screen_h /2 - PXH_H / 2;
-	
-
-	
-
-	current_texture = update_heros(key, texture_heros, &trame, &f);
-	show(main_screen, rendu, map);
-	SDL_RenderCopy(rendu, current_texture, NULL, pheros);	
-	SDL_RenderPresent(rendu);
+	showMap(main_screen, rendu, map);
+	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
 	
 	changeTypeSpell(key, tab_typeSpell,&current_type);
-	lanceattack(liste_spell, &f, current_type, key);
+	lanceattack(liste_spell, &direction, current_type, key);
 	
 	move->x = 0;
 	move->y = 0;
@@ -205,9 +185,6 @@ SDL_WINDOW_RESIZABLE);
 			SDL_Delay(limit - test);
 		}
 	}
-
-
-
 
 		limit = SDL_GetTicks() + FPS;
 	
@@ -334,81 +311,6 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 
 }
 
-SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f){
-	
-	if (key[4]){
-		return tableau[*f/3 + 24];
-	}	
-
-	if (key[0] && key[2]){
-		*f = 21;		
-		return tableau[21 + text_move(trame)];
-	}
-	if (key[0] && key[3]){
-		*f = 18;
-		return tableau[18 + text_move(trame)];
-	}
-	if (key[0] && !key[3] && !key[2]){
-		*f = 3;
-		return tableau[3 + text_move(trame)];
-	}
-	
-	if (key[1] && key[2]){
-		*f = 15;
-		return tableau[15 + text_move(trame)];
-	}
-	if (key[1] && key[3]){
-		*f = 12;
-		return tableau[12 + text_move(trame)];
-	}
-	if (key[1] && !key[3] && !key[2]){
-		*f = 0;
-		return tableau[*f + text_move(trame)];
-	}
-		
-	if (key[2] && !key[0] && !key[1]){
-		*f = 6;		
-		return tableau[6 + text_move(trame)];
-	}
-	if (key[3] && !key[0] && !key[1]){
-		*f = 9;
-		return tableau[9 + text_move(trame)];
-	}
-
-	return tableau[*f];	
-	
-
-		
-
-}
-
-void compute_tram(int *j, int *trame){
-	if (*j > SPEED_TRAME * 4){
-		*j = 0;
-	}
-
-	*trame = (*j /SPEED_TRAME) % 4;
-
-}
-
-int text_move(int *trame){
-	if (*trame == 0){
-		return 0;
-	}
-	else if (*trame == 1){
-		return 1;
-	}
-	else if (*trame == 2){
-		return 0;
-	}
-	else {
-		return 2;
-	}
-
-	return 0;
-
-}
-
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type){
 	int i;
 
@@ -417,9 +319,6 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 			*current_type = tab_typeSpell[i-5];
 		}
 	}
-
-	
-
 }
 
 

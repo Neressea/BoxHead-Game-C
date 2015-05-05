@@ -15,7 +15,7 @@
 
 
 # Création de l'exécutable 'Light'
-all: create Map.o Building.o Character.o Game.o Spell.o Main.o
+all: create Map.o Character.o Building.o Game.o Spell.o Main.o
 	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
@@ -28,12 +28,12 @@ Main.o: ./src/Main.c ./header/*.h
  
 Map.o: ./src/Map.c ./header/*.h
 	gcc -Wall -Werror -Wextra -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image
+
+Character.o: ./src/Character.c ./header/*.h
+	gcc -c ./src/Character.c -o ./bin/Character.o -lSDL2-2.0 -lSDL2_image
  
 Building.o: ./src/Building.c ./header/*.h
 	gcc -Wall -c ./src/Building.c -o ./bin/Building.o -lSDL2-2.0 -lSDL2_image
- 
-Character.o: ./src/Character.c ./header/*.h
-	gcc -Wall -c ./src/Character.c -o ./bin/Character.o -lSDL2-2.0 -lSDL2_image
  
 Game.o: ./src/Game.c ./header/*.h
 	gcc -Wall -c ./src/Game.c -o ./bin/Game.o  -lSDL2-2.0 -lSDL2_image

@@ -1,4 +1,5 @@
 #ifndef main_h 
+#define main_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,9 +16,7 @@ void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]);
 void test_key(int key[], SDL_Rect *position);
 void destroy_texture(int taille, SDL_Texture *tableau[]);
-SDL_Texture* update_heros(int key[], SDL_Texture *tableau[], int *trame, int *f);
 void compute_tram(int *j, int *trame);
-int text_move(int *trame);
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type);
 void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 

@@ -45,8 +45,8 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 			if(line[i] == '1'){
 				addWall(map, x, y);
 			}else if(line[i] == '2'){
-				map->characters = malloc(sizeof(ListBuilding));
-				map->characters->current = createChar(250, 100, 80, 1, 0, x, y, NULL);
+				map->characters = malloc(sizeof(ListChar));
+				map->characters->current = createChar(250, 100, 80, 1, 0, x, y, PXH_W, PXH_H, NULL);
 				map->characters->next = NULL;
 			}
 
@@ -65,12 +65,10 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	encircleMap(map);
 
 	//We set the left up corner of the map
-	int pos_perso_px_x = map->characters->current->pos->x * PX_W + PXH_W/2;
-	int pos_perso_px_y = map->characters->current->pos->y * PX_H + PXH_H/2;
+	int pos_perso_px_x = map->characters->current->pos->x + PXH_W/2;
+	int pos_perso_px_y = map->characters->current->pos->y + PXH_H/2;
 	map->corner->x = pos_perso_px_x - SCREEN_W / 2;
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
-
-	//printf("%d %d\n", pos_perso_px_x, pos_perso_px_y);
 
 	fclose(file);
 }
@@ -136,7 +134,7 @@ void destroyMap(Map* map){
 /**
 * Print the map on the screen
 */
-void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
+void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
 	//We check if the size of the screen has changed
 	static int screen_h = SCREEN_H, screen_w = SCREEN_W;
@@ -162,8 +160,6 @@ void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
 	int begin_x = map->corner->x - shift_x - PX_W;
 	int begin_y = map->corner->y - shift_y - PX_H;
-
-	printf("%d %d\n", begin_x, begin_y);
 
 	int end_x = begin_x + (screen_w - screen_w % PX_W) + NB_SPRITES_BLITTED * PX_W * 2;
 	int end_y = begin_y + (screen_h - screen_h % PX_H) + NB_SPRITES_BLITTED * PX_H * 2;
@@ -267,7 +263,6 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
 	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
-	//printf("COUCOU !!!!!!!!!!!!!! %d %d\n", map->corner->x, map->corner->y);
 
 	if(cantMove(map->buildings, chara)){
 		map->corner->x=prev_x;
@@ -275,6 +270,9 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	}else{
 		move->x = map->corner->x - prev_x;
 		move->y = map->corner->y - prev_y;
+		map->characters->current->pos->x += move->x;
+		map->characters->current->pos->y += move->y;
+		//printf("%d %d\n", map->characters->current->pos->x, map->characters->current->pos->y);
 	}
 
 	free(chara);
@@ -292,7 +290,6 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		if(pos->x + PXH_W >= b->current->x && pos->x <= b->current->x + PX_W){
 			if(pos->y + PXH_H >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
-				//printf("%d %d %d %d\n", pos->x, pos->y, b->current->x, b->current->y);
 			}
 		}
 		b = b->next;
