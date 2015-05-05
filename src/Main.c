@@ -17,7 +17,10 @@ int main(){
 		exit(EXIT_FAILURE);
 	}
 
-	managing_event();
+	SDL_Window *main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE);
+	SDL_Renderer *rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
+
+	managing_event(main_screen,rendu);
 
 	IMG_Quit();
 	SDL_Quit();
@@ -25,10 +28,8 @@ int main(){
 	return EXIT_SUCCESS;
 }
 
-void managing_event(){
+void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
-	SDL_Window *main_screen = NULL;
-	SDL_Renderer *rendu = NULL;
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
@@ -51,12 +52,7 @@ void managing_event(){
 	int direction = 0;
 	int limit = 0;
 	int test = 0;
-	
-	main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN|
-SDL_WINDOW_RESIZABLE);
- 			 // iniatializing screen
 
-	rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
 	SDL_RenderClear(rendu);
 	

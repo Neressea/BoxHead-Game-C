@@ -10,7 +10,7 @@
 #include "Globals.h"
 
 int main();
-void managing_event();
+void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu);
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]);
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]);
