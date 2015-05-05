@@ -13,22 +13,71 @@ int main(){
 	}
 
 	if(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == -1){
-		fprintf(stderr, "Erreur d'initialisation des images : %s\n", SDL_GetError()); // managing SDL loading error 
+		fprintf(stderr, "Erreur d'initialisation de la SDL_IMG : %s\n", SDL_GetError()); // managing IMG loading error 
+		exit(EXIT_FAILURE);
+	}
+
+	if (TTF_Init() == -1){
+		fprintf(stderr, "Erreur d'initialisation de la SDL_TTF : %s\n", SDL_GetError()); // managing TTF loading error 
 		exit(EXIT_FAILURE);
 	}
 
 	SDL_Window *main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE);
 	SDL_Renderer *rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 
+	SDL_Rect *title = malloc(sizeof(SDL_Rect));
+	SDL_Color textColor = { 255, 255, 255, 255 }; 
+	SDL_Event event;
+
+	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
+    	SDL_Surface *Surface_Title = TTF_RenderText_Solid (font, "The Game", textColor);
+	SDL_Surface *Surface_Tsubtitle = TTF_RenderText_Solid (font, "Appuyez sur une touche", textColor);
+	SDL_Texture* Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
+	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
+
+	int screen = 0;
+	
+
+	while(screen == 0){
+		SDL_PollEvent(&event);
+
+		if (event.type == SDL_KEYDOWN){
+			screen = 1;
+		}
+
+		title->h = 400;
+		title->w = 400;	
+		title->x = screen_w/2 - title->w/2;
+		title->y = screen_h/2 - title->h/2 - 100;
+
+		SDL_RenderClear(rendu);
+
+		SDL_RenderCopy(rendu, Text_title, NULL, title );
+
+		//SDL_RenderPresent(rendu);
+
+		title->h = 200;
+		title->w = 300;	
+		title->x = screen_w/2 - title->w/2;
+		title->y = screen_h/2 - title->h/2 + 100;
+
+		SDL_RenderCopy(rendu, Text_subtitle, NULL, title );
+
+		SDL_RenderPresent(rendu);
+	
+	}
+
 	managing_event(main_screen,rendu);
 
+	free(title);
+	TTF_CloseFont(font);	
 	IMG_Quit();
 	SDL_Quit();
 
 	return EXIT_SUCCESS;
 }
 
-void managing_event(main_screen,rendu){
+void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
