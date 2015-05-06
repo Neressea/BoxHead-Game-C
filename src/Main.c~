@@ -68,7 +68,7 @@ int main(){
 
 		
 
-		if(SDL_GetTicks() - test>50){
+		if(SDL_GetTicks() - test>25){
 			if(SDL_GetTicks()- test>300){
 				test = SDL_GetTicks();
 			}
@@ -106,13 +106,13 @@ int main(){
 							if (point->y > screen_h/2 - title->h/2 - 100){
 								point->y = point->y - 120;
 							}
-							SDL_Delay(50);							
+							SDL_Delay(70);							
 						break;
 						case SDLK_DOWN:
 							if (point->y < screen_h/2 - title->h/2 + 140){
 								point->y = point->y + 120;
 							}
-							SDL_Delay(50);
+							SDL_Delay(70);
 						break;
 						case SDLK_e:
 							if (point->y == screen_h/2 - title->h/2 -100) 								{							

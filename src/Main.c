@@ -68,7 +68,7 @@ int main(){
 
 		
 
-		if(SDL_GetTicks() - test>50){
+		if(SDL_GetTicks() - test>100){
 			if(SDL_GetTicks()- test>300){
 				test = SDL_GetTicks();
 			}
