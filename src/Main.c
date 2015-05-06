@@ -114,7 +114,7 @@ int main(){
 							}
 							SDL_Delay(70);
 						break;
-						case SDLK_e:
+						case SDLK_SPACE:
 							if (point->y == screen_h/2 - title->h/2 -100) 								{							
 								play = 1;
 							}else if (point->y == screen_h/2 - title->h/2 + 140){
