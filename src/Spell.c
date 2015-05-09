@@ -102,7 +102,6 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
-			current_type->ammo --;
 		}
 		else{
 			

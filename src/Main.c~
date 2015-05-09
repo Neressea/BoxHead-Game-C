@@ -301,7 +301,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	move->y = 0;
 	moveMap(main_screen, map, key, move);
 
-	//
+	manageSpellType(current_type, rendu, texture_type, font);
 
 	updateSpell(liste_spell, move, main_screen);
 	

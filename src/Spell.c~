@@ -102,7 +102,7 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
-			current_type->ammo --;
+			//current_type->ammo --;
 		}
 		else{
 			
@@ -174,7 +174,7 @@ void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *
 	
 	char nbAmmo[15] = "Inf";
 	
-	if (current_type->ammo > 0){
+	if (current_type->ammo >= 0){
 		sprintf(nbAmmo, "%d", current_type->ammo);
 	}
 

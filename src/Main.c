@@ -182,7 +182,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
-	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
+	TTF_Font* font = TTF_OpenFont("./images/polices/Capture_it.ttf",100);
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
 	
