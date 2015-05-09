@@ -26,6 +26,7 @@ int main(){
 	SDL_Renderer *rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 
 	SDL_Rect *title = malloc(sizeof(SDL_Rect));
+	SDL_Rect *title2 = malloc(sizeof(SDL_Rect));
 	SDL_Rect *point = malloc(sizeof(SDL_Rect));
 	SDL_Color textColor = { 255, 255, 255, 255 }; 
 	SDL_Event event;
@@ -42,8 +43,7 @@ int main(){
 	int quit = 0;
 	int play = 0;
 	int option = 0;
-	int test = 0;
-	
+	int test = 0;	
 
 	while(screen == 0){
 		SDL_PollEvent(&event);
@@ -52,27 +52,33 @@ int main(){
 			screen = 1;
 		}
 
-		title->h = 400;
-		title->w = 400;	
+		if (event.type == SDL_QUIT){
+			screen = 1;
+			quit = 1;
+		}
+
+		SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
+
+		title->h = screen_h/1.2;
+		title->w = screen_w/1.6;	
 		title->x = screen_w/2 - title->w/2;
-		title->y = screen_h/2 - title->h/2 - 100;
+		title->y = screen_h/2 - title->h/2 - screen_h/4.8;
 
 		SDL_RenderClear(rendu);
 
 		SDL_RenderCopy(rendu, Text_title, NULL, title );
 
-		title->h = 100;
-		title->w = 300;	
-		title->x = screen_w/2 - title->w/2;
-		title->y = screen_h/2 - title->h/2 + 100;
+		title2->h = screen_h/4.8;
+		title2->w = screen_w/2;	
+		title2->x = screen_w/2 - title2->w/2;
+		title2->y = screen_h/2 - title2->h/2 + screen_h/4.8;
 
 		
-
 		if(SDL_GetTicks() - test>100){
 			if(SDL_GetTicks()- test>300){
 				test = SDL_GetTicks();
 			}
-			SDL_RenderCopy(rendu, Text_subtitle, NULL, title );	
+			SDL_RenderCopy(rendu, Text_subtitle, NULL, title2 );	
 		}else{
 	
 		}
@@ -87,12 +93,10 @@ int main(){
 	SDL_Surface *Surface_Tsubtitle2 = TTF_RenderText_Solid (font, "Quit", textColor);
 	Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
 	Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
+
 	SDL_Texture *Text_subtitle2 = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle2);
 
-	point->h = 50;
-	point->w = 50;	
-	point->x = screen_w/2 - title->w/2 - 70;
-	point->y = screen_h/2 - title->h/2 - 100;
+	point->y = screen_h/2 - screen_h/3.2;
 
 	while(quit == 0){
 		SDL_PollEvent(&event1);
@@ -103,21 +107,21 @@ int main(){
 				case SDL_KEYDOWN:
 					switch (event1.key.keysym.sym){
 						case SDLK_UP:
-							if (point->y > screen_h/2 - title->h/2 - 100){
-								point->y = point->y - 120;
+							if (point->y > screen_h/2 - screen_h/3.2){
+								point->y = point->y - screen_h/4;
 							}
 							SDL_Delay(70);							
 						break;
 						case SDLK_DOWN:
-							if (point->y < screen_h/2 - title->h/2 + 140){
-								point->y = point->y + 120;
+							if (point->y < screen_h/2 - screen_h/3.2 + 2*screen_h/4){
+								point->y = point->y + screen_h/4;
 							}
 							SDL_Delay(70);
 						break;
 						case SDLK_SPACE:
-							if (point->y == screen_h/2 - title->h/2 -100) 								{							
+							if (point->y == screen_h/2 - screen_h/3.2) 								{							
 								play = 1;
-							}else if (point->y == screen_h/2 - title->h/2 + 140){
+							}else if (point->y == screen_h/2 - screen_h/3.2 + 2*screen_h/4){
 							}else{
 								option = 1;
 							}
@@ -127,18 +131,28 @@ int main(){
 				break;
 			}
 
-		title->y = screen_h/2 - title->h/2 - 120;
+		SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
+		
+		title->h = screen_h/4.8;
+		title->w = screen_w/2;
+		title->x = screen_w/2 - title->w/2;
+		title->y = screen_h/2 - title->h/2 - screen_h/4;
 
 		SDL_RenderClear(rendu);
 		SDL_RenderCopy(rendu, Text_title, NULL, title );
-	
+		
 		title->y = screen_h/2 - title->h/2;
 
 		SDL_RenderCopy(rendu, Text_subtitle, NULL, title );
 
-		title->y = screen_h/2 - title->h/2 + 120;
+		title->y = screen_h/2 - title->h/2 + screen_h/4;
 
 		SDL_RenderCopy(rendu, Text_subtitle2, NULL, title );
+
+		point->h = screen_h/9.6;
+		point->w = screen_w/12.8;	
+		point->x = screen_w/2 - title->w/2 - screen_w/8;
+
 		SDL_RenderCopy(rendu, Pointeur, NULL, point );
 		SDL_RenderPresent(rendu);
 		
@@ -153,6 +167,7 @@ int main(){
 	}
 	
 	free(title);
+	free(title2);
 	TTF_CloseFont(font);	
 	IMG_Quit();
 	SDL_Quit();
