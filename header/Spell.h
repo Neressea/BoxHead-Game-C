@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "Globals.h"
 
 /**
@@ -41,5 +43,6 @@ TypeSpell *init_typeSpell(int attack, int id, int rate, int ammo);
 void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]);
 ListSpell *init_listspell();
 void update_blitmap (Move* move, SDL_Rect *position);
+void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *texture_type[], TTF_Font* font);
 
 #endif

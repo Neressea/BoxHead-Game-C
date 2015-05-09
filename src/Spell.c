@@ -168,3 +168,31 @@ void update_blitmap (Move* move, SDL_Rect *position){
 
 }
 
+void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *texture_type[], TTF_Font* font){
+	SDL_Rect *pattack = malloc(sizeof(SDL_Rect));
+	SDL_Color textColor = { 0, 0, 0, 0 };
+	
+	char nbAmmo[15] = "Inf";
+	
+	if (current_type->ammo >= 0){
+		sprintf(nbAmmo, "%d", current_type->ammo);
+	}
+
+	SDL_Surface *Surface_Ammo = TTF_RenderText_Solid (font, nbAmmo, textColor);
+	SDL_Texture* Text_Ammo = SDL_CreateTextureFromSurface(rendu, Surface_Ammo);
+
+	pattack->h = PX_H;
+	pattack->w = PX_W;
+	pattack->x = 10;
+	pattack->y = SCREEN_H - PX_W - 25;
+
+	SDL_RenderCopy(rendu, texture_type[current_type->id], NULL, pattack);
+
+	pattack->h = PX_H/2.5;
+	pattack->w = PX_W/2.5;
+	pattack->x = 75;
+	pattack->y = SCREEN_H - PX_W + 30;
+	
+	SDL_RenderCopy(rendu, Text_Ammo, NULL, pattack );
+}
+

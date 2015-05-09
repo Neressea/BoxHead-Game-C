@@ -37,9 +37,10 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y);
 void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen);
 void deleteSpell(ListSpell *current_list);
 void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]);
-TypeSpell *init_typeSpell(int attack, int id, int rate);
+TypeSpell *init_typeSpell(int attack, int id, int rate, int ammo);
 void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]);
 ListSpell *init_listspell();
 void update_blitmap (Move* move, SDL_Rect *position);
+void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *texture_type[], TTF_Font* font);
 
 #endif

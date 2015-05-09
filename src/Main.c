@@ -43,7 +43,7 @@ int main(){
 	int quit = 0;
 	int play = 0;
 	int option = 0;
-	int test = 0;	
+	int test = 0;
 
 	while(screen == 0){
 		SDL_PollEvent(&event);
@@ -182,7 +182,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
-	SDL_Rect *pattack = NULL;
+	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
 	
@@ -215,14 +215,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 		exit(EXIT_FAILURE);
 	}
 
-	load(rendu, map, "./maps/map1");
-	
-	pattack = malloc(sizeof(SDL_Rect));
-
-	pattack->h = PX_H;
-	pattack->w = PX_W;
-	pattack->x = 10;
-	pattack->y = screen_h- PX_W - 10;	
+	load(rendu, map, "./maps/map1");	
 
 	SDL_Event event;
 		
@@ -308,7 +301,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	move->y = 0;
 	moveMap(main_screen, map, key, move);
 
-	SDL_RenderCopy(rendu, texture_type[current_type->id], NULL, pattack);
+	manageSpellType(current_type, rendu, texture_type, font);
 
 	updateSpell(liste_spell, move, main_screen);
 	
