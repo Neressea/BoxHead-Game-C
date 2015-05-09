@@ -43,6 +43,7 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 
 		if (current_direction == 0){
 			cursor->currentSpell->pspell->y += 2*SPEED;
+			
 		}
 		if (current_direction == 3){
 			cursor->currentSpell->pspell->y -= 2*SPEED;
@@ -102,7 +103,6 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->nextSpell = NULL; 
 		if (cursor == NULL){
 			current_list->nextSpell = newlist;
-			//current_type->ammo --;
 		}
 		else{
 			

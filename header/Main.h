@@ -20,5 +20,6 @@ void destroy_texture(int taille, SDL_Texture *tableau[]);
 void compute_tram(int *j, int *trame);
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type);
 void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]);
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen, Map *map);
 
 #endif

@@ -182,7 +182,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
 	SDL_Texture *current_texture = NULL;
-	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
+	TTF_Font* font = TTF_OpenFont("./images/polices/Capture_it.ttf",100);
 	Map *map = malloc(sizeof(Map));
 	ListSpell *liste_spell = init_listspell();
 	
@@ -303,7 +303,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	manageSpellType(current_type, rendu, texture_type, font);
 
-	updateSpell(liste_spell, move, main_screen);
+	updateSpell(liste_spell, move, main_screen, map);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
@@ -455,6 +455,64 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 			*current_type = tab_typeSpell[i-5];
 		}
 	}
+}
+
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen, Map *map){
+	
+	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);	
+	SDL_Rect *test = malloc(sizeof(SDL_Rect));
+
+	deleteSpell(current_list);
+
+	ListSpell *cursor = current_list->nextSpell;
+
+	int current_direction = 0;
+
+	while(cursor != NULL){
+
+		current_direction = cursor->currentSpell->direction;
+		update_blitmap(move, cursor->currentSpell->pspell);
+
+		if (current_direction == 0){
+			
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			test->x = cursor->currentSpell->pspell->x + map->corner->x;
+			test->y = cursor->currentSpell->pspell->y + map->corner->y;
+
+			if (isBuilding(map->buildings, test)){
+				free(cursor);
+				printf("Atteint\n");
+			}
+		}
+		if (current_direction == 3){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+		}
+		if (current_direction == 6){
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+		if (current_direction == 9){
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 12){
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 15){
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+		if (current_direction == 18){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 21){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+		cursor = cursor->nextSpell;
+	}
+
+	free(test);
 }
 
 
