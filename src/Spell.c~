@@ -26,6 +26,24 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 
 }
 
+
+
+void deleteSpell(ListSpell *current_list){
+	
+	ListSpell *cursor = current_list->nextSpell;
+	
+	while(cursor != NULL){
+		if (SDL_GetTicks() - cursor->currentSpell->time > LIFEEXPANC){
+			current_list->nextSpell = cursor->nextSpell;
+			free(cursor);
+			cursor = current_list;
+		}
+		
+		cursor = cursor->nextSpell;		
+
+	}
+}
+
 void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 	
 	SDL_GetWindowSize(main_screen,&screen_w1,&screen_h1);	
@@ -42,8 +60,7 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 		update_blitmap(move, cursor->currentSpell->pspell);
 
 		if (current_direction == 0){
-			cursor->currentSpell->pspell->y += 2*SPEED;
-			
+			cursor->currentSpell->pspell->y += 2*SPEED;		
 		}
 		if (current_direction == 3){
 			cursor->currentSpell->pspell->y -= 2*SPEED;
@@ -70,25 +87,14 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 			cursor->currentSpell->pspell->y -= 2*SPEED;
 			cursor->currentSpell->pspell->x -= 2*SPEED;
 		}
+
+		
+
 		cursor = cursor->nextSpell;
 	}
+
 }
 
-void deleteSpell(ListSpell *current_list){
-	
-	ListSpell *cursor = current_list->nextSpell;
-	
-	while(cursor != NULL){
-		if (SDL_GetTicks() - cursor->currentSpell->time > LIFEEXPANC){
-			current_list->nextSpell = cursor->nextSpell;
-			free(cursor);
-			cursor = current_list;
-		}
-		
-		cursor = cursor->nextSpell;		
-
-	}
-}
 
 void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
 	

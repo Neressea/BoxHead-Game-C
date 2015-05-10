@@ -44,6 +44,56 @@ void deleteSpell(ListSpell *current_list){
 	}
 }
 
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
+	
+	SDL_GetWindowSize(main_screen,&screen_w1,&screen_h1);	
+
+	deleteSpell(current_list);
+
+	ListSpell *cursor = current_list->nextSpell;
+
+	int current_direction = 0;
+
+	while(cursor != NULL){
+
+		current_direction = cursor->currentSpell->direction;
+		update_blitmap(move, cursor->currentSpell->pspell);
+
+		if (current_direction == 0){
+			cursor->currentSpell->pspell->y += 2*SPEED;		
+		}
+		if (current_direction == 3){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+		}
+		if (current_direction == 6){
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+		if (current_direction == 9){
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 12){
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 15){
+			cursor->currentSpell->pspell->y += 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+		if (current_direction == 18){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x += 2*SPEED;
+		}
+		if (current_direction == 21){
+			cursor->currentSpell->pspell->y -= 2*SPEED;
+			cursor->currentSpell->pspell->x -= 2*SPEED;
+		}
+
+		cursor = cursor->nextSpell;
+	}
+
+}
+
+
 void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
 	
 	ListSpell *cursor = current_list->nextSpell;	
