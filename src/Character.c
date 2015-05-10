@@ -128,7 +128,6 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 			current_texture = texture_ennemy[0];
 
 			SDL_RenderCopy(rendu, current_texture, NULL, blit);
-			SDL_RenderPresent(rendu);
 
 			characters = characters->next;
 		}

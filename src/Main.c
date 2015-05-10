@@ -292,6 +292,9 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
 
 	showMap(main_screen, rendu, map);
+
+	//addChar(map->characters, createChar(100, 10, 10, 1, 1, 200, 200, 50, 50, liste_spell));
+
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
 	
 	changeTypeSpell(key, tab_typeSpell,&current_type);
@@ -299,6 +302,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	
 	move->x = 0;
 	move->y = 0;
+
 	moveMap(main_screen, map, key, move);
 
 	manageSpellType(current_type, rendu, texture_type, font);
@@ -306,8 +310,6 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	updateSpell(liste_spell, move, main_screen);
 
 	deleteSpell2(liste_spell, map);
-
-	//
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
