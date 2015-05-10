@@ -20,6 +20,7 @@ typedef struct{
 	int ammo;
 	int rate;
 	int id;
+	int time;
 }TypeSpell;
 
 typedef struct{

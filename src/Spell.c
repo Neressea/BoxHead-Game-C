@@ -97,7 +97,6 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
 	
 	ListSpell *cursor = current_list->nextSpell;	
-	ListSpell *cursor_type = NULL;
 
 	if (key[4] && current_type->ammo != 0){
 		
@@ -105,25 +104,16 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		ListSpell * newlist = malloc(sizeof(ListSpell));
 		newlist->currentSpell = new;
 		newlist->nextSpell = NULL; 
-		if (cursor == NULL){
+
+		if (SDL_GetTicks() - current_type->time > current_type-> rate){
+			if (cursor == NULL){
 			current_list->nextSpell = newlist;
-		}
-		else{
-			
-			while(cursor->nextSpell != NULL){
-				cursor = cursor->nextSpell;
-				if(cursor->currentSpell->type == current_type){
-					cursor_type = cursor;
-				}
 			}
-			
-			if (cursor_type != NULL && SDL_GetTicks() - cursor_type->currentSpell->time < current_type-> rate){
-
-			}else{
-				cursor->nextSpell = newlist;
-				current_type->ammo --;
-			}  
-
+			else{
+			cursor->nextSpell = newlist;
+			}
+			current_type->ammo --;
+			current_type->time = SDL_GetTicks();
 		}		
 	}
 }

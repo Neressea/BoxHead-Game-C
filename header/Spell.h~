@@ -20,11 +20,11 @@ typedef struct{
 	int ammo;
 	int rate;
 	int id;
+	int time;
 }TypeSpell;
 
 typedef struct{
-	int direction;
-	int time;	
+	int direction;	
 	TypeSpell *type;
 	SDL_Rect *pspell;
 }Spell;
@@ -43,5 +43,6 @@ void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *table
 ListSpell *init_listspell();
 void update_blitmap (Move* move, SDL_Rect *position);
 void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *texture_type[], TTF_Font* font);
+void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen);
 
 #endif
