@@ -478,10 +478,10 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 		current_direction = cursor->currentSpell->direction;
 
 		if (current_direction == 0){
-			test->y -= 2*SPEED;		
+			test->y -= 6*SPEED;		
 		}
 		if (current_direction == 3){
-			test->y += 2*SPEED;
+			test->y += 6*SPEED;
 		}
 		if (current_direction == 6){
 			test->x += 3*SPEED;
@@ -508,7 +508,7 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 
 		// On peut enlever cette partie en recoupant les sprites!
 
-		if (cantMove(map->buildings, test)){
+		if (cantMoveSpell(map->buildings, test)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);

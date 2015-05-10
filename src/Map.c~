@@ -374,6 +374,8 @@ void updateWall(ListBuilding* lb){
 			c = c->next;
 		}
 
+		
+
 	}
 
 }

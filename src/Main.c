@@ -293,6 +293,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	showMap(main_screen, rendu, map);
 
+	updateWall(map->buildings);
+
 	//addChar(map->characters, createChar(100, 10, 10, 1, 1, 200, 200, 50, 50, liste_spell));
 
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
@@ -508,7 +510,7 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 
 		// On peut enlever cette partie en recoupant les sprites!
 
-		if (cantMove(map->buildings, test)){
+		if (cantMoveSpell(map->buildings, test)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);

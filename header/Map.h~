@@ -28,9 +28,6 @@ typedef struct{
 	SDL_Rect *corner;
 }Map;
 
-typedef struct {
-	int x, y;
-}Move;
 
 /**
 * Load a map from a text file.
@@ -50,7 +47,7 @@ void destroyMap(Map* map);
 * rendu : the renderer where we blit the map
 * map : the map tp blit on the renderer
 */
-void show(SDL_Window* screen, SDL_Renderer *rendu, Map* map);
+void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map);
 
 /**
 * buildings : the lst of the buildings of the map
@@ -71,7 +68,7 @@ void save(Map* m);
 * map : the map to move
 * key : the input events
 */
-void moveMap(Map* map, int key[], Move* move);
+void moveMap(SDL_Window *screen,Map* map, int key[], Move* move);
 
 void addWall(Map *map, int x, int y);
 
@@ -81,6 +78,14 @@ void addWall(Map *map, int x, int y);
 void encircleMap(Map* map);
 
 int cantMove(ListBuilding* lb, SDL_Rect* pos);
+
+void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
+
+void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]);
+
+int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos);
+
+void updateWall(ListBuilding* lb);
 
 #endif
 

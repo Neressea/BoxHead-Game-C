@@ -81,5 +81,11 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos);
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
 
+void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]);
+
+int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos);
+
+void updateWall(ListBuilding* lb);
+
 #endif
 
