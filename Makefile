@@ -15,7 +15,7 @@
 
 
 # Création de l'exécutable 'Light'
-all: create Map.o Character.o Building.o Game.o Spell.o Main.o
+all: create IA.o Map.o Character.o Building.o Game.o Spell.o Main.o
 	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
@@ -23,6 +23,9 @@ create:
 	mkdir -p bin
 
 ############ Compilation de l'ensemble des fichiers ############
+IA.o: ./src/IA.o ./header/*.h
+	gcc -Wall -Werror -Wextra -c ./src/IA.c -o ./bin/IA.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
+
 Main.o: ./src/Main.c ./header/*.h
 	gcc -Wall -Werror -Wextra -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  

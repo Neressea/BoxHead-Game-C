@@ -9,6 +9,7 @@
 #include <time.h>
 #include "Map.h"
 #include "Globals.h"
+#include "IA.h"
 
 int main();
 void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu);

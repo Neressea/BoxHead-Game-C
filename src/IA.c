@@ -1,36 +1,34 @@
-#include "./header/IA.h"
+#include "../header/IA.h"
 
 void manageEnnemies(Map* map){
+
 	int level = map->characters->current->level; //We get the level of the player to define the difficulty
 	int numberOfEnnemies = size(map->characters) - 1;
 
 	//If there is not enough ennemies, we add them
 	if(numberOfEnnemies < level * level){
-		int numberToAdd = level * level - numberOfEnnemies;
+		int numberToAdd = level * 2 - numberOfEnnemies;
 		
-		for(int i = 0; i < numberToAdd; ++i){
-			
+		int i;
+		for(i = 0; i < numberToAdd; ++i){
+			createEnnemy(map, level);
 		}
 	}
 }
 
-Character* createEnnemy(Map* map, int level){
+void createEnnemy(Map* map, int level){
 
 	//We select the position where the ennemy will appear
-	int width = map->width/PX_W;
-	int height = map->height/PX_H;
+	int width = map->width;
+	int height = map->height;
 
 	SDL_Rect *pos = malloc(sizeof(SDL_Rect));
 
 	do{
-
-		pos->x = rand()%width;
-		pos->y = rand()%height;
-
+		pos->x = (rand() * PX_W)%width;
+		pos->y = (rand() * PX_H)%height;
 	}while(!isBuilding(map->buildings, pos));
 
-	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x, pos->y, NULL);
+	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x, pos->y, PX_W, PX_H, NULL);
 	addChar(map->characters, ch);
-
-	return ch;
 }

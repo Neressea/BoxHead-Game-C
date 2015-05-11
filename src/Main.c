@@ -296,6 +296,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	updateWall(map->buildings);
 
 	//addChar(map->characters, createChar(100, 10, 10, 1, 1, 200, 200, 50, 50, liste_spell));
+	manageEnnemies(map);
 
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
 	

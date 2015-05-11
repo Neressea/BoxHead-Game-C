@@ -7,7 +7,7 @@
 #include "Character.h"
 
 void manageEnnemies(Map* map);
-Character* createEnnemy(int level);
+void createEnnemy(Map* m, int level);
 int numberOfEnnemies(Map* map);
 
 #endif
