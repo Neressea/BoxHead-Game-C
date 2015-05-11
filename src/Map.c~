@@ -306,11 +306,11 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell){
 	int w;
 	
 	if (spell->direction == 6 || spell->direction == 9){
-		h = 30;
-		w = 70;
+		h = SPELL_W;
+		w = SPELL_H;
 	}else{
-		h = 70;
-		w = 30;
+		h = SPELL_H;
+		w = SPELL_W;
 	}
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 

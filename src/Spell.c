@@ -18,7 +18,7 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 		c->pspell->h = SPELL_H;
 		c->pspell->w = SPELL_W;
 		c->pspell->y = y;
-		c->pspell->x = x + 20;
+		c->pspell->x = x + 10;
 	}
 
 	
@@ -37,6 +37,7 @@ void deleteSpell(ListSpell *current_list){
 	while(cursor != NULL){
 		if (SDL_GetTicks() - cursor->currentSpell->time > LIFEEXPANC){
 			current_list->nextSpell = cursor->nextSpell;
+			free(cursor->currentSpell);			
 			free(cursor);
 			cursor = current_list;
 		}
