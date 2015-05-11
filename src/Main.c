@@ -316,10 +316,10 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	updateSpell(liste_spell, move, main_screen);
 
 	deleteSpell2(liste_spell, map, listitem);
-	
-	Blit_attack(liste_spell,rendu, texture_attack);
 
 	updateItem(listitem, rendu, texture_item);
+	
+	Blit_attack(liste_spell,rendu, texture_attack);
 		
 	SDL_RenderPresent(rendu);
 

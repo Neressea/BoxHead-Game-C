@@ -21,8 +21,6 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 		c->pspell->x = x + 10;
 	}
 
-	
-	
 
 	return c;
 

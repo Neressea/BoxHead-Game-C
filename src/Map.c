@@ -322,9 +322,9 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 				cant=1;
 				if (b->current->hp > 0){
 					b->current->hp =- spell->type->attack;
-					if (b->current->hp < 0){
+					if (b->current->hp <= 0){
 						b->current->hp = 0;
-						poseItem(listitem, b->current->x - PX_W/2, b->current->y - PX_H/2); 
+						poseItem(listitem, b->current->x, b->current->y); 
 					}
 				}
 			}

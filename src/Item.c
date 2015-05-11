@@ -47,7 +47,7 @@ Item* createItem(int id, int x, int y){
 void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	ListItem *cursor = listitem->next;
 	
-	/*while(cursor != NULL){
+	while(cursor != NULL){
 		if (SDL_GetTicks() - cursor->current->time > LIFEEXPANC){
 			listitem->next = cursor->next;
 			free(cursor->current);			
@@ -55,14 +55,11 @@ void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[])
 			cursor = listitem;
 		}
 		cursor = cursor->next;		
-	}*/
+	}
 
 	cursor = listitem->next;
 	
 	while(cursor != NULL){
-
-		cursor->current->pitem->x = 0;
-		cursor->current->pitem->y = 0;
 		                
 		SDL_RenderCopy(rendu, tableau[cursor->current->id], NULL, cursor->current->pitem);		
 
