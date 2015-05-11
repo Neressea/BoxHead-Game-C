@@ -469,7 +469,6 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 void deleteSpell2(ListSpell *current_list, Map *map){
 	
 	SDL_Rect *test = malloc(sizeof(SDL_Rect));
-	int current_direction = 0;
 
 	ListSpell *cursor = current_list->nextSpell;	
 
@@ -478,38 +477,6 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 		test->x = cursor->currentSpell->pspell->x + map->corner->x;
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
-		current_direction = cursor->currentSpell->direction;
-
-		if (current_direction == 0){
-			test->y -= 6*SPEED;		
-		}
-		if (current_direction == 3){
-			test->y += 6*SPEED;
-		}
-		if (current_direction == 6){
-			test->x += 3*SPEED;
-		}
-		if (current_direction == 9){
-			test->x -= 3*SPEED;
-		}
-		if (current_direction == 12){
-			test->y -= 6*SPEED;
-			test->x -= 6*SPEED;
-		}
-		if (current_direction == 15){
-			test->y -= 6*SPEED;
-			test->x += 6*SPEED;
-		}
-		if (current_direction == 18){
-			test->y += 6*SPEED;
-			test->x -= 6*SPEED;
-		}
-		if (current_direction == 21){
-			test->y += 6*SPEED;
-			test->x += 6*SPEED;
-		}
-
-		// On peut enlever cette partie en recoupant les sprites!
 
 		if (cantMoveSpell(map->buildings, test, cursor->currentSpell)){
 			

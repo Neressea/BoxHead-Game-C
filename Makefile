@@ -15,7 +15,8 @@
 
 
 # Création de l'exécutable 'Light'
-all: create IA.o Map.o Character.o Building.o Game.o Spell.o Main.o
+
+all: create IA.o Map.o Character.o Building.o Game.o Spell.o Item.o Main.o
 	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
@@ -43,6 +44,9 @@ Game.o: ./src/Game.c ./header/*.h
 
 Spell.o: ./src/Spell.c ./header/*.h
 	gcc -Wall -c ./src/Spell.c -o ./bin/Spell.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
+
+Item.o: ./src/Item.c ./header/*.h
+	gcc -Wall -c ./src/Item.c -o ./bin/Item.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 # Suppression des fichiers temporaires
 clean:
