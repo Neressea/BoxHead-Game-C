@@ -181,9 +181,11 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
+	SDL_Texture *texture_item[NB_ITEM] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	TTF_Font* font = TTF_OpenFont("./images/polices/Capture_it.ttf",100);
 	Map *map = malloc(sizeof(Map));
+	ListItem * listitem = NULL;
 	ListSpell *liste_spell = init_listspell();
 	
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
@@ -207,6 +209,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	init_texture_ennemy(rendu, texture_ennemy);
 	init_texture_attack(rendu, texture_attack);
 	init_type_attack(rendu, texture_type);
+	texture_item[0] = IMG_LoadTexture(rendu, "./images/sprites/item0.png");
 	
 	current_texture = texture_heros[0];
 
@@ -296,6 +299,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	updateWall(map->buildings);
 
 	//addChar(map->characters, createChar(100, 10, 10, 1, 1, 200, 200, 50, 50, liste_spell));
+	manageEnnemies(map);
 
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
 	
@@ -314,6 +318,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	deleteSpell2(liste_spell, map);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
+
+	updateItem(listitem, rendu, texture_item);
 		
 	SDL_RenderPresent(rendu);
 
@@ -468,7 +474,6 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 void deleteSpell2(ListSpell *current_list, Map *map){
 	
 	SDL_Rect *test = malloc(sizeof(SDL_Rect));
-	//int current_direction = 0;
 
 	ListSpell *cursor = current_list->nextSpell;	
 
@@ -477,11 +482,6 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 		test->x = cursor->currentSpell->pspell->x + map->corner->x;
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
-		//current_direction = cursor->currentSpell->direction;
-
-		
-
-		// On peut enlever cette partie en recoupant les sprites!
 
 		if (cantMoveSpell(map->buildings, test, cursor->currentSpell)){
 			

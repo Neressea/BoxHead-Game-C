@@ -181,9 +181,11 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
 	SDL_Texture *texture_attack[NB_TYP_SPELL*NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_type[NB_TYP_SPELL] = {NULL};
+	SDL_Texture *texture_item[NB_ITEM] = {NULL};
 	SDL_Texture *current_texture = NULL;
 	TTF_Font* font = TTF_OpenFont("./images/polices/Capture_it.ttf",100);
 	Map *map = malloc(sizeof(Map));
+	ListItem * listitem = NULL;
 	ListSpell *liste_spell = init_listspell();
 	
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
@@ -207,6 +209,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	init_texture_ennemy(rendu, texture_ennemy);
 	init_texture_attack(rendu, texture_attack);
 	init_type_attack(rendu, texture_type);
+	texture_item[0] = IMG_LoadTexture(rendu, "./images/sprites/item0.png");
 	
 	current_texture = texture_heros[0];
 
@@ -312,9 +315,11 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	updateSpell(liste_spell, move, main_screen);
 
-	deleteSpell2(liste_spell, map);
+	deleteSpell2(liste_spell, map, listitem);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
+
+	updateItem(listitem, rendu, texture_item);
 		
 	SDL_RenderPresent(rendu);
 
@@ -466,7 +471,7 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 	}
 }
 
-void deleteSpell2(ListSpell *current_list, Map *map){
+void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 	
 	SDL_Rect *test = malloc(sizeof(SDL_Rect));
 
@@ -478,7 +483,7 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
 
-		if (cantMoveSpell(map->buildings, test, cursor->currentSpell)){
+		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);

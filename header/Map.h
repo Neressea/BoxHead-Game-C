@@ -11,6 +11,7 @@
 #include "Character.h"
 #include "Main.h"
 #include "Globals.h"
+#include "Item.h"
 
 /**
 * Defines what the map is.
@@ -83,7 +84,7 @@ void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
 
 void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]);
 
-int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell);
+int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem);
 
 void updateWall(ListBuilding* lb);
 

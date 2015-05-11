@@ -26,6 +26,10 @@
 	#define SPELL_H 70
 	#define SPELL_W 20 
 
+	//Globals for the items
+	#define ITEM_H 10
+	#define ITEM_W 10
+
 
 typedef struct {
 	int x, y;

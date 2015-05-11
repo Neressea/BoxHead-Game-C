@@ -24,9 +24,10 @@ void poseItem(ListItem *listitem, int x, int y){
 }
 
 Item* createItem(int id, int x, int y){
-	Item* b = malloc(sizeof(Item));
+	Item* b = (Item*) malloc(sizeof(Item));
 	b->id = id;
 	b->time = SDL_GetTicks();
+	b->pitem = malloc(sizeof(SDL_Rect));
 	b->pitem->h = ITEM_H;
 	b->pitem->w = ITEM_W;
 	b->pitem->x = x;
@@ -35,7 +36,7 @@ Item* createItem(int id, int x, int y){
 	return b;
 }
 
-void updateItem(ListItem *listitem){
+void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	ListItem *cursor = listitem;
 	
 	while(cursor != NULL){
@@ -45,9 +46,22 @@ void updateItem(ListItem *listitem){
 			free(cursor);
 			cursor = listitem;
 		}
+		cursor = cursor->next;		
+	}
+
+	cursor = listitem;
+	
+	while(cursor != NULL){
+		                
+		SDL_RenderCopy(rendu, tableau[cursor->current->id], NULL, cursor->current->pitem);
+		
 		
 		cursor = cursor->next;		
 
 	}
+
+	SDL_RenderPresent(rendu);
+
+	
 }
 

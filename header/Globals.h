@@ -14,6 +14,7 @@
 	#define NB_SPRITES_H 24
 	#define NB_SPRITES_A 8
 	#define FPS 10
+	#define NB_ITEM 2
 
 	//GLobals for the map
 	#define NB_TEXTS_MAP 2

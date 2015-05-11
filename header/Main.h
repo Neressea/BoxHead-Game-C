@@ -10,6 +10,7 @@
 #include "Map.h"
 #include "Globals.h"
 #include "IA.h"
+#include "Item.h"
 
 int main();
 void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu);
@@ -21,6 +22,6 @@ void destroy_texture(int taille, SDL_Texture *tableau[]);
 void compute_tram(int *j, int *trame);
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type);
 void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]);
-void deleteSpell2(ListSpell *current_list, Map *map);
+void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem);
 
 #endif

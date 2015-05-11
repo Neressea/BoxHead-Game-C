@@ -297,7 +297,7 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 	return cant;
 }
 
-int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell){
+int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem){
 	int cant = 0;
 
 	ListBuilding* b = lb;
@@ -321,9 +321,10 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell){
 			if(pos->y + h >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
 				if (b->current->hp > 0){
-					b->current->hp =- 100;
+					b->current->hp =- spell->type->attack;
 					if (b->current->hp < 0){
 						b->current->hp = 0;
+						//poseItem(listitem, b->current->x - PX_W/2, b->current->y - PX_H/2); 
 					}
 				}
 			}
