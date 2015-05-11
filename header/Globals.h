@@ -9,8 +9,8 @@
 	#define SCREEN_H 480
 	#define PX_H 100
 	#define PX_W 100
-	#define PXH_H 100
-	#define PXH_W 70
+	#define PXH_H 80
+	#define PXH_W 40
 	#define NB_SPRITES_H 24
 	#define NB_SPRITES_A 8
 	#define FPS 10
@@ -23,6 +23,8 @@
 	//Globals for the spell
 	#define LIFEEXPANC 10000
 	#define NB_TYP_SPELL 2
+	#define SPELL_H 70
+	#define SPELL_W 20 
 
 
 typedef struct {

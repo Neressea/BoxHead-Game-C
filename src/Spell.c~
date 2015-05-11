@@ -11,7 +11,7 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	c->pspell = malloc(sizeof(SDL_Rect));
 	if (*direction == 6 || *direction == 9){
 		c->pspell->h = 30;
-		c->pspell->w = 50;
+		c->pspell->w = 70;
 		c->pspell->y = y + 20;
 		c->pspell->x = x;
 	}else{
