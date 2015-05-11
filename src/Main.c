@@ -510,7 +510,7 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 
 		// On peut enlever cette partie en recoupant les sprites!
 
-		if (cantMoveSpell(map->buildings, test)){
+		if (cantMoveSpell(map->buildings, test, cursor->currentSpell)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);

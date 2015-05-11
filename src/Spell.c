@@ -10,16 +10,18 @@ Spell* createSpell(TypeSpell *type, int *direction, int x, int y){
 	c->time = SDL_GetTicks();
 	c->pspell = malloc(sizeof(SDL_Rect));
 	if (*direction == 6 || *direction == 9){
-		c->pspell->h = 50;
+		c->pspell->h = 30;
 		c->pspell->w = 70;
 		c->pspell->y = y + 20;
+		c->pspell->x = x;
 	}else{
-		c->pspell->h = 100;
-		c->pspell->w = 70;
+		c->pspell->h = 70;
+		c->pspell->w = 30;
 		c->pspell->y = y;
+		c->pspell->x = x + 20;
 	}
 
-	c->pspell->x = x;
+	
 	
 
 	return c;
