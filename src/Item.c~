@@ -2,25 +2,33 @@
 
 void poseItem(ListItem *listitem, int x, int y){
 
-	//int hasard;
+	int hasard;
 
-	//ListItem *cursor = listitem;
+	Item *it = createItem(0,x,y);
+	ListItem *cursor = listitem->next;
 	ListItem *new = malloc(sizeof(ListItem));
-	new->current = createItem(0,x,y);
+	new->current = it;
 	new->next = NULL;
 
-	/*while(cursor != NULL){
-		if (cursor->next == NULL){
-			hasard = rand()%10;
-			if(hasard < 8){
-				cursor->next=new;
-			}else{
+	hasard = rand()%10;
 
-			}
-			break;
-		} 
-		cursor=cursor->next;
-	}*/
+	if (cursor == NULL){
+		if(hasard <8){
+			listitem->next=new;	
+		}
+	}else{
+		while(cursor != NULL){
+			if (cursor->next == NULL){
+				if(hasard < 8){
+					cursor->next=new;
+				}
+
+				break;
+			} 
+			cursor=cursor->next;
+		}
+	}
+	
 }
 
 Item* createItem(int id, int x, int y){
@@ -37,9 +45,9 @@ Item* createItem(int id, int x, int y){
 }
 
 void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]){
-	ListItem *cursor = listitem;
+	ListItem *cursor = listitem->next;
 	
-	while(cursor != NULL){
+	/*while(cursor != NULL){
 		if (SDL_GetTicks() - cursor->current->time > LIFEEXPANC){
 			listitem->next = cursor->next;
 			free(cursor->current);			
@@ -47,21 +55,32 @@ void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[])
 			cursor = listitem;
 		}
 		cursor = cursor->next;		
-	}
+	}*/
 
-	cursor = listitem;
+	cursor = listitem->next;
 	
 	while(cursor != NULL){
+
+		cursor->current->pitem->x = 0;
+		cursor->current->pitem->y = 0;
 		                
 		SDL_RenderCopy(rendu, tableau[cursor->current->id], NULL, cursor->current->pitem);
 		
-		
+		printf("Atteint");		
+
 		cursor = cursor->next;		
 
 	}
 
-	SDL_RenderPresent(rendu);
-
 	
+}
+
+ListItem* init_listItem(){
+	ListItem *b = malloc(sizeof(ListItem));
+	b->current = NULL;
+	b->next = NULL;
+
+	return b;
+
 }
 

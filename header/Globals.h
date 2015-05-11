@@ -28,8 +28,8 @@
 	#define SPELL_W 20 
 
 	//Globals for the items
-	#define ITEM_H 10
-	#define ITEM_W 10
+	#define ITEM_H 30
+	#define ITEM_W 30
 
 
 typedef struct {

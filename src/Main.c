@@ -185,7 +185,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_Texture *current_texture = NULL;
 	TTF_Font* font = TTF_OpenFont("./images/polices/Capture_it.ttf",100);
 	Map *map = malloc(sizeof(Map));
-	ListItem * listitem = NULL;
+	ListItem * listitem = init_listItem();
 	ListSpell *liste_spell = init_listspell();
 	
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));

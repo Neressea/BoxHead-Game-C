@@ -14,6 +14,7 @@
 	#define NB_SPRITES_H 24
 	#define NB_SPRITES_A 8
 	#define FPS 10
+	#define NB_ITEM 2
 
 	//GLobals for the map
 	#define NB_TEXTS_MAP 2
@@ -27,8 +28,8 @@
 	#define SPELL_W 20 
 
 	//Globals for the items
-	#define ITEM_H 10
-	#define ITEM_W 10
+	#define ITEM_H 20
+	#define ITEM_W 20
 
 
 typedef struct {

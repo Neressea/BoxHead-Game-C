@@ -315,7 +315,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	updateSpell(liste_spell, move, main_screen);
 
-	deleteSpell2(liste_spell, map);
+	deleteSpell2(liste_spell, map, listitem);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 
@@ -471,7 +471,7 @@ void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_
 	}
 }
 
-void deleteSpell2(ListSpell *current_list, Map *map){
+void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 	
 	SDL_Rect *test = malloc(sizeof(SDL_Rect));
 
@@ -483,7 +483,7 @@ void deleteSpell2(ListSpell *current_list, Map *map){
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
 
-		if (cantMoveSpell(map->buildings, test, cursor->currentSpell)){
+		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);

@@ -24,5 +24,6 @@ struct ListItem{
 void poseItem(ListItem *listitem, int x, int y);
 Item* createItem(int id, int x, int y);
 void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]);
+ListItem* init_listItem();
 
 #endif
