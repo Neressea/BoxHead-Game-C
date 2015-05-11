@@ -29,6 +29,8 @@ void createEnnemy(Map* map, int level){
 		pos->y = (rand() * PX_H)%height;
 	}while(!isBuilding(map->buildings, pos));
 
+	printf("%d %d\n", pos->x, pos->y);
+
 	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x, pos->y, PX_W, PX_H, NULL);
 	addChar(map->characters, ch);
 }
