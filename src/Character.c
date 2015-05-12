@@ -242,3 +242,20 @@ void add_xp(Character* ch, int dam){
 	}
 	
 } 
+
+void destroyChara(Character *c){
+	free(c->pos);
+	destroyListSpell(c->spells);
+	free(c);
+}
+
+void destroyListChara(ListChar *lc){
+	ListChar* nextC = NULL;
+
+	while(lc != NULL){
+		nextC = lc->next;
+		destroyChara(lc->current);
+		free(lc);
+		lc = nextC;
+	}	
+}

@@ -27,5 +27,6 @@ struct ListBuilding{
 };
 
 Building* createBuilding(int x, int y, int hp, int attack, int defense);
+void destroyListBuild(ListBuilding* lb);
 
 #endif

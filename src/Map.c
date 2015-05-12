@@ -71,6 +71,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
 
 	fclose(file);
+	free(line);
 }
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i){
@@ -112,23 +113,12 @@ void destroyMap(Map* map){
 	free(map->textures);
 
 	//We free the list of buildings
-	ListBuilding *b = map->buildings;
-	ListBuilding *nextB = NULL;
-	while(b != NULL){
-		nextB = b->next;
-		free(b->current);
-		free(b);
-		b = nextB;
-	}
+	destroyListBuild(map->buildings);
 
 	//We free the list of characters
-	ListChar* lc = map->characters;
-	ListChar* nextC = NULL;
-	while(lc != NULL){
-		nextC = lc->next;
-		free(lc);
-		lc = nextC;
-	}
+	destroyListChara(map->characters);
+
+	free(map);
 }
 
 /**

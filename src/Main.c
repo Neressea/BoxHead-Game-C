@@ -33,7 +33,7 @@ int main(){
 	SDL_Event event1;
 
 	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
-    	SDL_Surface *Surface_Title = TTF_RenderText_Solid (font, "The Game", textColor);
+    SDL_Surface *Surface_Title = TTF_RenderText_Solid (font, "The Game", textColor);
 	SDL_Surface *Surface_Tsubtitle = TTF_RenderText_Solid (font, "Appuyez sur une touche", textColor);
 	SDL_Texture* Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
@@ -84,17 +84,26 @@ int main(){
 		}
 
 		SDL_RenderPresent(rendu);
-
-	
 	}
 
+	SDL_FreeSurface(Surface_Title);
 	Surface_Title = TTF_RenderText_Solid (font, "New Game", textColor);
+
+	SDL_FreeSurface(Surface_Tsubtitle);
 	Surface_Tsubtitle = TTF_RenderText_Solid (font, "Options", textColor);
+
 	SDL_Surface *Surface_Tsubtitle2 = TTF_RenderText_Solid (font, "Quit", textColor);
+
+	SDL_DestroyTexture(Text_title);
 	Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
+	SDL_FreeSurface(Surface_Title);
+
+	SDL_DestroyTexture(Text_subtitle);
 	Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
+	SDL_FreeSurface(Surface_Tsubtitle);
 
 	SDL_Texture *Text_subtitle2 = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle2);
+	SDL_FreeSurface(Surface_Tsubtitle2);
 
 	point->y = screen_h/2 - screen_h/3.2;
 
@@ -168,9 +177,18 @@ int main(){
 	
 	free(title);
 	free(title2);
-	TTF_CloseFont(font);	
+	free(point);
+	TTF_CloseFont(font);
+	SDL_DestroyTexture(Text_title);
+	SDL_DestroyTexture(Text_subtitle);
+	SDL_DestroyTexture(Pointeur);	
+	SDL_DestroyTexture(Text_subtitle2);
+	SDL_DestroyRenderer(rendu);
+	SDL_DestroyWindow(main_screen);
 	IMG_Quit();
+	SDL_VideoQuit();
 	SDL_Quit();
+	TTF_Quit();
 
 	return EXIT_SUCCESS;
 }
@@ -192,7 +210,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
 	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
 	TypeSpell *current_type = tab_typeSpell[0];
-	
+
 	Move *move = malloc(sizeof(Move));
 	SDL_Texture** texture_chara[] = {texture_heros, texture_ennemy};
 	
@@ -203,7 +221,6 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	int limit = 0;
 	int test = 0;
 
-	SDL_SetRenderDrawColor(rendu, 0, 255, 255, 255);
 	SDL_RenderClear(rendu);
 	
 	init_texture(rendu, texture_heros);
@@ -300,7 +317,6 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	updateWall(map->buildings);
 
-	//addChar(map->characters, createChar(100, 10, 10, 1, 1, 200, 200, 50, 50, liste_spell));
 	manageEnnemies(map);
 
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
@@ -354,12 +370,48 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 		}
 
 	}
+
+	int i=0;
+	for (i = 0; i < 2; ++i)
+	{
+		free(tab_typeSpell[i]);
+	}
+
+	for (i = 0; i < NB_SPRITES_H + NB_SPRITES_A; ++i)
+	{
+		SDL_DestroyTexture(texture_heros[i]);
+	}
+
+	for (i = 0; i < NB_SPRITES_H; ++i)
+	{
+		SDL_DestroyTexture(texture_ennemy[i]);
+	}
+
+	for (i = 0; i < NB_TYP_SPELL*NB_SPRITES_A; ++i)
+	{
+		SDL_DestroyTexture(texture_attack[i]);
+	}
+
+	for (i = 0; i < NB_TYP_SPELL; ++i)
+	{
+		SDL_DestroyTexture(texture_type[i]);
+	}
+
+	for (i = 0; i < NB_ITEM; ++i)
+	{
+		SDL_DestroyTexture(texture_item[i]);
+	}
 	
+	destroyListItem(listitem);
+	destroyListSpell(liste_spell);
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
 	destroyMap(map);
 	SDL_DestroyRenderer(rendu);
 	SDL_DestroyWindow(main_screen);
+	free(tab_typeSpell);
+	free(move);
+	TTF_CloseFont(font);
 	
 }
 
@@ -558,6 +610,17 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 	plevel->y = plevel->y + 40;
 
 	SDL_RenderCopy(rendu,Text_le, NULL, plevel);
+
+	SDL_DestroyTexture(Text_level);
+	SDL_DestroyTexture(Text_le);
+	SDL_DestroyTexture(Text_health);
+	SDL_DestroyTexture(Text_hp);
+	SDL_FreeSurface(Surface_health);
+	SDL_FreeSurface(Surface_hp);
+	SDL_FreeSurface(Surface_level);
+	SDL_FreeSurface(Surface_le);
+	free(phealth);
+	free(plevel);
 
 }
 

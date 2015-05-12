@@ -69,4 +69,8 @@ ListChar* removeKilled(ListChar* characters);
 
 void add_xp(Character* ch, int dam);
 
+void destroyChara(Character* c);
+
+void destroyListChara(ListChar *lc);
+
 #endif

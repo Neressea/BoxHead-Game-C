@@ -29,5 +29,7 @@ void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[],
 ListItem* init_listItem();
 int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner, int Itemcaught[]);
 void effect_item(int Itemcaught[], TypeSpell **tab_typeSpell, Character * hero);
+void destroyListItem(ListItem *li);
+void destroyItem(Item *i);
 
 #endif

@@ -45,5 +45,7 @@ ListSpell *init_listspell();
 void update_blitmap (Move* move, SDL_Rect *position);
 void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *texture_type[], TTF_Font* font);
 void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen);
+void destroyListSpell(ListSpell* ls);
+void destroySpell(Spell* s);
 
 #endif

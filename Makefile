@@ -28,7 +28,7 @@ IA.o: ./src/IA.c ./header/*.h
 	gcc -Wall -Werror -Wextra -c ./src/IA.c -o ./bin/IA.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
 
 Main.o: ./src/Main.c ./header/*.h
-	gcc -Wall -Werror -Wextra -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
+	gcc -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 Map.o: ./src/Map.c ./header/*.h
 	gcc -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf

@@ -129,4 +129,19 @@ void effect_item(int Itemcaught[], TypeSpell **tab_typeSpell, Character * hero){
 
 }
 
+void destroyItem(Item *i){
+	//free(i->pitem);
+	free(i);
+}
+
+void destroyListItem(ListItem *li){
+	ListItem *succ;
+	while(li){
+		succ = li->next;
+		destroyItem(li->current);
+		free(li);
+		li = succ;
+	}
+}
+
 

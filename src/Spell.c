@@ -191,6 +191,23 @@ void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *
 	SDL_RenderCopy(rendu, Text_Ammo, NULL, pattack );
 
 	free(pattack);
+	SDL_FreeSurface(Surface_Ammo);
+	SDL_DestroyTexture(Text_Ammo);
+}
+
+void destroyListSpell(ListSpell* ls){
+	ListSpell *succ;
+	while(ls){
+		succ = ls->nextSpell;
+		destroySpell(ls->currentSpell);
+		free(ls);
+		ls = succ;
+	}
+}
+
+void destroySpell(Spell* s){
+	//free(s->pspell);
+	free(s);
 }
 
 

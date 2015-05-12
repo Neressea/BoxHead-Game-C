@@ -32,5 +32,7 @@ void createEnnemy(Map* map, int level){
 
 	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, PX_W, PX_H, NULL);
 	addChar(map->characters, ch);
+
+	free(pos);
 }
 
