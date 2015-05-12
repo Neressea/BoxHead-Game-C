@@ -211,6 +211,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	init_texture_attack(rendu, texture_attack);
 	init_type_attack(rendu, texture_type);
 	texture_item[0] = IMG_LoadTexture(rendu, "./images/sprites/item0.png");
+	texture_item[1] = IMG_LoadTexture(rendu, "./images/sprites/item1.png");
 	
 	current_texture = texture_heros[0];
 
@@ -534,7 +535,7 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 
 	SDL_RenderCopy(rendu,Text_health, NULL, phealth);
 
-	phealth->y = phealth->y + 20;
+	phealth->y = phealth->y + 40;
 
 	SDL_RenderCopy(rendu,Text_hp, NULL, phealth);
 
@@ -553,7 +554,8 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 
 	SDL_RenderCopy(rendu,Text_level, NULL, plevel);
 
-	plevel->y = plevel->y + 20;
+	plevel->w = 50;
+	plevel->y = plevel->y + 40;
 
 	SDL_RenderCopy(rendu,Text_le, NULL, plevel);
 
