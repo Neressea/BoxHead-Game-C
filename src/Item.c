@@ -84,6 +84,7 @@ ListItem* init_listItem(){
 int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
 	int cant = 0;
 
+	ListItem* p = listitem;
 	ListItem* b = listitem->next;
 
 	while(cant==0 && b != NULL){
@@ -93,11 +94,19 @@ int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
 			if(pos->y + PXH_H >= b->current->pitem->y + corner ->y && pos->y <= b->current->pitem->y + corner -> y + ITEM_W){
 				cant=1;
 
-				printf("atteint\n");				
+				p->next=b->next;
 
+				free(b->current);
+
+				free(b);
+
+				if (p->next != NULL){
+					b=p->next;
+				}
 
 			}
 		}
+		p = p->next;
 		b = b->next;
 	}
 	return cant;
