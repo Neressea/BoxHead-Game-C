@@ -81,3 +81,34 @@ ListItem* init_listItem(){
 
 }
 
+int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
+	int cant = 0;
+
+	ListItem* p = listitem;
+	ListItem* b = listitem->next;
+
+	while(cant==0 && b != NULL){
+
+		//If we are between the x position of the building
+		if(pos->x + PXH_W >= b->current->pitem->x + corner->x && pos->x <= b->current->pitem->x + corner->x + ITEM_W){
+			if(pos->y + PXH_H >= b->current->pitem->y + corner ->y && pos->y <= b->current->pitem->y + corner -> y + ITEM_W){
+				cant=1;
+
+				p->next=b->next;
+
+				free(b->current);
+
+				free(b);
+
+				if (p->next != NULL){
+					b=p->next;
+				}
+
+			}
+		}
+		p = p->next;
+		b = b->next;
+	}
+	return cant;
+}
+

@@ -319,6 +319,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	updateItem(listitem, rendu, texture_item, move);
 	
+	catchItem(map->characters->current->pos, listitem, map->corner);
+
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
 	SDL_RenderPresent(rendu);

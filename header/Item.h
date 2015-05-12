@@ -26,5 +26,6 @@ void poseItem(ListItem *listitem, int x, int y);
 Item* createItem(int id, int x, int y);
 void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[], Move* move);
 ListItem* init_listItem();
+int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner);
 
 #endif
