@@ -195,7 +195,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	
 	Move *move = malloc(sizeof(Move));
 	SDL_Texture** texture_chara[] = {texture_heros, texture_ennemy};
-
+	
+	int Itemcaught[NB_ITEM]= {0};
 	int quit = 0;
 	int key[7] = {0};
 	int direction = 0;
@@ -319,7 +320,9 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	updateItem(listitem, rendu, texture_item, move);
 	
-	catchItem(map->characters->current->pos, listitem);
+	catchItem(map->characters->current->pos, listitem, map->corner, Itemcaught);
+
+	effect_item(Itemcaught, tab_typeSpell, map->characters->current)
 
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
