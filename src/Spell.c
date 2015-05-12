@@ -189,6 +189,8 @@ void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *
 	pattack->y = SCREEN_H - PX_W + 30;
 	
 	SDL_RenderCopy(rendu, Text_Ammo, NULL, pattack );
+
+	free(pattack);
 }
 
 

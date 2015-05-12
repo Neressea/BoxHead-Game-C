@@ -23,5 +23,6 @@ void compute_tram(int *j, int *trame);
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type);
 void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem);
+void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map);
 
 #endif

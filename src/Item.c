@@ -4,7 +4,9 @@ void poseItem(ListItem *listitem, int x, int y){
 
 	int hasard;
 
-	Item *it = createItem(0,x,y);
+	hasard = rand()%2;
+
+	Item *it = createItem(hasard,x,y);
 	ListItem *cursor = listitem->next;
 	ListItem *new = malloc(sizeof(ListItem));
 	new->current = it;
@@ -118,6 +120,11 @@ void effect_item(int Itemcaught[], TypeSpell **tab_typeSpell, Character * hero){
 	if(Itemcaught[0]){
 		tab_typeSpell[1]->ammo += 20;
 		Itemcaught[0] = 0;
+	}
+
+	if(Itemcaught[1]){
+		hero->hp += 20;
+		Itemcaught[1] = 0;
 	}
 
 }

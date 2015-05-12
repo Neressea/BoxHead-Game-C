@@ -318,11 +318,15 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	deleteSpell2(liste_spell, map, listitem);
 
+	removeKilled(map->characters->next);
+
 	updateItem(listitem, rendu, texture_item, move);
 	
 	catchItem(map->characters->current->pos, listitem, map->corner, Itemcaught);
 
-	effect_item(Itemcaught, tab_typeSpell, map->characters->current)
+	effect_item(Itemcaught, tab_typeSpell, map->characters->current);
+
+	hero_stat(rendu, font, map);
 
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
@@ -487,18 +491,71 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 		test->x = cursor->currentSpell->pspell->x + map->corner->x;
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
-
-		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem,map)){
-			
+		if(cantMoveMonster(map->characters->next, test, cursor->currentSpell,listitem,map)){
+			current_list->nextSpell = cursor->nextSpell;
+			free(cursor);
+			cursor = current_list;
+		}else if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem,map)){
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);
 			cursor = current_list;
 		}
 
+		removeKilled(map->characters);
+
 		cursor = cursor->nextSpell;
 	}
 
 	free(test);
+
+}
+
+void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
+	
+	SDL_Rect *phealth = malloc(sizeof(SDL_Rect));
+	SDL_Rect *plevel = malloc(sizeof(SDL_Rect));
+	SDL_Color textColor = { 0, 0, 0, 0 };
+	
+	char hp[15] = "100";
+	char level[15] = "1";
+
+	sprintf(hp, "%d", map->characters->current->hp);
+
+	SDL_Surface *Surface_health = TTF_RenderText_Solid (font, "Health:", textColor);
+	SDL_Texture* Text_health = SDL_CreateTextureFromSurface(rendu, Surface_health);	
+
+	SDL_Surface *Surface_hp = TTF_RenderText_Solid (font, hp, textColor);
+	SDL_Texture* Text_hp = SDL_CreateTextureFromSurface(rendu, Surface_hp);
+
+	phealth->h = 50;
+	phealth->w = 100;
+	phealth->x = 10;
+	phealth->y = 10;
+
+	SDL_RenderCopy(rendu,Text_health, NULL, phealth);
+
+	phealth->y = phealth->y + 20;
+
+	SDL_RenderCopy(rendu,Text_hp, NULL, phealth);
+
+	sprintf(level, "%d", map->characters->current->level);
+
+	SDL_Surface *Surface_level = TTF_RenderText_Solid (font, "Level:", textColor);
+	SDL_Texture* Text_level = SDL_CreateTextureFromSurface(rendu, Surface_level);	
+
+	SDL_Surface *Surface_le = TTF_RenderText_Solid (font, hp, textColor);
+	SDL_Texture* Text_le = SDL_CreateTextureFromSurface(rendu, Surface_le);
+
+	plevel->h = 50;
+	plevel->w = 100;
+	plevel->x = SCREEN_W - 150;
+	plevel->y = 10;
+
+	SDL_RenderCopy(rendu,Text_level, NULL, plevel);
+
+	plevel->y = plevel->y + 20;
+
+	SDL_RenderCopy(rendu,Text_le, NULL, plevel);
 
 }
 
