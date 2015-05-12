@@ -3,7 +3,7 @@
 
 	//Globals for the main
 	#define main_h
-	#define SPEED 4
+	#define SPEED 8
 	#define SPEED_TRAME 8
 	#define SCREEN_W 640
 	#define SCREEN_H 480
@@ -13,7 +13,7 @@
 	#define PXH_W 40
 	#define NB_SPRITES_H 24
 	#define NB_SPRITES_A 8
-	#define FPS 20
+	#define FPS 18
 	#define NB_ITEM 2
 
 	//GLobals for the map
