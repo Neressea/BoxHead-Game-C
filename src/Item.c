@@ -81,7 +81,7 @@ ListItem* init_listItem(){
 
 }
 
-int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
+int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner, int Itemcaught[]){
 	int cant = 0;
 
 	ListItem* p = listitem;
@@ -93,6 +93,8 @@ int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
 		if(pos->x + PXH_W >= b->current->pitem->x + corner->x && pos->x <= b->current->pitem->x + corner->x + ITEM_W){
 			if(pos->y + PXH_H >= b->current->pitem->y + corner ->y && pos->y <= b->current->pitem->y + corner -> y + ITEM_W){
 				cant=1;
+
+				Itemcaught[b->current->id] = 1;
 
 				p->next=b->next;
 
@@ -111,4 +113,13 @@ int catchItem(SDL_Rect* pos, ListItem *listitem, SDL_Rect *corner){
 	}
 	return cant;
 }
+
+void effect_item(int Itemcaught[], TypeSpell **tab_typeSpell, Character * hero){
+	if(Itemcaught[0]){
+		tab_typeSpell[1]->ammo += 20;
+		Itemcaught[0] = 0;
+	}
+
+}
+
 

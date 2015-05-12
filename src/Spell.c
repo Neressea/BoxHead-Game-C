@@ -191,3 +191,4 @@ void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *
 	SDL_RenderCopy(rendu, Text_Ammo, NULL, pattack );
 }
 
+
