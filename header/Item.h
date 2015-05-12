@@ -8,6 +8,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <time.h>
 #include "Globals.h"
+#include "Spell.h"
 
 typedef struct{
 	int id;
@@ -23,7 +24,7 @@ struct ListItem{
 
 void poseItem(ListItem *listitem, int x, int y);
 Item* createItem(int id, int x, int y);
-void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]);
+void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[], Move* move);
 ListItem* init_listItem();
 
 #endif

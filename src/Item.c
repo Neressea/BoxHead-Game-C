@@ -13,13 +13,13 @@ void poseItem(ListItem *listitem, int x, int y){
 	hasard = rand()%10;
 
 	if (cursor == NULL){
-		if(hasard <8){
+		if(hasard <5){
 			listitem->next=new;	
 		}
 	}else{
 		while(cursor != NULL){
 			if (cursor->next == NULL){
-				if(hasard < 8){
+				if(hasard <5){
 					cursor->next=new;
 				}
 
@@ -44,7 +44,7 @@ Item* createItem(int id, int x, int y){
 	return b;
 }
 
-void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[]){
+void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[], Move *move){
 	ListItem *cursor = listitem->next;
 	
 	while(cursor != NULL){
@@ -61,6 +61,8 @@ void updateItem(ListItem *listitem, SDL_Renderer *rendu, SDL_Texture *tableau[])
 	
 	while(cursor != NULL){
 		                
+		update_blitmap(move, cursor->current->pitem);
+
 		SDL_RenderCopy(rendu, tableau[cursor->current->id], NULL, cursor->current->pitem);		
 
 		cursor = cursor->next;		

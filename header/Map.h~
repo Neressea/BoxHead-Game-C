@@ -11,6 +11,7 @@
 #include "Character.h"
 #include "Main.h"
 #include "Globals.h"
+#include "Item.h"
 
 /**
 * Defines what the map is.

@@ -317,7 +317,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	deleteSpell2(liste_spell, map, listitem);
 
-	updateItem(listitem, rendu, texture_item);
+	updateItem(listitem, rendu, texture_item, move);
 	
 	Blit_attack(liste_spell,rendu, texture_attack);
 		
@@ -483,7 +483,7 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
 
-		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem)){
+		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem,map)){
 			
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);
