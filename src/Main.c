@@ -559,6 +559,9 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 
 	SDL_RenderCopy(rendu,Text_le, NULL, plevel);
 
+	free(phealth);
+	free(plevel);
+
 }
 
 
