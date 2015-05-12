@@ -24,7 +24,7 @@ create:
 	mkdir -p bin
 
 ############ Compilation de l'ensemble des fichiers ############
-IA.o: ./src/IA.o ./header/*.h
+IA.o: ./src/IA.c ./header/*.h
 	gcc -Wall -Werror -Wextra -c ./src/IA.c -o ./bin/IA.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
 
 Main.o: ./src/Main.c ./header/*.h
