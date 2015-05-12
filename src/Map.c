@@ -319,7 +319,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 			if(pos->y + h >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
 				if (b->current->hp > 0){
-					b->current->hp =- spell->type->attack;
+					b->current->hp -= spell->type->attack;
 					if (b->current->hp <= 0){
 						b->current->hp = 0;
 						poseItem(listitem, b->current->x-map->corner->x, b->current->y-map->corner->y); 
