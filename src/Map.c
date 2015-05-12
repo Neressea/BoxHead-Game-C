@@ -358,7 +358,9 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 					int damage = spell->type->attack + lb->current->level * 10;
 					lc->current->hp -= damage;
 					printf("HP_ENNEMY ::::: %d\n", lc->current->hp);
-					poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
+
+					if(lc->current->hp <= 0)
+						poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
 					add_xp(lb->current, damage);
 				}
 			}

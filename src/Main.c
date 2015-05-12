@@ -491,7 +491,7 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 		test->x = cursor->currentSpell->pspell->x + map->corner->x;
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
-		if(cantMoveMonster(map->characters->next, test, cursor->currentSpell,listitem,map)){
+		if(cantMoveMonster(map->characters, test, cursor->currentSpell,listitem,map)){
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);
 			cursor = current_list;
