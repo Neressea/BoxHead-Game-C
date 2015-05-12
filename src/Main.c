@@ -611,7 +611,7 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 
 	SDL_RenderCopy(rendu,Text_le, NULL, plevel);
 
-<<<<<<< HEAD
+
 	SDL_DestroyTexture(Text_level);
 	SDL_DestroyTexture(Text_le);
 	SDL_DestroyTexture(Text_health);
@@ -620,8 +620,7 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 	SDL_FreeSurface(Surface_hp);
 	SDL_FreeSurface(Surface_level);
 	SDL_FreeSurface(Surface_le);
-=======
->>>>>>> 66ad8cf1ccdefc16b8e7b4f605b77fe08e9d4fda
+
 	free(phealth);
 	free(plevel);
 
