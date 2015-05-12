@@ -236,8 +236,9 @@ ListChar* removeKilled(ListChar* characters){
 void add_xp(Character* ch, int dam){
 	ch->xp+=dam;
 
-	if(ch->xp >= ch->level * 100){
+	if(ch->xp >= (ch->level * 100)){
 		ch->level++;
-		printf("%d\n", ch->level);
+		ch->xp = 0;
 	}
+	
 } 

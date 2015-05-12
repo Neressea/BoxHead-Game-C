@@ -335,7 +335,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map *map){
 	int cant = 0;
 
-	ListChar* lc = lb;
+	ListChar* lc = lb->next;
 
 	int h;
 	int w;
@@ -355,8 +355,11 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 			if(pos->y + h >= lc->current->pos->y && pos->y <= lc->current->pos->y + PX_H){
 				cant=1;
 				if (lc->current->hp > 0){
-					lc->current->hp -= spell->type->attack + lb->current->level * 10;
+					int damage = spell->type->attack + lb->current->level * 10;
+					lc->current->hp -= damage;
+					printf("HP_ENNEMY ::::: %d\n", lc->current->hp);
 					poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
+					add_xp(lb->current, damage);
 				}
 			}
 		}
