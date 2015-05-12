@@ -65,4 +65,6 @@ int text_move(int *trame);
 
 void compute_tram(int *j, int *trame);
 
+ListChar* removeKilled(ListChar* characters);
+
 #endif

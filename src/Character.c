@@ -208,3 +208,27 @@ void compute_tram(int *j, int *trame){
 	*trame = (*j /SPEED_TRAME) % 4;
 	(*j)++;
 }
+
+ListChar* removeKilled(ListChar* characters){
+
+	//We delete the killed monsters in the head of the list
+	ListChar *head = characters;
+	while(head != NULL && head->current->hp <= 0)head = head->next;
+
+	ListChar* previous = head;
+	ListChar* cur = head->next;
+
+	while(cur != NULL){
+		if(cur->current->hp<=0){
+			previous->next = cur->next;
+			ListChar* tmp = cur->next;
+			free(cur);
+			cur = tmp;
+		}else{
+			previous = cur;
+			cur = cur->next;
+		}
+	}
+
+	return head;
+}

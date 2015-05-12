@@ -17,7 +17,6 @@ void manageEnnemies(Map* map){
 }
 
 void createEnnemy(Map* map, int level){
-
 	//We select the position where the ennemy will appear
 	int width = map->width;
 	int height = map->height;
@@ -30,6 +29,6 @@ void createEnnemy(Map* map, int level){
 	}while(cantMove(map->buildings, pos));
 
 	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, PX_W, PX_H, NULL);
-	printf("%d %d\n", ch->pos->x, ch->pos->y);
 	addChar(map->characters, ch);
 }
+
