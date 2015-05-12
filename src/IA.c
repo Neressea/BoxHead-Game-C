@@ -25,12 +25,11 @@ void createEnnemy(Map* map, int level){
 	SDL_Rect *pos = malloc(sizeof(SDL_Rect));
 
 	do{
-		pos->x = (rand() * PX_W)%width;
-		pos->y = (rand() * PX_H)%height;
-	}while(!isBuilding(map->buildings, pos));
+		pos->x = abs((rand() * PX_W)%width);
+		pos->y = abs((rand() * PX_H)%height);
+	}while(cantMove(map->buildings, pos));
 
-	printf("%d %d\n", pos->x, pos->y);
-
-	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x, pos->y, PX_W, PX_H, NULL);
+	Character* ch = createChar(10 * level, 10 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, PX_W, PX_H, NULL);
+	printf("%d %d\n", ch->pos->x, ch->pos->y);
 	addChar(map->characters, ch);
 }

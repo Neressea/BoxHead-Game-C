@@ -203,7 +203,6 @@ void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
 int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 	int is = 0;
-
 	ListBuilding* b = buildings;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
@@ -272,7 +271,6 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		move->y = map->corner->y - prev_y;
 		map->characters->current->pos->x += move->x;
 		map->characters->current->pos->y += move->y;
-		//printf("%d %d\n", map->characters->current->pos->x, map->characters->current->pos->y);
 	}
 
 	free(chara);

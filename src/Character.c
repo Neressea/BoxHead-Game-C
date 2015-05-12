@@ -129,6 +129,7 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 
 			blit->x= characters->current->pos->x - corner->x;
 			blit->y= characters->current->pos->y - corner->y;
+
 			SDL_RenderCopy(rendu, current_texture, NULL, blit);
 
 			characters = characters->next;
