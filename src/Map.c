@@ -332,6 +332,39 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 	return cant;
 }
 
+int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map *map){
+	int cant = 0;
+
+	ListChar* lc = lb;
+
+	int h;
+	int w;
+	
+	if (spell->direction == 6 || spell->direction == 9){
+		h = SPELL_W;
+		w = SPELL_H;
+	}else{
+		h = SPELL_H;
+		w = SPELL_W;
+	}
+
+	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
+	while(cant==0 && lc != NULL){
+		//If we are between the x position of the building
+		if(pos->x + w >= lc->current->pos->x && pos->x <= lc->current->pos->x + PX_W){
+			if(pos->y + h >= lc->current->pos->y && pos->y <= lc->current->pos->y + PX_H){
+				cant=1;
+				if (lc->current->hp > 0){
+					lc->current->hp -= spell->type->attack + lb->current->level * 10;
+					poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
+				}
+			}
+		}
+		lc = lc->next;
+	}
+	return cant;
+}
+
 void addWall(Map *map, int x, int y){
 	Building* b = createBuilding(x * PX_W, y * PX_H, 100, -1, -1);
 	ListBuilding* lb = malloc(sizeof(ListBuilding));

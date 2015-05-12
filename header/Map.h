@@ -88,5 +88,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 
 void updateWall(ListBuilding* lb);
 
+int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map *map);
+
 #endif
 

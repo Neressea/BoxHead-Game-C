@@ -31,7 +31,7 @@ Main.o: ./src/Main.c ./header/*.h
 	gcc -Wall -Werror -Wextra -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 Map.o: ./src/Map.c ./header/*.h
-	gcc -Wall -Werror -Wextra -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
+	gcc -c ./src/Map.c -o ./bin/Map.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
 
 Character.o: ./src/Character.c ./header/*.h
 	gcc -c ./src/Character.c -o ./bin/Character.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf

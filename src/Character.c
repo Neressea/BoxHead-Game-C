@@ -216,7 +216,7 @@ ListChar* removeKilled(ListChar* characters){
 	while(head != NULL && head->current->hp <= 0)head = head->next;
 
 	ListChar* previous = head;
-	ListChar* cur = head->next;
+	ListChar* cur = (head) ? head->next : NULL;
 
 	while(cur != NULL){
 		if(cur->current->hp<=0){
@@ -232,3 +232,12 @@ ListChar* removeKilled(ListChar* characters){
 
 	return head;
 }
+
+void add_xp(Character* ch, int dam){
+	ch->xp+=dam;
+
+	if(ch->xp >= ch->level * 100){
+		ch->level++;
+		printf("%d\n", ch->level);
+	}
+} 

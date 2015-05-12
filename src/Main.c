@@ -318,6 +318,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	deleteSpell2(liste_spell, map, listitem);
 
+	removeKilled(map->characters->next);
+
 	updateItem(listitem, rendu, texture_item, move);
 	
 	catchItem(map->characters->current->pos, listitem, map->corner, Itemcaught);
@@ -487,13 +489,17 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 		test->x = cursor->currentSpell->pspell->x + map->corner->x;
 		test->y = cursor->currentSpell->pspell->y + map->corner->y;
 		
-
-		if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem,map)){
-			
+		if(cantMoveMonster(map->characters->next, test, cursor->currentSpell,listitem,map)){
+			current_list->nextSpell = cursor->nextSpell;
+			free(cursor);
+			cursor = current_list;
+		}else if (cantMoveSpell(map->buildings, test, cursor->currentSpell,listitem,map)){
 			current_list->nextSpell = cursor->nextSpell;
 			free(cursor);
 			cursor = current_list;
 		}
+
+		removeKilled(map->characters);
 
 		cursor = cursor->nextSpell;
 	}

@@ -67,4 +67,6 @@ void compute_tram(int *j, int *trame);
 
 ListChar* removeKilled(ListChar* characters);
 
+void add_xp(Character* ch, int dam);
+
 #endif
