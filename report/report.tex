@@ -26,18 +26,18 @@
 \begin{document}
   \include{files/title}
   \cleardoublepage % Dans le cas du recto verso, ajoute une page blanche si besoin
+  \renewcommand\thepage{}
   \tableofcontents % Table des matières
   \sloppy          % Justification moins stricte : des mots ne dépasseront pas des paragraphes
   \cleardoublepage
-  \include{files/thanks}
-  \cleardoublepage
-  \include{files/intro}
+  \renewcommand\thepage{\arabic{page}}
+  \setcounter{page}{1}
+  
+  \include{files/presentation}
   \cleardoublepage
   \include{files/partie1}
   \cleardoublepage
   \include{files/partie2}
-  \cleardoublepage
-  \include{files/concl}
   \cleardoublepage
   \include{files/references}
 \end{document}
