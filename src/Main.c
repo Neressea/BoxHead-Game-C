@@ -45,6 +45,8 @@ int main(){
 	int option = 0;
 	int test = 0;
 
+	int limit=0, test2=0;
+
 	while(screen == 0){
 		SDL_PollEvent(&event);
 
@@ -84,6 +86,19 @@ int main(){
 		}
 
 		SDL_RenderPresent(rendu);
+
+		test2 = SDL_GetTicks();	
+
+		if (limit > test){
+			if (limit > test + FPS){
+				SDL_Delay(FPS);
+			}
+			else {
+				SDL_Delay(limit - test);
+			}
+		}
+
+		limit = SDL_GetTicks() + FPS;
 	}
 
 	SDL_FreeSurface(Surface_Title);
@@ -164,6 +179,19 @@ int main(){
 
 		SDL_RenderCopy(rendu, Pointeur, NULL, point );
 		SDL_RenderPresent(rendu);
+
+		test2 = SDL_GetTicks();	
+
+		if (limit > test){
+			if (limit > test + FPS){
+				SDL_Delay(FPS);
+			}
+			else {
+				SDL_Delay(limit - test);
+			}
+		}
+
+		limit = SDL_GetTicks() + FPS;
 		
 	}
 
