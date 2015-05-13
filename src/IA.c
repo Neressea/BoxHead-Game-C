@@ -8,8 +8,6 @@ void manageEnnemies(Map* map){
 	//If there is not enough ennemies, we add them
 	if(numberOfEnnemies < level * 2){
 		int numberToAdd = level * 2 - numberOfEnnemies;
-
-		printf("LEVEL %d\n", level);
 		
 		int i;
 		for(i = 0; i < numberToAdd; ++i){
@@ -28,7 +26,7 @@ void createEnnemy(Map* map, int level){
 	do{
 		pos->x = abs((rand() * PX_W)%width);
 		pos->y = abs((rand() * PX_H)%height);
-	}while(cantMove(map, pos));
+	}while(cantMove(map, pos) || blockMonsters(map, pos));
 
 	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, 50, 61, NULL);
 	addChar(map->characters, ch);

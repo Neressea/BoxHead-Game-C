@@ -254,7 +254,7 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
 
 	int res = 0;
-	if(cantMove(map, chara) || cantMoveMonsters(map, chara)){
+	if(cantMove(map, chara) || blockMonsters(map, chara)){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
 	}else{
@@ -287,7 +287,7 @@ int cantMove(Map* map, SDL_Rect* pos){
 	return cant;
 }
 
-int cantMoveMonsters(Map* map, SDL_Rect* pos){
+int blockMonsters(Map* map, SDL_Rect* pos){
 	int cant = 0;
 
 	ListChar* characters = map->characters->next;
@@ -300,6 +300,7 @@ int cantMoveMonsters(Map* map, SDL_Rect* pos){
 			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
 				cant=1;
 				map->characters->current->hp-=characters->current->attack;
+				printf("%d %d\n", characters->current->pos->x, characters->current->pos->y);
 			}
 		}
 
@@ -365,13 +366,12 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && lc != NULL){
 		//If we are between the x position of the building
-		if(pos->x + w >= lc->current->pos->x && pos->x <= lc->current->pos->x + PX_W){
-			if(pos->y + h >= lc->current->pos->y && pos->y <= lc->current->pos->y + PX_H){
+		if(pos->x + w >= lc->current->pos->x && pos->x <= lc->current->pos->x + lc->current->pos->w){
+			if(pos->y + h >= lc->current->pos->y && pos->y <= lc->current->pos->y + lc->current->pos->h){
 				cant=1;
 				if (lc->current->hp > 0){
 					int damage = spell->type->attack + lb->current->level * 10;
 					lc->current->hp -= damage;
-					printf("HP_ENNEMY ::::: %d\n", lc->current->hp);
 
 					if(lc->current->hp <= 0)
 						poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
