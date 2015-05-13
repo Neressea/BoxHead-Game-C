@@ -28,9 +28,9 @@ void createEnnemy(Map* map, int level){
 	do{
 		pos->x = abs((rand() * PX_W)%width);
 		pos->y = abs((rand() * PX_H)%height);
-	}while(cantMove(map->buildings, pos));
+	}while(cantMove(map, pos));
 
-	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, PX_W, PX_H, NULL);
+	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, 50, 61, NULL);
 	addChar(map->characters, ch);
 
 	free(pos);

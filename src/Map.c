@@ -253,7 +253,7 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
 
-	if(cantMove(map->buildings, chara)){
+	if(cantMove(map, chara)){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
 	}else{
@@ -266,10 +266,11 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	free(chara);
 }
 
-int cantMove(ListBuilding* lb, SDL_Rect* pos){
+int cantMove(Map* map, SDL_Rect* pos){
 	int cant = 0;
 
-	ListBuilding* b = lb;
+	ListBuilding* b = map->buildings;
+	ListChar* characters = map->characters->next;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
@@ -282,6 +283,20 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		}
 		b = b->next;
 	}
+
+	while(cant==0 && characters != NULL){
+		//If we are between the x position of the building
+		SDL_Rect* pos_e = characters->current->pos;
+
+		if(pos->x + pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
+			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
+				cant=1;
+			}
+		}
+
+		characters = characters->next;
+	}
+
 	return cant;
 }
 
