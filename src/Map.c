@@ -398,14 +398,44 @@ void addWall(Map *map, int x, int y){
 	map->buildings = lb;
 }
 
-void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]){
+void turret(Map *map, int x, int y, TypeSpell *current_type, int key[], int direction){
 	if (key[4] && current_type->ammo != 0){
+		
+		if (direction == 0){
+			y = y + PXH_H;
+			x = x/100;
+			y = y/100;
+			y++;
+		}
+
+		if (direction == 3){
+			x = x/100;
+			y = y/100;
+			y--;
+		}
+
+		if (direction == 6){
+			x = x - PXH_W;
+			x = x/100;
+			y = y/100;
+			x--;
+		}
+
+		if (direction == 9){
+			x = x + PXH_W;
+			x = x/100;
+			y = y/100;
+			x++;
+		}
+
 		Building* b = createBuilding(x * PX_W, y * PX_H, 100, 10, 10);
 		ListBuilding* lb = malloc(sizeof(ListBuilding));
 		lb->current=b;
 		lb->next = map->buildings;
 		map->buildings = lb;
 		current_type->ammo --;
+
+
 	}
 }
 

@@ -359,7 +359,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	changeTypeSpell(key, tab_typeSpell,&current_type);
 
 	if (current_type->id == 2){
-		turret(map, map->characters->current->pos->x+map->corner->x, map->characters->current->pos->y+map->corner->y, current_type, key);
+		turret(map, map->characters->current->pos->x/100, map->characters->current->pos->y/100, current_type, key, direction);
 	}else{
 		lanceattack(liste_spell, &direction, current_type, key);
 	}
