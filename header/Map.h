@@ -92,5 +92,7 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 
 int blockMonsters(Map* map, SDL_Rect* pos);
 
+int isFree(Map* map, SDL_Rect* pos);
+
 #endif
 

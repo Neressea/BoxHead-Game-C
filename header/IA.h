@@ -10,5 +10,7 @@
 void manageEnnemies(Map* map);
 void createEnnemy(Map* m, int level);
 int numberOfEnnemies(Map* map);
+void moveEnnemies(Map* m);
+void moveEnnemy(Character* heros, Character *ennemy);
 
 #endif

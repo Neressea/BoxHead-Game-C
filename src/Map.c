@@ -218,55 +218,57 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 
 	if(!key[4]){
 
-	if (key[0] && key[2]){
-		map->corner->y -= SPEED;
-		map->corner->x -= SPEED;
-	}
-	if (key[0] && key[3]){
-		map->corner->y -= SPEED;
-		map->corner->x += SPEED;
-	}
-	if (key[0] && !key[3] && !key[2]){
-		map->corner->y -= SPEED;
-	}
-	
-	if (key[1] && key[2]){
-		map->corner->y += SPEED;
-		map->corner->x -= SPEED;
-	}
-	if (key[1] && key[3]){
-		map->corner->y += SPEED;
-		map->corner->x += SPEED;
-	}
-	if (key[1] && !key[3] && !key[2]){
-		map->corner->y += SPEED;
-	}
+		if (key[0] && key[2]){
+			map->corner->y -= SPEED;
+			map->corner->x -= SPEED;
+		}
+		if (key[0] && key[3]){
+			map->corner->y -= SPEED;
+			map->corner->x += SPEED;
+		}
+		if (key[0] && !key[3] && !key[2]){
+			map->corner->y -= SPEED;
+		}
 		
-	if (key[2] && !key[0] && !key[1]){
-		map->corner->x -= SPEED;
-	}
-	if (key[3] && !key[0] && !key[1]){
-		map->corner->x += SPEED;
-	}
+		if (key[1] && key[2]){
+			map->corner->y += SPEED;
+			map->corner->x -= SPEED;
+		}
+		if (key[1] && key[3]){
+			map->corner->y += SPEED;
+			map->corner->x += SPEED;
+		}
+		if (key[1] && !key[3] && !key[2]){
+			map->corner->y += SPEED;
+		}
+			
+		if (key[2] && !key[0] && !key[1]){
+			map->corner->x -= SPEED;
+		}
+		if (key[3] && !key[0] && !key[1]){
+			map->corner->x += SPEED;
+		}
 
-	int screen_h, screen_w;
-	SDL_GetWindowSize(screen,&screen_w,&screen_h);
-	SDL_Rect* chara = malloc(sizeof(SDL_Rect));
-	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
-	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
+		int screen_h, screen_w;
+		SDL_GetWindowSize(screen,&screen_w,&screen_h);
+		SDL_Rect* chara = malloc(sizeof(SDL_Rect));
+		chara->x = map->corner->x + screen_w/2 - PXH_W/2;
+		chara->y = map->corner->y + screen_h/2 - PXH_H/2;
+		chara->w = PXH_W;
+		chara->h = PXH_H;
 
-	int res = 0;
-	if(cantMove(map, chara) || blockMonsters(map, chara)){
-		map->corner->x=prev_x;
-		map->corner->y=prev_y;
-	}else{
-		move->x = map->corner->x - prev_x;
-		move->y = map->corner->y - prev_y;
-		map->characters->current->pos->x += move->x;
-		map->characters->current->pos->y += move->y;
-	}
+		int res = 0;
+		if(cantMove(map, chara) || blockMonsters(map, chara)){
+			map->corner->x=prev_x;
+			map->corner->y=prev_y;
+		}else{
+			move->x = map->corner->x - prev_x;
+			move->y = map->corner->y - prev_y;
+			map->characters->current->pos->x += move->x;
+			map->characters->current->pos->y += move->y;
+		}
 
-	free(chara);
+		free(chara);
 
 	}
 
@@ -306,11 +308,34 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
 				cant=1;
 				map->characters->current->hp-=characters->current->attack;
-				printf("%d %d\n", characters->current->pos->x, characters->current->pos->y);
 			}
 		}
 
 		characters = characters->next;
+	}
+
+	return cant;
+}
+
+int isFree(Map* map, SDL_Rect* pos){
+	int cant = 0;
+	ListChar* characters = map->characters->next;
+
+	while(cant==0 && characters != NULL){
+		//If we are between the x position of the building
+		SDL_Rect* pos_e = characters->current->pos;
+
+		if(pos->x+ pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
+			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
+				cant=1;
+			}
+		}
+
+		characters = characters->next;
+	}
+
+	if(!cant){
+		cant = cantMove(map, pos);
 	}
 
 	return cant;

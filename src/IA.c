@@ -14,6 +14,24 @@ void manageEnnemies(Map* map){
 			createEnnemy(map, level);
 		}
 	}
+
+	moveEnnemies(map);
+}
+
+void moveEnnemies(Map* map){
+	Character* heros = map->characters->current;
+	ListChar* ennemy = map->characters->next;
+
+	while(ennemy != NULL){
+		moveEnnemy(heros, ennemy->current);
+		ennemy = ennemy->next;
+	}
+}
+
+void moveEnnemy(Character* heros, Character *ennemy){
+	SDL_Rect *move = malloc(sizeof(SDL_Rect));
+	move->x = heros->pos->x - ennemy->pos->x;
+	move->y = heros->pos->y - ennemy->pos->y;
 }
 
 void createEnnemy(Map* map, int level){
@@ -26,7 +44,7 @@ void createEnnemy(Map* map, int level){
 	do{
 		pos->x = abs((rand() * PX_W)%width);
 		pos->y = abs((rand() * PX_H)%height);
-	}while(cantMove(map, pos) || blockMonsters(map, pos));
+	}while(isFree(map, pos));
 
 	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, 50, 61, NULL);
 	addChar(map->characters, ch);
