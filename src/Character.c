@@ -99,7 +99,7 @@ void addChar(ListChar *characters, Character* ch){
 	characters->next = ennemy;
 }
 
-void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner, SDL_Texture*** texture_chara, int key[], int* direction){
+void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner, SDL_Texture*** texture_chara, int key[], int* direction, ListBuilding* b){
 
 	SDL_Texture** texture_heros = texture_chara[0];
 	SDL_Texture** texture_ennemy = texture_chara[1];
@@ -113,28 +113,32 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 
 	static int trame = 0;
 	static int j = 0;
-	text_move(&trame);
 	current_texture = update_texture(key, texture_heros, &trame, direction);
 	compute_tram(&j, &trame);
 
 	SDL_RenderCopy(rendu, current_texture, NULL, blit);
 
+	//WE MOVE THE ENNEMIES
+	Character* heros = characters->current;
 	characters = characters->next;
+	int key2[5]={0, 0, 0, 0, 0};
+	int direction2 = 0;
 
-	if(characters != NULL){
+	int i=0;
 
-		current_texture = texture_ennemy[0];
-		
-		while(characters != NULL){
+	while(characters != NULL){
 
-			blit->x= characters->current->pos->x - corner->x;
-			blit->y= characters->current->pos->y - corner->y;
+		moveEnnemy(b, heros, characters->current, key2);
+		current_texture = update_texture(key2, texture_ennemy, &trame, &direction2);
 
-			SDL_RenderCopy(rendu, current_texture, NULL, blit);
+		blit->x= characters->current->pos->x - corner->x;
+		blit->y= characters->current->pos->y - corner->y;
 
-			characters = characters->next;
-		}
+		SDL_RenderCopy(rendu, current_texture, NULL, blit);
+
+		characters = characters->next;
 	}
+
 
 	free(blit);
 }

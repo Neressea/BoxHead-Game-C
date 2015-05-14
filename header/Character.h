@@ -57,7 +57,7 @@ int size(ListChar *characters);
 
 void addChar(ListChar *characters, Character* ch);
 
-void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect *corner, SDL_Texture*** texture_chara, int key[], int* direction);
+void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect *corner, SDL_Texture*** texture_chara, int key[], int* direction, ListBuilding* b);
 
 SDL_Texture* update_texture(int key[], SDL_Texture *tableau[], int *trame, int *f);
 

@@ -351,11 +351,11 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	showMap(main_screen, rendu, map);
 
-	updateWall(map->buildings);
+	map->buildings = updateWall(map->buildings);
 
 	manageEnnemies(map);
 
-	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
+	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction, map->buildings);
 	
 	changeTypeSpell(key, tab_typeSpell,&current_type);
 
@@ -454,41 +454,6 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	free(move);
 	TTF_CloseFont(font);
 	
-}
-
-void test_key(int key[], SDL_Rect *position){
-		
-	if (key[0] && key[2]){
-		position->y -= SPEED;
-		position->x -= SPEED;
-	}
-	if (key[0] && key[3]){
-		position->y -= SPEED;
-		position->x += SPEED;
-	}
-	if (key[0] && !key[3] && !key[2]){
-		position->y -= SPEED;
-	}
-	
-	if (key[1] && key[2]){
-		position->y += SPEED;
-		position->x -= SPEED;
-	}
-	if (key[1] && key[3]){
-		position->y += SPEED;
-		position->x += SPEED;
-	}
-	if (key[1] && !key[3] && !key[2]){
-		position->y += SPEED;
-	}
-		
-	if (key[2] && !key[0] && !key[1]){
-		position->x -= SPEED;
-	}
-	if (key[3] && !key[0] && !key[1]){
-		position->x += SPEED;
-	}
-
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
@@ -619,7 +584,7 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 			cursor = current_list;
 		}
 
-		removeKilled(map->characters);
+		map->characters->next = removeKilled(map->characters->next);
 
 		cursor = cursor->nextSpell;
 	}

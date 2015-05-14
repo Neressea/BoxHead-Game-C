@@ -24,8 +24,6 @@ create:
 	mkdir -p bin
 
 ############ Compilation de l'ensemble des fichiers ############
-IA.o: ./src/IA.c ./header/*.h
-	gcc -Wall -Werror -Wextra -c ./src/IA.c -o ./bin/IA.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
 
 Main.o: ./src/Main.c ./header/*.h
 	gcc -c ./src/Main.c -o ./bin/Main.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
@@ -47,6 +45,9 @@ Spell.o: ./src/Spell.c ./header/*.h
 
 Item.o: ./src/Item.c ./header/*.h
 	gcc -Wall -c ./src/Item.c -o ./bin/Item.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
+
+IA.o: ./src/IA.c ./header/*.h
+	gcc -Wall -Werror -Wextra -c ./src/IA.c -o ./bin/IA.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf
  
 # Suppression des fichiers temporaires
 clean:

@@ -17,7 +17,7 @@
 	#define NB_ITEM 2
 
 	//GLobals for the map
-	#define NB_TEXTS_MAP 2
+	#define NB_TEXTS_MAP 3
 	#define NB_SPRITES_BLITTED 2
 	
 

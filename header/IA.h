@@ -10,7 +10,7 @@
 void manageEnnemies(Map* map);
 void createEnnemy(Map* m, int level);
 int numberOfEnnemies(Map* map);
-void moveEnnemies(Map* m);
-void moveEnnemy(Character* heros, Character *ennemy);
+void moveEnnemy(ListBuilding* b, Character* heros, Character *ennemy, int key[]);
+void deplaceEnnemy(ListBuilding* b, int key[], SDL_Rect* position);
 
 #endif

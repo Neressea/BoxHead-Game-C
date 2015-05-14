@@ -27,6 +27,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	//We read the file line by line : the first line is the name of the background
 	loadSprite(file, rendu, map->textures, 0);
 	loadSprite(file, rendu, map->textures, 1);
+	loadSprite(file, rendu, map->textures, 2);
 
 	char *line = malloc(sizeof(char) * 101); //We keep a char for the '\0'
 
@@ -171,8 +172,12 @@ void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 	 	for (j = begin_y; j <= end_y; j+=PX_H){
 
 	 		//We check the type of the case to blit
-	 		if(isBuilding(map->buildings, map_pos)){
-	 			SDL_RenderCopy(rendu, map->textures[1], NULL, blit_pos);
+	 		Building* b = NULL;
+	 		if((b = isBuilding(map->buildings, map_pos))){
+	 			if(b->hp == -1)
+	 				SDL_RenderCopy(rendu, map->textures[1], NULL, blit_pos);
+	 			else
+	 				SDL_RenderCopy(rendu, map->textures[2], NULL, blit_pos);
 	 		}else{
 	 			SDL_RenderCopy(rendu, map->textures[0], NULL, blit_pos);
 	 		}
@@ -191,7 +196,7 @@ void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 	 free(blit_pos);
 }
 
-int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
+Building* isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 	int is = 0;
 	ListBuilding* b = buildings;
 
@@ -200,12 +205,15 @@ int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 
 		if(b->current->x == pos->x && b->current->y == pos->y){
 			is = 1;
+		}else{
+			b = b->next;
 		}
-
-		b = b->next;
 	}
 
-	return is;
+	Building *res = NULL;
+	if(is) res = b->current;
+
+	return res;
 }
 
 void saveMap(Map *map){
@@ -258,7 +266,7 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		chara->h = PXH_H;
 
 		int res = 0;
-		if(cantMove(map, chara) || blockMonsters(map, chara)){
+		if(cantMove(map->buildings, chara) || blockMonsters(map, chara)){
 			map->corner->x=prev_x;
 			map->corner->y=prev_y;
 		}else{
@@ -275,10 +283,8 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	
 }
 
-int cantMove(Map* map, SDL_Rect* pos){
+int cantMove(ListBuilding* b, SDL_Rect* pos){
 	int cant = 0;
-
-	ListBuilding* b = map->buildings;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
@@ -314,7 +320,7 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 		characters = characters->next;
 	}
 
-	return cant;
+	return 0;
 }
 
 int isFree(Map* map, SDL_Rect* pos){
@@ -335,7 +341,7 @@ int isFree(Map* map, SDL_Rect* pos){
 	}
 
 	if(!cant){
-		cant = cantMove(map, pos);
+		cant = cantMove(map->buildings, pos);
 	}
 
 	return cant;
@@ -497,10 +503,17 @@ void encircleMap(Map* map){
 	}
 }
 
-void updateWall(ListBuilding* lb){
+ListBuilding* updateWall(ListBuilding* lb){
 	
 	ListBuilding* c = lb;
 	ListBuilding* d;
+	Building *b;
+
+	while(lb!= NULL && c->current->hp == 0){
+		b = lb->current;
+		lb = lb->next;
+		free(b);
+	}
 
 	while(c->next != NULL){
 		if (c->next->current->hp == 0){
@@ -520,4 +533,5 @@ void updateWall(ListBuilding* lb){
 
 	}
 
+	return lb;
 }

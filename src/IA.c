@@ -14,24 +14,60 @@ void manageEnnemies(Map* map){
 			createEnnemy(map, level);
 		}
 	}
-
-	moveEnnemies(map);
 }
 
-void moveEnnemies(Map* map){
-	Character* heros = map->characters->current;
-	ListChar* ennemy = map->characters->next;
+void moveEnnemy(ListBuilding* b, Character* heros, Character *ennemy, int key[]){
+	SDL_Rect *dist = malloc(sizeof(SDL_Rect));
+	dist->x = heros->pos->x - ennemy->pos->x;
+	dist->y = heros->pos->y - ennemy->pos->y;
 
-	while(ennemy != NULL){
-		moveEnnemy(heros, ennemy->current);
-		ennemy = ennemy->next;
+	key[0] = (dist->y < 0) ? 1 : 0;
+	key[1] = (dist->y != 0) ? !key[0] : 0;
+	key[2] = (dist->x < 0) ? 1 : 0;
+	key[3] = (dist->x != 0) ? !key[2] : 0;
+
+	deplaceEnnemy(b, key, ennemy->pos);
+	free(dist);
+}
+
+void deplaceEnnemy(ListBuilding *b, int key[], SDL_Rect* position){
+	int x = position->x, y = position->y;
+
+	if (key[0] && key[2]){
+		position->y -= SPEED / 3;
+		position->x -= SPEED / 3;
 	}
-}
+	if (key[0] && key[3]){
+		position->y -= SPEED / 3;
+		position->x += SPEED / 3;
+	}
+	if (key[0] && !key[3] && !key[2]){
+		position->y -= SPEED / 3;
+	}
+	
+	if (key[1] && key[2]){
+		position->y += SPEED / 3;
+		position->x -= SPEED / 3;
+	}
+	if (key[1] && key[3]){
+		position->y += SPEED / 3;
+		position->x += SPEED / 3;
+	}
+	if (key[1] && !key[3] && !key[2]){
+		position->y += SPEED / 3;
+	}
+		
+	if (key[2] && !key[0] && !key[1]){
+		position->x -= SPEED / 3;
+	}
+	if (key[3] && !key[0] && !key[1]){
+		position->x += SPEED / 3;
+	}
 
-void moveEnnemy(Character* heros, Character *ennemy){
-	SDL_Rect *move = malloc(sizeof(SDL_Rect));
-	move->x = heros->pos->x - ennemy->pos->x;
-	move->y = heros->pos->y - ennemy->pos->y;
+	if(cantMove(b, position)){
+		position->x = x;
+		position->y = y;
+	}
 }
 
 void createEnnemy(Map* map, int level){
