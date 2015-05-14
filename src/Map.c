@@ -404,7 +404,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 	int y = map->characters->current->pos->y;
 	int mur = 0;
 	
-	if (key[4] && current_type->ammo != 0 && SDL_GetTicks() - *last > current_type->rate){
+	if (key[4] && current_type->ammo != 0 && SDL_GetTicks() - *last > current_type->rate && (direction == 0 || direction == 3 || direction == 6 || direction == 9)){
 		
 		if (direction == 0){
 			y = y + PXH_H;
@@ -421,6 +421,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 
 		if (direction == 6){
 			x = x - PXH_W;
+			y = y + PXH_H;
 			x = x/100;
 			y = y/100;
 			x--;
@@ -428,6 +429,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 
 		if (direction == 9){
 			x = x + PXH_W;
+			y = y + PXH_H;
 			x = x/100;
 			y = y/100;
 			x++;
@@ -436,8 +438,8 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 		ListBuilding* b = map->buildings;
 
 		while(b != NULL){
-			if (b->current->x == x){
-				if (b->current->y == y){
+			if (b->current->x/PX_W == x){
+				if (b->current->y/PX_H == y){
 					mur = 1;
 					break;
 				}
