@@ -82,7 +82,7 @@ int cantMove(Map* map, SDL_Rect* pos);
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
 
-void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]);
+void turret(Map *map, TypeSpell *current_type, int key[], int direction, int last);
 
 int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map* map);
 

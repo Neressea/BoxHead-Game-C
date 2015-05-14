@@ -398,8 +398,13 @@ void addWall(Map *map, int x, int y){
 	map->buildings = lb;
 }
 
-void turret(Map *map, int x, int y, TypeSpell *current_type, int key[], int direction){
-	if (key[4] && current_type->ammo != 0){
+void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *last){
+	
+	int x = map->characters->current->pos->x;
+	int y = map->characters->current->pos->y;
+	int mur = 0;
+	
+	if (key[4] && current_type->ammo != 0 && SDL_GetTicks() - *last > current_type->rate){
 		
 		if (direction == 0){
 			y = y + PXH_H;
@@ -428,15 +433,27 @@ void turret(Map *map, int x, int y, TypeSpell *current_type, int key[], int dire
 			x++;
 		}
 
-		Building* b = createBuilding(x * PX_W, y * PX_H, 100, 10, 10);
-		ListBuilding* lb = malloc(sizeof(ListBuilding));
-		lb->current=b;
-		lb->next = map->buildings;
-		map->buildings = lb;
-		current_type->ammo --;
+		ListBuilding* b = map->buildings;
 
-		static int last = SDL_GetTicks();
+		while(b != NULL){
+			if (b->current->x == x){
+				if (b->current->y == y){
+					mur = 1;
+					break;
+				}
+			}
+		b = b->next;
+		}
 
+		if (!mur){
+			Building* b = createBuilding(x * PX_W, y * PX_H, 100, 10, 10);
+			ListBuilding* lb = malloc(sizeof(ListBuilding));
+			lb->current=b;
+			lb->next = map->buildings;
+			map->buildings = lb;
+			current_type->ammo --;
+			*last = SDL_GetTicks();
+		}
 	}
 }
 

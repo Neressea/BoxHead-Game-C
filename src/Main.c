@@ -237,7 +237,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
 	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
-	tab_typeSpell[2] = init_typeSpell(100,2,500,20);
+	tab_typeSpell[2] = init_typeSpell(100,2,500,10);
 	TypeSpell *current_type = tab_typeSpell[0];
 
 	Move *move = malloc(sizeof(Move));
@@ -249,6 +249,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	int direction = 0;
 	int limit = 0;
 	int test = 0;
+	int last = 0;
 
 	SDL_RenderClear(rendu);
 	
@@ -359,7 +360,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	changeTypeSpell(key, tab_typeSpell,&current_type);
 
 	if (current_type->id == 2){
-		turret(map, map->characters->current->pos->x, map->characters->current->pos->y, current_type, key, direction);
+		turret(map, current_type, key, direction, &last);
 	}else{
 		lanceattack(liste_spell, &direction, current_type, key);
 	}
