@@ -441,7 +441,6 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 			if (b->current->x/PX_W == x){
 				if (b->current->y/PX_H == y){
 					mur = 1;
-					printf("atteint");
 					break;
 				}
 			}

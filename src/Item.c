@@ -120,11 +120,17 @@ void effect_item(int Itemcaught[], TypeSpell **tab_typeSpell, Character * hero){
 	if(Itemcaught[0]){
 		tab_typeSpell[1]->ammo += 20;
 		Itemcaught[0] = 0;
+		if (tab_typeSpell[1]->ammo > 60){
+			tab_typeSpell[1]->ammo = 60;
+		}
 	}
 
 	if(Itemcaught[1]){
 		hero->hp += 20;
 		Itemcaught[1] = 0;
+		if (hero->hp > hero->level * 250){
+			hero->hp = hero->level * 250;
+		}
 	}
 
 }
