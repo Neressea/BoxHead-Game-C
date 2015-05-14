@@ -26,12 +26,14 @@ void moveEnnemy(ListBuilding* b, Character* heros, Character *ennemy, int key[])
 	key[2] = (dist->x < 0) ? 1 : 0;
 	key[3] = (dist->x != 0) ? !key[2] : 0;
 
-	deplaceEnnemy(b, key, ennemy->pos);
+	deplaceEnnemy(b, key, ennemy);
 	free(dist);
 }
 
-void deplaceEnnemy(ListBuilding *b, int key[], SDL_Rect* position){
+void deplaceEnnemy(ListBuilding *b, int key[], Character *ennemy){
+	SDL_Rect* position = ennemy->pos;
 	int x = position->x, y = position->y;
+	static int pool = 1; 
 
 	if (key[0] && key[2]){
 		position->y -= SPEED / 3;
@@ -64,9 +66,18 @@ void deplaceEnnemy(ListBuilding *b, int key[], SDL_Rect* position){
 		position->x += SPEED / 3;
 	}
 
-	if(cantMove(b, position)){
+	Building *build;
+	if((build = cantMove(b, position))){
 		position->x = x;
 		position->y = y;
+
+		if(build->hp > 0 && pool % 10 == 0){
+			build->hp -= ennemy->attack;
+			pool = 1;
+			if(build->hp <=0) build->hp = 0;
+		}else{
+			pool++;
+		}
 	}
 }
 
@@ -82,7 +93,7 @@ void createEnnemy(Map* map, int level){
 		pos->y = abs((rand() * PX_H)%height);
 	}while(isFree(map, pos));
 
-	Character* ch = createChar(100 * level, 100 * (level-1), 5 * level, 0, 0, pos->x/PX_W, pos->y/PX_H, 50, 61, NULL);
+	Character* ch = createChar(100 + level * 20, 100 * (level-1), level, 0, 0, pos->x/PX_W, pos->y/PX_H, 50, 61, NULL);
 	addChar(map->characters, ch);
 
 	free(pos);

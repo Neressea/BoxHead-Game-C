@@ -78,7 +78,7 @@ void addWall(Map *map, int x, int y);
 */
 void encircleMap(Map* map);
 
-int cantMove(ListBuilding* b, SDL_Rect* pos);
+Building* cantMove(ListBuilding* b, SDL_Rect* pos);
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
 

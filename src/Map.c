@@ -283,8 +283,9 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	
 }
 
-int cantMove(ListBuilding* b, SDL_Rect* pos){
+Building* cantMove(ListBuilding* b, SDL_Rect* pos){
 	int cant = 0;
+	Building *res = NULL;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
@@ -293,16 +294,22 @@ int cantMove(ListBuilding* b, SDL_Rect* pos){
 		if(pos->x + PXH_W >= b->current->x && pos->x <= b->current->x + PX_W){
 			if(pos->y + PXH_H >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
+			}else{
+				b = b->next;
 			}
+		}else{
+			b = b->next;
 		}
-		b = b->next;
 	}
 
-	return cant;
+	res = (cant) ? b->current : NULL;
+
+	return res;
 }
 
 int blockMonsters(Map* map, SDL_Rect* pos){
 	int cant = 0;
+	static int loop = 0;
 
 	ListChar* characters = map->characters->next;
 
@@ -313,7 +320,13 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 		if(pos->x+ pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
 			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
 				cant=1;
-				map->characters->current->hp-=characters->current->attack;
+
+				if(loop==10){
+					map->characters->current->hp-=characters->current->attack;
+					loop=0;
+				}else{
+					loop++;
+				}
 			}
 		}
 
@@ -341,7 +354,7 @@ int isFree(Map* map, SDL_Rect* pos){
 	}
 
 	if(!cant){
-		cant = cantMove(map->buildings, pos);
+		cant = (cantMove(map->buildings, pos)) ? 1 : 0;
 	}
 
 	return cant;
