@@ -216,6 +216,8 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 
 	int prev_x=map->corner->x, prev_y=map->corner->y;
 
+	if(!key[4]){
+
 	if (key[0] && key[2]){
 		map->corner->y -= SPEED;
 		map->corner->x -= SPEED;
@@ -265,6 +267,10 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	}
 
 	free(chara);
+
+	}
+
+	
 }
 
 int cantMove(Map* map, SDL_Rect* pos){
@@ -296,7 +302,7 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 		//If we are between the x position of the building
 		SDL_Rect* pos_e = characters->current->pos;
 
-		if(pos->x + pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
+		if(pos->x+ pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
 			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
 				cant=1;
 				map->characters->current->hp-=characters->current->attack;
@@ -337,7 +343,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 					b->current->hp -= spell->type->attack;
 					if (b->current->hp <= 0){
 						b->current->hp = 0;
-						poseItem(listitem, b->current->x-map->corner->x, b->current->y-map->corner->y); 
+						poseItem(listitem, b->current->x-map->corner->x - ITEM_W/2 + PX_W/2, b->current->y-map->corner->y + PX_H/2 - ITEM_H/2); 
 					}
 				}
 			}
@@ -374,7 +380,7 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 					lc->current->hp -= damage;
 
 					if(lc->current->hp <= 0)
-						poseItem(listitem, lc->current->pos->x-map->corner->x, lc->current->pos->y-map->corner->y);
+						poseItem(listitem, lc->current->pos->x-map->corner->x + PXH_W/2 - ITEM_W/2, lc->current->pos->y-map->corner->y+ PXH_H/2 - ITEM_H/2);
 					add_xp(lb->current, damage);
 				}
 			}
@@ -385,7 +391,7 @@ int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listite
 }
 
 void addWall(Map *map, int x, int y){
-	Building* b = createBuilding(x * PX_W, y * PX_H, 100, -1, -1);
+	Building* b = createBuilding(x * PX_W, y * PX_H, -1, -1, -1);
 	ListBuilding* lb = malloc(sizeof(ListBuilding));
 	lb->current=b;
 	lb->next = map->buildings;
@@ -399,6 +405,7 @@ void turret(Map *map, int x, int y, TypeSpell *current_type, int key[]){
 		lb->current=b;
 		lb->next = map->buildings;
 		map->buildings = lb;
+		current_type->ammo --;
 	}
 }
 

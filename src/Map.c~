@@ -71,6 +71,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 	map->corner->y = pos_perso_px_y - SCREEN_H / 2;
 
 	fclose(file);
+	free(line);
 }
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i){
@@ -112,23 +113,12 @@ void destroyMap(Map* map){
 	free(map->textures);
 
 	//We free the list of buildings
-	ListBuilding *b = map->buildings;
-	ListBuilding *nextB = NULL;
-	while(b != NULL){
-		nextB = b->next;
-		free(b->current);
-		free(b);
-		b = nextB;
-	}
+	destroyListBuild(map->buildings);
 
 	//We free the list of characters
-	ListChar* lc = map->characters;
-	ListChar* nextC = NULL;
-	while(lc != NULL){
-		nextC = lc->next;
-		free(lc);
-		lc = nextC;
-	}
+	destroyListChara(map->characters);
+
+	free(map);
 }
 
 /**
@@ -203,7 +193,6 @@ void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map){
 
 int isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 	int is = 0;
-
 	ListBuilding* b = buildings;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
@@ -226,6 +215,8 @@ void saveMap(Map *map){
 void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 
 	int prev_x=map->corner->x, prev_y=map->corner->y;
+
+	if(!key[4]){
 
 	if (key[0] && key[2]){
 		map->corner->y -= SPEED;
@@ -264,7 +255,8 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 	chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 	chara->y = map->corner->y + screen_h/2 - PXH_H/2;
 
-	if(cantMove(map->buildings, chara)){
+	int res = 0;
+	if(cantMove(map, chara) || blockMonsters(map, chara)){
 		map->corner->x=prev_x;
 		map->corner->y=prev_y;
 	}else{
@@ -272,16 +264,19 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		move->y = map->corner->y - prev_y;
 		map->characters->current->pos->x += move->x;
 		map->characters->current->pos->y += move->y;
-		//printf("%d %d\n", map->characters->current->pos->x, map->characters->current->pos->y);
 	}
 
 	free(chara);
+
+	}
+
+	
 }
 
-int cantMove(ListBuilding* lb, SDL_Rect* pos){
+int cantMove(Map* map, SDL_Rect* pos){
 	int cant = 0;
 
-	ListBuilding* b = lb;
+	ListBuilding* b = map->buildings;
 
 	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
@@ -294,6 +289,30 @@ int cantMove(ListBuilding* lb, SDL_Rect* pos){
 		}
 		b = b->next;
 	}
+
+	return cant;
+}
+
+int blockMonsters(Map* map, SDL_Rect* pos){
+	int cant = 0;
+
+	ListChar* characters = map->characters->next;
+
+	while(cant==0 && characters != NULL){
+		//If we are between the x position of the building
+		SDL_Rect* pos_e = characters->current->pos;
+
+		if(pos->x+ pos->w >= pos_e->x && pos->x <= pos_e->x + pos_e->w){
+			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
+				cant=1;
+				map->characters->current->hp-=characters->current->attack;
+				printf("%d %d\n", characters->current->pos->x, characters->current->pos->y);
+			}
+		}
+
+		characters = characters->next;
+	}
+
 	return cant;
 }
 
@@ -321,10 +340,10 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 			if(pos->y + h >= b->current->y && pos->y <= b->current->y + PX_H){
 				cant=1;
 				if (b->current->hp > 0){
-					b->current->hp =- spell->type->attack;
+					b->current->hp -= spell->type->attack;
 					if (b->current->hp <= 0){
 						b->current->hp = 0;
-						poseItem(listitem, b->current->x+map->corner->x, b->current->y+map->corner->y); 
+						poseItem(listitem, b->current->x-map->corner->x - ITEM_W/2 + PX_W/2, b->current->y-map->corner->y + PX_H/2 - ITEM_H/2); 
 					}
 				}
 			}
@@ -334,8 +353,45 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 	return cant;
 }
 
+int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map *map){
+	int cant = 0;
+
+	ListChar* lc = lb->next;
+
+	int h;
+	int w;
+	
+	if (spell->direction == 6 || spell->direction == 9){
+		h = SPELL_W;
+		w = SPELL_H;
+	}else{
+		h = SPELL_H;
+		w = SPELL_W;
+	}
+
+	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
+	while(cant==0 && lc != NULL){
+		//If we are between the x position of the building
+		if(pos->x + w >= lc->current->pos->x && pos->x <= lc->current->pos->x + lc->current->pos->w){
+			if(pos->y + h >= lc->current->pos->y && pos->y <= lc->current->pos->y + lc->current->pos->h){
+				cant=1;
+				if (lc->current->hp > 0){
+					int damage = spell->type->attack + lb->current->level * 10;
+					lc->current->hp -= damage;
+
+					if(lc->current->hp <= 0)
+						poseItem(listitem, lc->current->pos->x-map->corner->x + PXH_W/2 - ITEM_W/2, lc->current->pos->y-map->corner->y+ PXH_H/2 - ITEM_H/2);
+					add_xp(lb->current, damage);
+				}
+			}
+		}
+		lc = lc->next;
+	}
+	return cant;
+}
+
 void addWall(Map *map, int x, int y){
-	Building* b = createBuilding(x * PX_W, y * PX_H, 100, -1, -1);
+	Building* b = createBuilding(x * PX_W, y * PX_H, -1, -1, -1);
 	ListBuilding* lb = malloc(sizeof(ListBuilding));
 	lb->current=b;
 	lb->next = map->buildings;

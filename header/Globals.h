@@ -23,7 +23,7 @@
 
 	//Globals for the spell
 	#define LIFEEXPANC 10000
-	#define NB_TYP_SPELL 2
+	#define NB_TYP_SPELL 3
 	#define SPELL_H 70
 	#define SPELL_W 20 
 

@@ -237,6 +237,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
 	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
+	tab_typeSpell[2] = init_typeSpell(100,2,500,20);
 	TypeSpell *current_type = tab_typeSpell[0];
 
 	Move *move = malloc(sizeof(Move));
@@ -244,7 +245,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	
 	int Itemcaught[NB_ITEM]= {0};
 	int quit = 0;
-	int key[7] = {0};
+	int key[8] = {0};
 	int direction = 0;
 	int limit = 0;
 	int test = 0;
@@ -304,6 +305,9 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 						case SDLK_z:
 							key[6] = 1;
 						break;
+						case SDLK_e:
+							key[7] = 1;
+						break;
 						}
 				break;
 				case SDL_KEYUP:
@@ -331,6 +335,9 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 						case SDLK_z:
 							key[6] = 0;
 						break;
+						case SDLK_e:
+							key[7] = 0;
+						break;
 						}
 				break;
 							
@@ -350,7 +357,12 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
 	
 	changeTypeSpell(key, tab_typeSpell,&current_type);
-	lanceattack(liste_spell, &direction, current_type, key);
+
+	if (current_type->id == 2){
+		turret(map, map->characters->current->pos->x, map->characters->current->pos->y, current_type, key);
+	}else{
+		lanceattack(liste_spell, &direction, current_type, key);
+	}
 	
 	move->x = 0;
 	move->y = 0;
@@ -513,8 +525,31 @@ void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[31] = IMG_LoadTexture(rendu, "./images/sprites/heros31.png");
 }
 
-void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tabl[]){
-	tabl[0] = IMG_LoadTexture(rendu, "./images/sprites/monstre0.png");
+void init_texture_ennemy(SDL_Renderer *rendu, SDL_Texture *tableau[]){
+	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/monstre0.png");
+	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/monstre1.png");
+	tableau[2] = IMG_LoadTexture(rendu, "./images/sprites/monstre2.png");
+	tableau[3] = IMG_LoadTexture(rendu, "./images/sprites/monstre3.png");
+	tableau[4] = IMG_LoadTexture(rendu, "./images/sprites/monstre4.png");
+	tableau[5] = IMG_LoadTexture(rendu, "./images/sprites/monstre5.png");
+	tableau[6] = IMG_LoadTexture(rendu, "./images/sprites/monstre6.png");
+	tableau[7] = IMG_LoadTexture(rendu, "./images/sprites/monstre7.png");
+	tableau[8] = IMG_LoadTexture(rendu, "./images/sprites/monstre8.png");
+	tableau[9] = IMG_LoadTexture(rendu, "./images/sprites/monstre9.png");
+	tableau[10] = IMG_LoadTexture(rendu, "./images/sprites/monstre10.png");
+	tableau[11] = IMG_LoadTexture(rendu, "./images/sprites/monstre11.png");
+	tableau[12] = IMG_LoadTexture(rendu, "./images/sprites/monstre12.png");
+	tableau[13] = IMG_LoadTexture(rendu, "./images/sprites/monstre13.png");
+	tableau[14] = IMG_LoadTexture(rendu, "./images/sprites/monstre14.png");
+	tableau[15] = IMG_LoadTexture(rendu, "./images/sprites/monstre15.png");
+	tableau[16] = IMG_LoadTexture(rendu, "./images/sprites/monstre16.png");
+	tableau[17] = IMG_LoadTexture(rendu, "./images/sprites/monstre17.png");
+	tableau[18] = IMG_LoadTexture(rendu, "./images/sprites/monstre18.png");
+	tableau[19] = IMG_LoadTexture(rendu, "./images/sprites/monstre19.png");
+	tableau[20] = IMG_LoadTexture(rendu, "./images/sprites/monstre20.png");
+	tableau[21] = IMG_LoadTexture(rendu, "./images/sprites/monstre21.png");
+	tableau[22] = IMG_LoadTexture(rendu, "./images/sprites/monstre22.png");
+	tableau[23] = IMG_LoadTexture(rendu, "./images/sprites/monstre23.png");
 }
 
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]){
@@ -540,6 +575,7 @@ void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]){
 void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]){
 	tableau[0] = IMG_LoadTexture(rendu, "./images/sprites/typespell0.png");
 	tableau[1] = IMG_LoadTexture(rendu, "./images/sprites/typespell1.png");
+	tableau[2] = IMG_LoadTexture(rendu, "./images/sprites/typespell2.png");
 }
 
 void destroy_texture(int taille, SDL_Texture *tableau[]){
