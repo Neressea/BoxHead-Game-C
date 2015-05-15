@@ -420,11 +420,6 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 			SDL_Texture* end_screen = IMG_LoadTexture(rendu, "./images/sprites/game_over.jpeg");
 			SDL_RenderClear(rendu);
 
-			if(!end_screen){
-				fprintf(stderr, "Erreur lors du chargement de game_over.jpeg");
-				exit(1);
-			}
-
 			SDL_RenderCopy(rendu, end_screen, NULL, &pos);
 			int t=0;
 			while(t++ < 5000) SDL_RenderPresent(rendu);
