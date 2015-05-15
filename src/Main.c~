@@ -239,8 +239,9 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
-	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
+	tab_typeSpell[1] = init_typeSpell(1000,1,500,20);
 	tab_typeSpell[2] = init_typeSpell(100,2,500,10);
+	tab_typeSpell[3] = init_typeSpell(100,0,500,-1);
 	TypeSpell *current_type = tab_typeSpell[0];
 
 	Move *move = malloc(sizeof(Move));
@@ -366,11 +367,10 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 		turret(map, current_type, key, direction, &last);
 	}else{
 		lanceattack(liste_spell, &direction, current_type, key,screen_w /2- PXH_W / 2, screen_h /2 - PXH_H / 2);
-		turret_shot(map, liste_spell, current_type);
 	}
 
-	
-	
+	turret_shot(map, liste_spell, tab_typeSpell[3]);
+
 	move->x = 0;
 	move->y = 0;
 
@@ -579,7 +579,7 @@ void destroy_texture(int taille, SDL_Texture *tableau[]){
 void changeTypeSpell (int key[], TypeSpell **tab_typeSpell, TypeSpell **current_type){
 	int i;
 
-	for (i = 5 ; i < NB_TYP_SPELL + 5; i ++){
+	for (i = 5 ; i < NB_TYP_SPELL + 4; i ++){
 		if (key[i] == 1){			
 			*current_type = tab_typeSpell[i-5];
 		}

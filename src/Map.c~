@@ -505,7 +505,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 
 void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
 	ListBuilding* b = map->buildings;
-	int direction = 0;
+	int direction = rand()%4;
 	SDL_Rect * ptest = malloc(sizeof(SDL_Rect));
 	int key[5] = {0};
 	key[4] = 1;
@@ -513,18 +513,35 @@ void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
 
 		while(b != NULL){
 			if (b->current->hp > 0){
-				ptest->h = SPELL_H;
-				ptest->w = SPELL_W;
-				ptest->y = b->current->y - map->corner->y + PX_H;
-				ptest->x = b->current->x - map->corner->x + 25;
-				test = test_shot(ptest, direction, map);
-				lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
-				if (test == 2){
-					lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
-					printf("%d %d\n", ptest->x, ptest->y);
-				}else{
+					
+				direction *= 3;
 
+				if (direction == 0){
+					ptest->h = SPELL_H;
+					ptest->w = SPELL_W;
+					ptest->y = b->current->y - map->corner->y + PX_H;
+					ptest->x = b->current->x - map->corner->x + PX_W/2;
 				}
+				if (direction == 3){
+					ptest->h = SPELL_H;
+					ptest->w = SPELL_W;
+					ptest->y = b->current->y - map->corner->y - PX_H/10;
+					ptest->x = b->current->x - map->corner->x + PX_W/3;
+				}
+				if (direction == 6){
+					ptest->h = SPELL_W;
+					ptest->w = SPELL_H;
+					ptest->y = b->current->y - map->corner->y;
+					ptest->x = b->current->x - map->corner->x - PX_W;
+				}
+				if (direction == 9){
+					ptest->h = SPELL_W;
+					ptest->w = SPELL_H;
+					ptest->y = b->current->y - map->corner->y;
+					ptest->x = b->current->x - map->corner->x + PX_W;
+				}
+
+				lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
 				
 			}
 		b = b->next;
@@ -569,24 +586,13 @@ int test_shot(SDL_Rect* pref, int direction, Map *map){
 			h = SPELL_W;
 			w = SPELL_H;
 		}
- 
-		while(b != NULL){
-
-			if(ptest->x + w >= b->current->x && ptest->x <= b->current->x + PX_W){
-				if(ptest->y + h >= b->current->y && ptest->y <= b->current->y + PX_H){
-	 				test = 1;
-				}
-			}
-		
-			b = b->next;
-
-		}
 
 		while(c != NULL){
 
 			if(ptest->x + w >= c->current->pos->x && ptest->x <= c->current->pos->x + PXH_W){
 				if(ptest->y + h >= c->current->pos->y && ptest->y <= c->current->pos->y + PXH_H){
-	 				test = 2;
+	 				test = 1;
+					break;
 					
 				}
 			}
