@@ -37,7 +37,7 @@ int main(){
 	SDL_Surface *Surface_Tsubtitle = TTF_RenderText_Solid (font, "Appuyez sur une touche", textColor);
 	SDL_Texture* Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
-	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/ennemy.png");	
+	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/cursor.png");	
 
 	int screen = 0;
 	int quit = 0;
@@ -200,8 +200,11 @@ int main(){
 	}
 
 	if (play == 1){
-		managing_event(main_screen,rendu);
+		quit = managing_event(main_screen,rendu);
 	}
+
+	if(quit == 2) main();
+
 	
 	free(title);
 	free(title2);
@@ -221,7 +224,7 @@ int main(){
 	return EXIT_SUCCESS;
 }
 
-void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
+int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
@@ -410,6 +413,26 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 			exit(EXIT_FAILURE);
 		}
 
+		if(map->characters->current->hp<=0){
+			SDL_Rect pos;
+			pos.x = 0;
+			pos.y = 0;
+			SDL_Texture* end_screen = IMG_LoadTexture(rendu, "./images/sprites/game_over.jpeg");
+			SDL_RenderClear(rendu);
+
+			if(!end_screen){
+				fprintf(stderr, "Erreur lors du chargement de game_over.jpeg");
+				exit(1);
+			}
+
+			SDL_RenderCopy(rendu, end_screen, NULL, &pos);
+			int t=0;
+			while(t++ < 5000) SDL_RenderPresent(rendu);
+
+			SDL_DestroyTexture(end_screen);
+			quit = 2;	
+		} 
+
 	}
 
 	int i=0;
@@ -453,6 +476,8 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	free(tab_typeSpell);
 	free(move);
 	TTF_CloseFont(font);
+
+	return quit;
 	
 }
 
