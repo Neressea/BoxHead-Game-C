@@ -37,7 +37,7 @@ int main(){
 	SDL_Surface *Surface_Tsubtitle = TTF_RenderText_Solid (font, "Appuyez sur une touche", textColor);
 	SDL_Texture* Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
-	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/ennemy.png");	
+	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/cursor.png");	
 
 	int screen = 0;
 	int quit = 0;
@@ -200,8 +200,11 @@ int main(){
 	}
 
 	if (play == 1){
-		managing_event(main_screen,rendu);
+		quit = managing_event(main_screen,rendu);
 	}
+
+	if(quit == 2) main();
+
 	
 	free(title);
 	free(title2);
@@ -221,7 +224,7 @@ int main(){
 	return EXIT_SUCCESS;
 }
 
-void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
+int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	SDL_Texture *texture_heros[NB_SPRITES_H + NB_SPRITES_A] = {NULL};
 	SDL_Texture *texture_ennemy[NB_SPRITES_H] = {NULL};	
@@ -237,7 +240,7 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
 	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
-	tab_typeSpell[2] = init_typeSpell(100,2,500,20);
+	tab_typeSpell[2] = init_typeSpell(100,2,500,10);
 	TypeSpell *current_type = tab_typeSpell[0];
 
 	Move *move = malloc(sizeof(Move));
@@ -351,19 +354,22 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	showMap(main_screen, rendu, map);
 
-	updateWall(map->buildings);
+	map->buildings = updateWall(map->buildings);
 
 	manageEnnemies(map);
 
-	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction);
+	showCharacters(rendu, map->characters, map->corner, texture_chara, key, &direction, map->buildings);
 	
 	changeTypeSpell(key, tab_typeSpell,&current_type);
 
 	if (current_type->id == 2){
 		turret(map, current_type, key, direction, &last);
 	}else{
-		lanceattack(liste_spell, &direction, current_type, key);
+		lanceattack(liste_spell, &direction, current_type, key,screen_w /2- PXH_W / 2, screen_h /2 - PXH_H / 2);
+		turret_shot(map, liste_spell, current_type);
 	}
+
+	
 	
 	move->x = 0;
 	move->y = 0;
@@ -410,6 +416,21 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 			exit(EXIT_FAILURE);
 		}
 
+		if(map->characters->current->hp<=0){
+			SDL_Rect pos;
+			pos.x = 0;
+			pos.y = 0;
+			SDL_Texture* end_screen = IMG_LoadTexture(rendu, "./images/sprites/game_over.jpeg");
+			SDL_RenderClear(rendu);
+
+			SDL_RenderCopy(rendu, end_screen, NULL, &pos);
+			int t=0;
+			while(t++ < 5000) SDL_RenderPresent(rendu);
+
+			SDL_DestroyTexture(end_screen);
+			quit = 2;	
+		} 
+
 	}
 
 	int i=0;
@@ -453,42 +474,9 @@ void managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	free(tab_typeSpell);
 	free(move);
 	TTF_CloseFont(font);
-	
-}
 
-void test_key(int key[], SDL_Rect *position){
-		
-	if (key[0] && key[2]){
-		position->y -= SPEED;
-		position->x -= SPEED;
-	}
-	if (key[0] && key[3]){
-		position->y -= SPEED;
-		position->x += SPEED;
-	}
-	if (key[0] && !key[3] && !key[2]){
-		position->y -= SPEED;
-	}
+	return quit;
 	
-	if (key[1] && key[2]){
-		position->y += SPEED;
-		position->x -= SPEED;
-	}
-	if (key[1] && key[3]){
-		position->y += SPEED;
-		position->x += SPEED;
-	}
-	if (key[1] && !key[3] && !key[2]){
-		position->y += SPEED;
-	}
-		
-	if (key[2] && !key[0] && !key[1]){
-		position->x -= SPEED;
-	}
-	if (key[3] && !key[0] && !key[1]){
-		position->x += SPEED;
-	}
-
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
@@ -619,7 +607,7 @@ void deleteSpell2(ListSpell *current_list, Map *map, ListItem *listitem){
 			cursor = current_list;
 		}
 
-		removeKilled(map->characters);
+		map->characters->next = removeKilled(map->characters->next);
 
 		cursor = cursor->nextSpell;
 	}

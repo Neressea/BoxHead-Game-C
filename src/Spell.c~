@@ -95,7 +95,7 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 }
 
 
-void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
+void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[], int x, int y){
 	
 	ListSpell *cursor = current_list->nextSpell;	
 
@@ -189,6 +189,25 @@ void manageSpellType(TypeSpell *current_type, SDL_Renderer *rendu, SDL_Texture *
 	pattack->y = SCREEN_H - PX_W + 30;
 	
 	SDL_RenderCopy(rendu, Text_Ammo, NULL, pattack );
+
+	free(pattack);
+	SDL_FreeSurface(Surface_Ammo);
+	SDL_DestroyTexture(Text_Ammo);
+}
+
+void destroyListSpell(ListSpell* ls){
+	ListSpell *succ;
+	while(ls){
+		succ = ls->nextSpell;
+		destroySpell(ls->currentSpell);
+		free(ls);
+		ls = succ;
+	}
+}
+
+void destroySpell(Spell* s){
+	//free(s->pspell);
+	free(s);
 }
 
 

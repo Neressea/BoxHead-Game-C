@@ -95,13 +95,13 @@ void updateSpell(ListSpell *current_list, Move* move, SDL_Window *main_screen){
 }
 
 
-void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]){
+void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[], int x, int y){
 	
 	ListSpell *cursor = current_list->nextSpell;	
 
 	if (key[4] && current_type->ammo != 0){
 		
-		Spell *new = createSpell(current_type, f, screen_w1 /2- PXH_W / 2,screen_h1 /2 - PXH_H / 2);			
+		Spell *new = createSpell(current_type, f, x, y);			
 		ListSpell * newlist = malloc(sizeof(ListSpell));
 		newlist->currentSpell = new;
 		newlist->nextSpell = NULL; 

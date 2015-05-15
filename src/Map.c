@@ -492,7 +492,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 		}
 
 		if (mur == 0){
-			Building* b = createBuilding(x * PX_W, y * PX_H, 100, 10, 10);
+			Building* b = createBuilding(x * PX_W, y * PX_H, map->characters->current->level*1000, 10, 10);
 			ListBuilding* lb = malloc(sizeof(ListBuilding));
 			lb->current=b;
 			lb->next = map->buildings;
@@ -501,6 +501,109 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 			*last = SDL_GetTicks();
 		}
 	}
+}
+
+void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
+	ListBuilding* b = map->buildings;
+	int direction = 0;
+	SDL_Rect * ptest = malloc(sizeof(SDL_Rect));
+	int key[5] = {0};
+	key[4] = 1;
+	int test = 0;
+
+		while(b != NULL){
+			if (b->current->hp > 0){
+				ptest->h = SPELL_H;
+				ptest->w = SPELL_W;
+				ptest->y = b->current->y - map->corner->y + PX_H;
+				ptest->x = b->current->x - map->corner->x + 25;
+				test = test_shot(ptest, direction, map);
+				lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
+				printf("%d %d\n", ptest->x, ptest->y);
+				if (test == 2){
+					lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
+					printf("%d %d\n", ptest->x, ptest->y);
+				}else{
+
+				}
+				
+			}
+		b = b->next;
+		}
+
+	free(ptest);
+
+}
+
+int test_shot(SDL_Rect* pref, int direction, Map *map){
+	int test = 0;
+	int time = 0;
+	int h;
+	int w;
+
+	ListBuilding* b = map->buildings;
+	ListChar *c = map->characters;
+	SDL_Rect *ptest = malloc(sizeof(SDL_Rect));
+	ptest->x = pref->x;
+	ptest->y = pref->y;
+	ptest->w = pref->w;
+	ptest->h = pref->h;
+
+	while(time != 200){
+		if (direction == 0){
+			ptest->y += 2*SPEED;
+			h = SPELL_H;
+			w = SPELL_W;		
+		}
+		if (direction == 3){
+			ptest->y -= 2*SPEED;
+			h = SPELL_H;
+			w = SPELL_W;
+		}
+		if (direction == 6){
+			ptest->x -= 2*SPEED;
+			h = SPELL_W;
+			w = SPELL_H;
+		}
+		if (direction == 9){
+			ptest->x += 2*SPEED;
+			h = SPELL_W;
+			w = SPELL_H;
+		}
+ 
+		while(b != NULL){
+
+			if(ptest->x + w >= b->current->x && ptest->x <= b->current->x + PX_W){
+				if(ptest->y + h >= b->current->y && ptest->y <= b->current->y + PX_H){
+	 				test = 1;
+				}
+			}
+		
+			b = b->next;
+
+		}
+
+		while(c != NULL){
+
+			if(ptest->x + w >= c->current->pos->x && ptest->x <= c->current->pos->x + PXH_W){
+				if(ptest->y + h >= c->current->pos->y && ptest->y <= c->current->pos->y + PXH_H){
+	 				test = 2;
+					
+				}
+			}
+		
+			c = c->next;
+
+		}
+
+		time++;
+
+	}
+
+	free(ptest);
+
+	return test;
+
 }
 
 void encircleMap(Map* map){

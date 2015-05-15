@@ -38,7 +38,7 @@ struct ListSpell{
 
 Spell* createSpell(TypeSpell *type, int *direction, int x, int y);
 void deleteSpell(ListSpell *current_list);
-void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[]);
+void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int key[], int x, int y);
 TypeSpell *init_typeSpell(int attack, int id, int rate, int ammo);
 void Blit_attack(ListSpell *current_list,SDL_Renderer *rendu, SDL_Texture *tableau[]);
 ListSpell *init_listspell();

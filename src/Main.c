@@ -239,7 +239,7 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	
 	TypeSpell **tab_typeSpell = malloc(NB_TYP_SPELL*sizeof(TypeSpell));
 	tab_typeSpell[0] = init_typeSpell(100,0,500,-1);
-	tab_typeSpell[1] = init_typeSpell(100,1,500,20);
+	tab_typeSpell[1] = init_typeSpell(1000,1,500,20);
 	tab_typeSpell[2] = init_typeSpell(100,2,500,10);
 	TypeSpell *current_type = tab_typeSpell[0];
 
@@ -365,8 +365,11 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	if (current_type->id == 2){
 		turret(map, current_type, key, direction, &last);
 	}else{
-		lanceattack(liste_spell, &direction, current_type, key);
+		lanceattack(liste_spell, &direction, current_type, key,screen_w /2- PXH_W / 2, screen_h /2 - PXH_H / 2);
+		turret_shot(map, liste_spell, current_type);
 	}
+
+	
 	
 	move->x = 0;
 	move->y = 0;

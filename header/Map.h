@@ -94,5 +94,9 @@ int blockMonsters(Map* map, SDL_Rect* pos);
 
 int isFree(Map* map, SDL_Rect* pos);
 
+void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type);
+
+int test_shot(SDL_Rect* pref, int direction, Map *map);
+
 #endif
 
