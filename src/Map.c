@@ -73,6 +73,7 @@ void load(SDL_Renderer *rendu, Map* map, char* filepath){
 
 	fclose(file);
 	free(line);
+	printf("%zu\n", sizeof(*map));
 }
 
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i){
