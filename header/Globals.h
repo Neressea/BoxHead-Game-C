@@ -31,6 +31,21 @@
 	#define ITEM_H 30
 	#define ITEM_W 30
 
+	//Globals for the keybinds
+	#define ESCAPE 0
+	#define UP 1
+	#define DOWN 2
+	#define LEFT 3
+	#define RIGHT 4
+	#define ATTACK 5
+	#define FIRE 6
+	#define ICE 7
+	#define TOWER 8
+
+	//Autres variables
+	#define LGR_MAX 30
+	#define NB_TOUCHES 9
+
 
 typedef struct {
 	int x, y;

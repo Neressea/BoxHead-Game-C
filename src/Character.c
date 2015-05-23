@@ -240,6 +240,11 @@ ListChar* removeKilled(ListChar* characters){
 void add_xp(Character* ch, int dam){
 	ch->xp+=dam;
 
+	Mix_Chunk *frappe;
+	frappe = Mix_LoadWAV("./sons/hit.wav");
+	Mix_PlayChannel(2, frappe, 0);
+	Mix_FreeChunk(frappe);
+
 	if(ch->xp >= (ch->level * 100)){
 		ch->level++;
 		ch->xp = 0;

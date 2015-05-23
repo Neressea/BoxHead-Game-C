@@ -1,4 +1,3 @@
-./bin/*.o
-./Game
-./maps/*
-.src/*~
+*.o
+*~
+Game

@@ -3,6 +3,7 @@
 int screen_h = SCREEN_H;
 int screen_w = SCREEN_W;
 
+
 int main(){
 	
 	srand(time(NULL));
@@ -22,6 +23,11 @@ int main(){
 		exit(EXIT_FAILURE);
 	}
 
+	 if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){
+	      	fprintf(stderr, "Erreur d'initialisation du la SDL_Mixer : %s\n", Mix_GetError()); //managing MIXER loading error
+		exit(EXIT_FAILURE);
+	   } 
+
 	SDL_Window *main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE);
 	SDL_Renderer *rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 
@@ -32,12 +38,19 @@ int main(){
 	SDL_Event event;
 	SDL_Event event1;
 
-	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100);
+
+
+	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100); //!!0 création des textures 
     SDL_Surface *Surface_Title = TTF_RenderText_Solid (font, "The Game", textColor);
 	SDL_Surface *Surface_Tsubtitle = TTF_RenderText_Solid (font, "Appuyez sur une touche", textColor);
 	SDL_Texture* Text_title = SDL_CreateTextureFromSurface(rendu, Surface_Title);
 	SDL_Texture* Text_subtitle = SDL_CreateTextureFromSurface(rendu, Surface_Tsubtitle);
 	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/cursor.png");	
+	
+	Mix_VolumeMusic(MIX_MAX_VOLUME); //On lance la musique d'écran titre
+	Mix_Music *musique;
+  	musique = Mix_LoadMUS("./sons/The Pyre.mp3"); 
+  	Mix_PlayMusic(musique, -1); 
 
 	int screen = 0;
 	int quit = 0;
@@ -66,11 +79,11 @@ int main(){
 		title->x = screen_w/2 - title->w/2;
 		title->y = screen_h/2 - title->h/2 - screen_h/4.8;
 
-		SDL_RenderClear(rendu);
+		SDL_RenderClear(rendu); //!!1
 
-		SDL_RenderCopy(rendu, Text_title, NULL, title );
+		SDL_RenderCopy(rendu, Text_title, NULL, title ); //!!2
 
-		title2->h = screen_h/4.8;
+		title2->h = screen_h/4.8;  //definit la taille des textures
 		title2->w = screen_w/2;	
 		title2->x = screen_w/2 - title2->w/2;
 		title2->y = screen_h/2 - title2->h/2 + screen_h/4.8;
@@ -85,7 +98,7 @@ int main(){
 	
 		}
 
-		SDL_RenderPresent(rendu);
+		SDL_RenderPresent(rendu); //!!3
 
 		test2 = SDL_GetTicks();	
 
@@ -105,7 +118,7 @@ int main(){
 	Surface_Title = TTF_RenderText_Solid (font, "New Game", textColor);
 
 	SDL_FreeSurface(Surface_Tsubtitle);
-	Surface_Tsubtitle = TTF_RenderText_Solid (font, "Options", textColor);
+	Surface_Tsubtitle = TTF_RenderText_Solid (font, "Keybindings", textColor);
 
 	SDL_Surface *Surface_Tsubtitle2 = TTF_RenderText_Solid (font, "Quit", textColor);
 
@@ -145,11 +158,12 @@ int main(){
 						case SDLK_SPACE:
 							if (point->y == screen_h/2 - screen_h/3.2) 								{							
 								play = 1;
+								quit=1;
 							}else if (point->y == screen_h/2 - screen_h/3.2 + 2*screen_h/4){
+								quit=1;
 							}else{
 								option = 1;
 							}
-								quit = 1;
 						break;
 					}
 				break;
@@ -192,14 +206,19 @@ int main(){
 		}
 
 		limit = SDL_GetTicks() + FPS;
+
+		if (option == 1){
+			quit = managing_keybinds(main_screen,rendu);
+			option=0;
+			SDL_RenderClear(rendu);
+		}
 		
 	}
 
-	if (option == 1){
-
-	}
+	
 
 	if (play == 1){
+		Mix_FreeMusic(musique);
 		quit = managing_event(main_screen,rendu);
 	}
 
@@ -218,6 +237,8 @@ int main(){
 	SDL_DestroyWindow(main_screen);
 	IMG_Quit();
 	SDL_VideoQuit();
+	Mix_FreeMusic(musique);
+	Mix_CloseAudio();
 	SDL_Quit();
 	TTF_Quit();
 
@@ -270,13 +291,31 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 		fprintf(stderr, "Erreur d'initialisation de sprite courant : %s\n", SDL_GetError()); // managing SDL loading error 
 		exit(EXIT_FAILURE);
 	}
+	
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
+	Mix_Music *musique;
+	musique = Mix_LoadMUS("./sons/The Complex.mp3"); //Chargement de la musique
+   	Mix_PlayMusic(musique, -1);
+	Mix_AllocateChannels(32); //Effets sonores
+	Mix_Chunk *feu;
+	feu = Mix_LoadWAV("./sons/fire.wav");
+	Mix_Chunk *glace;
+	glace = Mix_LoadWAV("./sons/ice.wav");
+	Mix_Chunk *mort;
+	mort = Mix_LoadWAV("./sons/death.wav");
+	Mix_Chunk *tour;
+	tour = Mix_LoadWAV("./sons/hammer.wav");
 
-	load(rendu, map, "./maps/map1");	
+	load(rendu, map, "./maps/map1");
+
+	int keyBindings[NB_TOUCHES]={0}; //On génère les raccourcis clavier
+	initialise_keybinds(keyBindings);
+	
 
 	SDL_Event event;
 		
 	SDL_ShowCursor(SDL_DISABLE);
-	
+
 	while(quit == 0){
 
 		SDL_PollEvent(&event);
@@ -285,65 +324,73 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 					quit = 1;
 				break;
 				case SDL_KEYDOWN:
-					switch (event.key.keysym.sym){	//openclassrooms.com/uploads/fr/ftp/mateo21/sdlkeysym.html
-						case SDLK_ESCAPE:
-							quit = 1;
-        					break;
-						case SDLK_UP:
-							key[0] = 1;
-						break;
-						case SDLK_DOWN:
-							key[1] = 1;
-						break;
-						case SDLK_LEFT:
-							key[2] = 1;
-						break;
-						case SDLK_RIGHT:
-							key[3] = 1;
-						break;
-						case SDLK_SPACE:
-							key[4] = 1;
-						break;
-						case SDLK_a:
-							key[5] = 1;
-						break;
-						case SDLK_z:
-							key[6] = 1;
-						break;
-						case SDLK_e:
-							key[7] = 1;
-						break;
+					if (event.key.keysym.sym == keyBindings[ESCAPE]) {
+						quit = 1;
+					break; 
+					} else if (event.key.keysym.sym == keyBindings[UP]) {
+						key[0] = 1;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[DOWN]) {
+						key[1] = 1;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[LEFT]) {
+						key[2] = 1;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[RIGHT]) {
+						key[3] = 1;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[ATTACK]) {
+						key[4] = 1;
+						if(current_type == tab_typeSpell[0] && Mix_Playing(1) == 0) {
+							Mix_PlayChannel(1, feu, 0);
+						} else if (current_type == tab_typeSpell[1] && Mix_Playing(1) == 0) {
+							Mix_PlayChannel(1, glace, 0);
+						} else if (current_type == tab_typeSpell[2] && Mix_Playing(1) == 0) {
+							Mix_PlayChannel(1, tour, 0);
 						}
+					break;
+					} else if (event.key.keysym.sym == keyBindings[FIRE]) {
+						key[5] = 1;
+						Mix_PlayChannel(1, feu, 0);
+					break;
+					} else if (event.key.keysym.sym == keyBindings[ICE]) {
+						key[6] = 1;
+						Mix_PlayChannel(1, glace, 0);
+					break;
+					} else if (event.key.keysym.sym == keyBindings[TOWER]) {
+						key[7] = 1;
+						Mix_PlayChannel(1, tour, 0);
+					break;
+					}
 				break;
 				case SDL_KEYUP:
-					switch (event.key.keysym.sym){
-						case SDLK_ESCAPE:
-        					break;
-						case SDLK_UP:
-							key[0] = 0;
-						break;
-						case SDLK_DOWN:
-							key[1] = 0;
-						break;
-						case SDLK_LEFT:
-							key[2] = 0;
-						break;
-						case SDLK_RIGHT:
-							key[3] = 0;
-						break;
-						case SDLK_SPACE:
-							key[4] = 0;
-						break;
-						case SDLK_a:
-							key[5] = 0;
-						break;
-						case SDLK_z:
-							key[6] = 0;
-						break;
-						case SDLK_e:
-							key[7] = 0;
-						break;
-						}
+					if (event.key.keysym.sym == keyBindings[ESCAPE]) {
+					break; 
+					} else if (event.key.keysym.sym == keyBindings[UP]) {
+						key[0] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[DOWN]) {
+						key[1] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[LEFT]) {
+						key[2] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[RIGHT]) {
+						key[3] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[ATTACK]) {
+						key[4] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[FIRE]) {
+						key[5] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[ICE]) {
+						key[6] = 0;
+					break;
+					} else if (event.key.keysym.sym == keyBindings[TOWER]) {
+						key[7] = 0;
+					break;
+					}
 				break;
 							
 			}
@@ -423,6 +470,7 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 			pos.y = 0;
 			SDL_Texture* end_screen = IMG_LoadTexture(rendu, "./images/sprites/game_over.jpeg");
 			SDL_RenderClear(rendu);
+			Mix_PlayChannel(2, mort, 0);
 
 			SDL_RenderCopy(rendu, end_screen, NULL, &pos);
 			int t=0;
@@ -474,6 +522,10 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_DestroyWindow(main_screen);
 	free(tab_typeSpell);
 	free(move);
+	Mix_FreeChunk(feu);
+	Mix_FreeChunk(glace);
+	Mix_FreeChunk(mort);
+	Mix_FreeChunk(tour);
 	TTF_CloseFont(font);
 
 	return quit;
@@ -680,4 +732,116 @@ void hero_stat(SDL_Renderer *rendu, TTF_Font* font, Map *map){
 
 }
 
+int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non terminée
+
+	int keyBindings[NB_TOUCHES]={0}; //On génère les raccourcis clavier
+	initialise_keybinds(keyBindings);
+
+	int quit=0;
+	
+	char t1 = keyBindings[1];
+	char t2 = keyBindings[2];
+	char t3 = keyBindings[3];
+	char t4 = keyBindings[4];
+	char t5 = keyBindings[5];
+	char t6 = keyBindings[6];
+	char t7 = keyBindings[7];
+	char t8 = keyBindings[8];
+
+	TTF_Font* font1 = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100); //!!0 création des textures
+	SDL_Color textColor1 = { 255, 255, 255, 255 }; 
+ 
+	SDL_RenderClear(rendu); //!!1
+
+	SDL_Surface *Surface_Tkeytitle1 = TTF_RenderText_Solid (font1, "Haut", textColor1);
+	SDL_Surface *Surface_Tkeytitle2 = TTF_RenderText_Solid (font1, "Bas", textColor1);
+	SDL_Surface *Surface_Tkeytitle3 = TTF_RenderText_Solid (font1, "Gauche", textColor1);
+	SDL_Surface *Surface_Tkeytitle4 = TTF_RenderText_Solid (font1, "Droite", textColor1);
+	SDL_Surface *Surface_Tkeytitle5 = TTF_RenderText_Solid (font1, "Attaque", textColor1);
+	SDL_Surface *Surface_Tkeytitle6 = TTF_RenderText_Solid (font1, "Feu", textColor1);
+	SDL_Surface *Surface_Tkeytitle7 = TTF_RenderText_Solid (font1, "Glace", textColor1);
+	SDL_Surface *Surface_Tkeytitle8 = TTF_RenderText_Solid (font1, "Tour", textColor1);
+
+	SDL_Texture *Text_keytitle1 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle1);
+	SDL_FreeSurface(Surface_Tkeytitle1);
+	SDL_Texture *Text_keytitle2 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle2);
+	SDL_FreeSurface(Surface_Tkeytitle2);
+	SDL_Texture *Text_keytitle3 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle3);
+	SDL_FreeSurface(Surface_Tkeytitle3);
+	SDL_Texture *Text_keytitle4 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle4);
+	SDL_FreeSurface(Surface_Tkeytitle4);
+	SDL_Texture *Text_keytitle5 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle5);
+	SDL_FreeSurface(Surface_Tkeytitle5);
+	SDL_Texture *Text_keytitle6 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle6);
+	SDL_FreeSurface(Surface_Tkeytitle6);
+	SDL_Texture *Text_keytitle7 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle7);
+	SDL_FreeSurface(Surface_Tkeytitle7);
+	SDL_Texture *Text_keytitle8 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle8);
+	SDL_FreeSurface(Surface_Tkeytitle8);
+
+
+	SDL_Rect *title3 = malloc(sizeof(SDL_Rect));
+	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
+		
+		title3->h = screen_h/10;  //definit la taille des textures
+		title3->w = screen_w/2;	
+		title3->x = screen_w/2 - title3->w/2;
+		title3->y = screen_h/2 - title3->h/2 - 4*screen_h/10;
+	
+	int pas=screen_h/10;
+
+	SDL_RenderCopy(rendu, Text_keytitle1, NULL, title3 ); //!!2
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle2, NULL, title3 );
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle3, NULL, title3 );
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle4, NULL, title3 ); 
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle5, NULL, title3 );
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle6, NULL, title3 );
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle7, NULL, title3 );
+	title3->y += pas;
+	SDL_RenderCopy(rendu, Text_keytitle8, NULL, title3 ); 
+
+	SDL_Rect *point1 = malloc(sizeof(SDL_Rect));
+	
+	point1->h = screen_h/9.6;
+	point1->w = screen_w/12.8;	
+	point1->x = screen_w/2 - title3->w/2 - screen_w/8;
+	point1->y = screen_h/2 - screen_h/2.25;
+
+	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/cursor.png");	
+	SDL_RenderCopy(rendu, Pointeur, NULL, point1 );
+	
+	SDL_RenderPresent(rendu); //!!3
+	SDL_DestroyTexture(Text_keytitle1);
+	SDL_DestroyTexture(Text_keytitle2);
+	SDL_DestroyTexture(Text_keytitle3);
+	SDL_DestroyTexture(Text_keytitle4);
+	SDL_DestroyTexture(Text_keytitle5);
+	SDL_DestroyTexture(Text_keytitle6);
+	SDL_DestroyTexture(Text_keytitle7);
+	SDL_DestroyTexture(Text_keytitle8);
+	SDL_DestroyTexture(Pointeur);
+
+SDL_Event event;
+
+while(quit == 0) {
+	SDL_PollEvent(&event);	
+	switch(event.type){
+			case SDL_QUIT:
+				quit = 1;
+			break;
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_ESCAPE){
+					quit = 2;
+				}
+			break;
+	}
+}
+return quit;
+}
 
