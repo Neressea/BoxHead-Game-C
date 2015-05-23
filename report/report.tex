@@ -20,7 +20,6 @@
     pdftitle={\reporttitle},%
     pdfauthor={\reportauthor},%
     pdfsubject={\reportsubject},%
-    pdfkeywords={rapport} {vos} {mots} {clés}
 }
 
 \begin{document}
@@ -39,6 +38,9 @@
   \cleardoublepage
   \include{files/partie2}
   \cleardoublepage
+  
+  \setcounter{page}{0}
+  \thispagestyle{empty}
   \include{files/references}
 \end{document}
 
