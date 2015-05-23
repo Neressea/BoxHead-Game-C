@@ -20,6 +20,9 @@ En nous confrontant pour la première fois à un travail de groupe de cette ampl
 
 Après plusieurs longues séances de codage consécutives
 
-	\subsubsection{}
+	\subsubsection{Gestion événementielle}
+	
+	Nous n'arrivions pas dans un premier temps à gérer l'appuie de plusieurs touches en même temps. Nous avons alors changer notre Wait\_Event par un Poll\_Event. Ce dernier a comme avantage de garder en mémoire plusieurs évènements, contrairement à Wait\_Event qui les gèrent un par un. Les évènements étant stockés dès le premier appel de la fonction Poll\_Event, un switch(Poll\_Event) n'est pas nécessaire. Nous avons ensuite décidé de créer un tableau de booléen contenant les états de chaque touche nécessaire au jeu. Il a donc fallu contrôler à la fois lorsqu'une touche est pressée, mais aussi lorsqu'elle ne l'est plus. Ce tableau nous a permis de gérer les évènements de manière plus lisible, mais aussi de gérer grâce à un if l'état de plusieurs touches à la fois, permettant de gérer l'appuie de plusieurs touches. 
 
-	\subsubsection{}
+	\subsubsection{La vue et le modèle}
+Collisions et vue déplaçable.
