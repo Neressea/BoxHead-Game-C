@@ -6,14 +6,18 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <time.h>
+#include <string.h>
 #include "Map.h"
 #include "Globals.h"
 #include "IA.h"
 #include "Item.h"
+#include "Keybinds.h"
 
 int main();
 int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu);
+int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu);
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]);
 void init_texture_attack(SDL_Renderer *rendu, SDL_Texture *tabl[]);
 void init_type_attack(SDL_Renderer *rendu, SDL_Texture *tableau[]);
