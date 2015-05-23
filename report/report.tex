@@ -11,6 +11,10 @@
 \usepackage{hyperref}
 \usepackage[french]{varioref}
 
+\usepackage{tocloft}
+\addtocontents{toc}{\cftpagenumbersoff{section}}
+\addtocontents{toc}{\cftpagenumbersoff{subsubsection}}
+
 \newcommand{\reporttitle}{NOM DU JEU}     % Titre
 \newcommand{\reportauthor}{Nicolas \textsc{BÉDRINE}} % Auteur
 \newcommand{\reportsubject}{Rapport de projet C} % Sujet
@@ -40,7 +44,6 @@
   \include{files/partie2}
   \cleardoublepage
   
-  \setcounter{page}{0}
   \thispagestyle{empty}
   \include{files/references}
 \end{document}
