@@ -1,9 +1,5 @@
 #include "../header/Map.h"
 
-/**
-* Load a map from a text file.
-* filepath : the path to the file
-*/
 void load(SDL_Renderer *rendu, Map* map, char* filepath){
 
 	map->buildings = NULL;
@@ -80,18 +76,18 @@ void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i){
 	fgets(line, 100, file);
 
 	if(line == NULL){
-		fprintf(stderr, "Non well-formated file (background)\n");
+		fprintf(stderr, "Non well-formated file.\n");
 		exit(2);
 	}
 
-	//We load the texture of the background
+	//We load the texture
 	char path [120] = "./images/sprites/";
 	strcat(path, line);
 	path[strlen(path)-1] = '\0';
 	text[i] = IMG_LoadTexture(rendu, path);
 
 	if(text[i] == NULL){
-		fprintf(stderr, "Error loading the background : %s\n", SDL_GetError());
+		fprintf(stderr, "Error loading the texture : %s\n", SDL_GetError());
 		exit(2);
 	}
 
@@ -216,14 +212,12 @@ Building* isBuilding(ListBuilding* buildings, SDL_Rect* pos){
 	return res;
 }
 
-void saveMap(Map *map){
-	map->corner = NULL; //temp
-}
-
 void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 
+	//We keep the previous values, if we have to cancel all changes.
 	int prev_x=map->corner->x, prev_y=map->corner->y;
 
+	//We move the corner in function of the direction of the hero.
 	if(!key[4]){
 
 		if (key[0] && key[2]){
@@ -260,24 +254,32 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		int screen_h, screen_w;
 		SDL_GetWindowSize(screen,&screen_w,&screen_h);
 		SDL_Rect* chara = malloc(sizeof(SDL_Rect));
+
+		//We create a SDL_Rect fr thr position of the hero
 		chara->x = map->corner->x + screen_w/2 - PXH_W/2;
 		chara->y = map->corner->y + screen_h/2 - PXH_H/2;
 		chara->w = PXH_W;
 		chara->h = PXH_H;
 
 		int res = 0;
+
+		/*We verify if we can move. We can't if there is a building. And originally 
+		we couldn't if there were an ennemy. But we change that because it was impossible to play.
+		So blockMonsters always return 0, so false.*/
 		if(cantMove(map->buildings, chara) || blockMonsters(map, chara)){
+
+			//If we can't, we go back to the previous coordinates.
 			map->corner->x=prev_x;
 			map->corner->y=prev_y;
 		}else{
+
+			//If we aren't blocked, we also move the hero.
 			move->x = map->corner->x - prev_x;
 			move->y = map->corner->y - prev_y;
 			map->characters->current->pos->x += move->x;
 			map->characters->current->pos->y += move->y;
 		}
-
 		free(chara);
-
 	}
 
 	
@@ -304,6 +306,7 @@ Building* cantMove(ListBuilding* b, SDL_Rect* pos){
 
 	res = (cant) ? b->current : NULL;
 
+	//We return the building that blocks.
 	return res;
 }
 
@@ -321,6 +324,7 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 			if(pos->y + pos->h >= pos_e->y && pos->y <= pos_e->y + pos_e->h){
 				cant=1;
 
+				//We don't attack to often, so the hero doesn't die in two bites.
 				if(loop==10){
 					map->characters->current->hp-=characters->current->attack;
 					loop=0;
@@ -546,78 +550,19 @@ void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
 			}
 		b = b->next;
 		}
-
 	free(ptest);
-
-}
-
-int test_shot(SDL_Rect* pref, int direction, Map *map){
-	int test = 0;
-	int time = 0;
-	int h;
-	int w;
-
-	ListBuilding* b = map->buildings;
-	ListChar *c = map->characters;
-	SDL_Rect *ptest = malloc(sizeof(SDL_Rect));
-	ptest->x = pref->x;
-	ptest->y = pref->y;
-	ptest->w = pref->w;
-	ptest->h = pref->h;
-
-	while(time != 200){
-		if (direction == 0){
-			ptest->y += 2*SPEED;
-			h = SPELL_H;
-			w = SPELL_W;		
-		}
-		if (direction == 3){
-			ptest->y -= 2*SPEED;
-			h = SPELL_H;
-			w = SPELL_W;
-		}
-		if (direction == 6){
-			ptest->x -= 2*SPEED;
-			h = SPELL_W;
-			w = SPELL_H;
-		}
-		if (direction == 9){
-			ptest->x += 2*SPEED;
-			h = SPELL_W;
-			w = SPELL_H;
-		}
-
-		while(c != NULL){
-
-			if(ptest->x + w >= c->current->pos->x && ptest->x <= c->current->pos->x + PXH_W){
-				if(ptest->y + h >= c->current->pos->y && ptest->y <= c->current->pos->y + PXH_H){
-	 				test = 1;
-					break;
-					
-				}
-			}
-		
-			c = c->next;
-
-		}
-
-		time++;
-
-	}
-
-	free(ptest);
-
-	return test;
-
 }
 
 void encircleMap(Map* map){
 	int i;
+
+	//We add walls at x = -1 and x = weight
 	for (i = -1; i <= map->height/PX_H+1; ++i){
 		addWall(map, -1, i);
 		addWall(map, map->width/PX_W, i);
 	}
 
+	//We add walls at y = -1 and y = height
 	for (i = -1; i < map->width/PX_W; ++i){
 		addWall(map, i, -1);
 		addWall(map, i, map->height/PX_H+1);
@@ -646,7 +591,6 @@ ListBuilding* updateWall(ListBuilding* lb){
 			}else{
 				c->next = NULL;
 			}
-	
 			free(d);
 		}else{
 			c = c->next;

@@ -58,13 +58,6 @@ void showMap(SDL_Window* screen, SDL_Renderer *rendu, Map* map);
 Building* isBuilding(ListBuilding* buildings, SDL_Rect* pos);
 
 /**
-* This function check the folder of maps, determines the name of the file 
-* in which it will save the map, create and fill it up.
-* m : the map to save in a text file
-*/
-void save(Map* m);
-
-/**
 * Move the map to "follow" the player
 * map : the map to move
 * key : the input events
@@ -83,6 +76,7 @@ void encircleMap(Map* map);
 
 /**
 * Verify if the hero can move. Check the position of buildings.
+* returns the buildings that blocks.
 */
 Building* cantMove(ListBuilding* b, SDL_Rect* pos);
 
@@ -116,14 +110,18 @@ int blockMonsters(Map* map, SDL_Rect* pos);
 int isFree(Map* map, SDL_Rect* pos);
 
 /**
-*
+* Check if the spell of a turret touched an ennemy.
 */
-void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type);
-
 int test_shot(SDL_Rect* pref, int direction, Map *map);
 
+/**
+* Create a new turret and add it to the map. 
+*/
 void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *last);
 
+/**
+* Update the list of buildings and remove all destroyed turrets.
+*/
 ListBuilding* updateWall(ListBuilding* lb);
 
 #endif
