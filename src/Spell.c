@@ -106,7 +106,9 @@ void lanceattack(ListSpell *current_list, int *f, TypeSpell *current_type, int k
 		newlist->currentSpell = new;
 		newlist->nextSpell = NULL; 
 
-		if (SDL_GetTicks() - current_type->time > current_type-> rate){
+		unsigned int t = SDL_GetTicks() - current_type->time;
+		unsigned int r = current_type->rate; 
+		if ( t>r ){
 			if (cursor == NULL){
 			current_list->nextSpell = newlist;
 			}

@@ -28,7 +28,7 @@ int main(){
 		exit(EXIT_FAILURE);
 	   } 
 
-	SDL_Window *main_screen = SDL_CreateWindow("Jeu de la mort qui tue",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE);
+	SDL_Window *main_screen = SDL_CreateWindow("Topo Head",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_W,SCREEN_H, SDL_WINDOW_SHOWN| SDL_WINDOW_RESIZABLE);
 	SDL_Renderer *rendu = SDL_CreateRenderer(main_screen, -1, SDL_RENDERER_SOFTWARE);
 
 	SDL_Rect *title = malloc(sizeof(SDL_Rect));
@@ -56,7 +56,7 @@ int main(){
 	int option = 0;
 	int test = 0;
 
-	int limit=0, test2=0;
+	int limit=0;
 
 	while(screen == 0){
 		SDL_PollEvent(&event);
@@ -97,8 +97,6 @@ int main(){
 		}
 
 		SDL_RenderPresent(rendu); //!!3
-
-		test2 = SDL_GetTicks();	
 
 		if (limit > test){
 			if (limit > test + FPS){
@@ -193,8 +191,6 @@ int main(){
 
 		SDL_RenderCopy(rendu, Pointeur, NULL, point );
 		SDL_RenderPresent(rendu);
-
-		test2 = SDL_GetTicks();	
 
 		if (limit > test){
 			if (limit > test + FPS){
@@ -424,7 +420,6 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 		turret(map, current_type, key, direction, &last);
 	}else{
 		lanceattack(liste_spell, &direction, current_type, key,screen_w /2- PXH_W / 2, screen_h /2 - PXH_H / 2);
-		turret_shot(map, liste_spell, tab_typeSpell[3]);
 	}
 
 	
@@ -746,19 +741,10 @@ int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non term
 
 	int quit=0;
 	int test = 0;
-	int limit=0, test2=0;
+	int limit=0;
 	int mess=0;
 	char* instruction[11] = {"Choisissez la touche a Configurer", "Touche pour se deplacer vers le haut", "Touche pour se deplacer vers le bas", "Touche pour se deplacer vers la gauche", "Touche pour se deplacer vers la droite", "Touche d'attaque", "Touche pour selectionner le feu", "Touche pour selectionner la glace", "Touche pour selectionner les tours", "Touche deja liee a une action"};
 	int i;
-
-	char t1 = keyBindings[1];
-	char t2 = keyBindings[2];
-	char t3 = keyBindings[3];
-	char t4 = keyBindings[4];
-	char t5 = keyBindings[5];
-	char t6 = keyBindings[6];
-	char t7 = keyBindings[7];
-	char t8 = keyBindings[8];
 
 	SDL_Rect *title3 = malloc(sizeof(SDL_Rect));
 
@@ -948,10 +934,6 @@ while(quit == 0) {
 	SDL_DestroyTexture(Pointeur);
 	SDL_DestroyTexture(Text_title0);
 	SDL_DestroyTexture(Text_instruction);
-
-
-
-	test2 = SDL_GetTicks();	
 
 		if (limit > test){
 			if (limit > test + FPS){

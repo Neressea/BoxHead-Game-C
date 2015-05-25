@@ -261,8 +261,6 @@ void moveMap(SDL_Window *screen, Map* map, int key[], Move* move){
 		chara->w = PXH_W;
 		chara->h = PXH_H;
 
-		int res = 0;
-
 		/*We verify if we can move. We can't if there is a building. And originally 
 		we couldn't if there were an ennemy. But we change that because it was impossible to play.
 		So blockMonsters always return 0, so false.*/
@@ -453,8 +451,10 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 	int x = map->characters->current->pos->x;
 	int y = map->characters->current->pos->y;
 	int mur = 0;
+	unsigned int l = *last;
+	unsigned int r = current_type->rate;
 	
-	if (key[4] && current_type->ammo != 0 && SDL_GetTicks() - *last > current_type->rate && (direction == 0 || direction == 3 || direction == 6 || direction == 9)){
+	if (key[4] && current_type->ammo != 0 && SDL_GetTicks() - l > r && (direction == 0 || direction == 3 || direction == 6 || direction == 9)){
 		
 		if (direction == 0){
 			y = y + PXH_H;
@@ -515,7 +515,6 @@ void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
 	SDL_Rect * ptest = malloc(sizeof(SDL_Rect));
 	int key[5] = {0};
 	key[4] = 1;
-	int test = 0;
 
 		while(b != NULL){
 			if (b->current->hp > 0){

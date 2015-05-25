@@ -108,8 +108,6 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 	int key2[5]={0, 0, 0, 0, 0};
 	int direction2 = 0;
 
-	int i=0;
-
 	//Then we move all the ennemies.
 	while(characters != NULL){
 
