@@ -71,6 +71,9 @@ void save(Map* m);
 */
 void moveMap(SDL_Window *screen,Map* map, int key[], Move* move);
 
+/**
+* Add a new wall to the map at the position (x,y). 
+*/
 void addWall(Map *map, int x, int y);
 
 /**
@@ -78,25 +81,50 @@ void addWall(Map *map, int x, int y);
 */
 void encircleMap(Map* map);
 
+/**
+* Verify if the hero can move. Check the position of buildings.
+*/
 Building* cantMove(ListBuilding* b, SDL_Rect* pos);
 
+/**
+* load a texture for a sprite for the map. Used for buildings and the floor.
+*/
 void loadSprite(FILE *file, SDL_Renderer *rendu, SDL_Texture **text, int i);
 
-void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *last);
-
+/**
+* Verify if there is a collision between the spell and a building/an ennemy.
+*/
 int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map* map);
 
-ListBuilding* updateWall(ListBuilding* lb);
-
+/**
+* Check if the monster can move. If there is a collision, verify if it is an indestructible building
+* or a tower and in that case apply damages to the tower. 
+*/
 int cantMoveMonster(ListChar* lb, SDL_Rect* pos, Spell *spell, ListItem *listitem, Map *map);
 
+/**
+* Check if there is a collision between the ennemies and the hero. If that is the case,
+* apply damages to the hero.
+* At the beginning, it would also prevent the hero to move, but the game was very hard to play and unfunny.
+* pos : the position of the ennemy.
+*/
 int blockMonsters(Map* map, SDL_Rect* pos);
 
+/**
+* Check uf a place is free. Verify that there is no buildings and not the hero on the case.
+*/
 int isFree(Map* map, SDL_Rect* pos);
 
+/**
+*
+*/
 void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type);
 
 int test_shot(SDL_Rect* pref, int direction, Map *map);
+
+void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *last);
+
+ListBuilding* updateWall(ListBuilding* lb);
 
 #endif
 

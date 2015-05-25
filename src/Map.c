@@ -542,9 +542,7 @@ void turret_shot(Map *map, ListSpell *current_list, TypeSpell *current_type){
 					ptest->y = b->current->y - map->corner->y;
 					ptest->x = b->current->x - map->corner->x + PX_W;
 				}
-
 				lanceattack(current_list, &direction, current_type, key, ptest->x, ptest->y);
-				
 			}
 		b = b->next;
 		}
