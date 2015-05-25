@@ -8,5 +8,5 @@ To compile this you project, you'll need some extra libraries:
 - libsdl2-ttf-dev 
 - libsdl2-mixer-dev
 
-After that, you just have to launch the command make and let magic be done ;)
+After that, you just have to launch the command make and let magic be done ;) \n
 The executable Game will be created at the root of the directory.
