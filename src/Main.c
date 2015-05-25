@@ -214,10 +214,18 @@ int main(){
 		}
 
 		if (play == 1){
+			Mix_HaltMusic();
 			quit = managing_event(main_screen,rendu);
 		}
 
-		if(quit == 2){
+		if(quit == 2 || quit == 3){
+			if(quit == 2){
+				/*We manage the sound. that's the only way I found to stop correctly the music when we come.
+				Neither Mix_PauseMusic() nor Mix_HaltMusic were efficients.*/
+				Mix_FreeMusic(musique);
+				musique = Mix_LoadMUS("./sons/The Pyre.mp3"); 
+				Mix_PlayMusic(musique, -1); 
+			}
 			screen = 0;
 			quit = 0;
 			play = 0;
@@ -227,6 +235,7 @@ int main(){
 	}
 
 	SDL_DestroyRenderer(rendu);
+	Mix_FreeMusic(musique);
 	SDL_DestroyWindow(main_screen);
 	free(title);
 	free(title2);
@@ -779,7 +788,7 @@ while(quit == 0) {
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym){
 						case SDLK_ESCAPE:
-							quit = 2;
+							quit = 3;
 						break;
 						case SDLK_UP:
 							if (point1->y > screen_h/2 - screen_h/2.25) {
