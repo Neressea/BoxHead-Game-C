@@ -6,8 +6,8 @@ void manageEnnemies(Map* map){
 	int numberOfEnnemies = size(map->characters) - 1;
 
 	//If there is not enough ennemies, we add them
-	if(numberOfEnnemies < level * 2){
-		int numberToAdd = level * 2 - numberOfEnnemies;
+	if(numberOfEnnemies < level * 3){
+		int numberToAdd = level * 3 - numberOfEnnemies;
 		
 		int i;
 		for(i = 0; i < numberToAdd; ++i){
