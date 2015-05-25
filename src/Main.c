@@ -471,17 +471,19 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 		if(map->characters->current->hp<=0){
 			SDL_Rect pos;
-			pos.x = 0;
-			pos.y = 0;
-			SDL_Texture* end_screen = IMG_LoadTexture(rendu, "./images/sprites/game_over.jpeg");
+			pos.w = 500;
+			pos.h = 250;
+			pos.x = screen_w/2 - pos.w/2;
+			pos.y = screen_h/2 - pos.h/2;
+			char go [15] = "Game Over"; 
+			SDL_Color textColor = { 155, 155, 155, 155 };
+			SDL_Surface *go_surface = TTF_RenderText_Solid (font, go, textColor);
+			SDL_Texture* go_text = SDL_CreateTextureFromSurface(rendu, go_surface);
 			SDL_RenderClear(rendu);
 			Mix_PlayChannel(2, mort, 0);
-
-			SDL_RenderCopy(rendu, end_screen, NULL, &pos);
+			SDL_RenderCopy(rendu, go_text, NULL, &pos);
 			int t=0;
 			while(t++ < 5000) SDL_RenderPresent(rendu);
-
-			SDL_DestroyTexture(end_screen);
 			quit = 2;	
 		}
 	}
