@@ -7,7 +7,7 @@ L'ensemble du cahier des charges minimal a été implémenté. De plus, la diffi
 \subsection{Ce qui reste inachevé}
 
 Malheureusement, nous n'avons pas réussi à mettre en pratique nos autres idées. Nous avons tout de même préparé l'implémentation de certaines fonctionnalités. Ainsi, même si l'éditeur de cartes n'a pas été réalisé, le code a été adapté afin de pouvoir charger des fichiers textes formatés, ce qui facilite son ajout ultérieur. \\
-Pour l'intelligence artificielle des ennemis, nous avions prévu d'utiliser l'algorithme de Dijkstra afin de créer des ennemis intelligents capables d'éviter les obstacles. Cependant nous n'en avons pas eu le temps ; nous avons donc décidé pour pimenter le jeu de jouer sur le nombre d'ennemis. \\
+Pour l'intelligence artificielle des ennemis, nous avions prévu d'utiliser l'algorithme de Dijkstra afin de créer des ennemis intelligents capables d'éviter les obstacles. Cependant nous n'en avons pas eu le temps ; nous avons donc décidé de pimenter le jeu avec le nombre d'ennemis. \\
 Les tourelles que l'on pose quant à elles sont bien destructibles par les ennemis et les attaquent, mais leurs tirs sont aléatoires.
 
 \subsection{Les problèmes rencontrés}
@@ -17,7 +17,7 @@ Les tourelles que l'on pose quant à elles sont bien destructibles par les ennem
 En nous confrontant pour la première fois à un travail de groupe de cette ampleur, nous avons rencontré quelques difficultés, dont certaines communicationnelles. En effet, lors de la recherche de sprites, nous avons commencé par les boules de feu ; puis nous nous sommes concertés pour la recherche des boules de glace. Cependant à cause d'un quiproquo, nous avons eu temporairement des sprites de cornets de glace.
 
 	\subsubsection{Git et les machines virtuelles}
-	L'un des membres utilisant une machine virtuelle, nous avons passé un certain temps à essayer de configurer la VM pour pouvoir pusher les fichiers sur github, en vain. Nous avons donc été contraint de transférer des fichiers sur un autre ordinateur et d'utiliser un autre compte github, ce qui explique les commits de seulement deux membres.
+	L'un des membres utilisant une machine virtuelle, nous avons passé un certain temps à essayer de configurer la VM pour pouvoir pusher les fichiers sur github, en vain. Nous avons donc été contraint de transférer des fichiers sur un autre ordinateur et d'utiliser un autre compte github, ce qui explique les commits de seulement deux des trois membres.
 
 	\subsubsection{De la mémoire et des fuites}
 
@@ -29,4 +29,4 @@ Après plusieurs longues séances de codage consécutives, nous nous sommes rend
 
 	\subsubsection{La vue et le modèle}
 
-Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette différence bornée par la taille des cases (dans notre cas 100px). De plus, à cause des collisions avec les murs nous avons dû redécouper les sprites des monstres et des héros afin de les rendre plus réalistes. En ce qui concerne la collision entre les personnages, nous l'avions implémentée à l'origine, mais vu le nombre d'ennemis, le héros finissait rapidement bloqué par une horde de monstres, ce qui rendait les parties infaisables. Nous l'avons donc retirée, en privilégiant le gameplay au réalisme.
+Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette différence bornée par la taille des cases (dans notre cas 100px). De plus, à cause des collisions avec les murs nous avons dû redécouper les sprites des monstres et des héros afin de les rendre plus réalistes. En ce qui concerne la collision entre les personnages, nous l'avions implémentée à l'origine, mais vu le nombre d'ennemis, le héros finissait rapidement bloqué par une horde de monstres, ce qui sapait l'intérêt des parties. Nous l'avons donc retirée, en privilégiant le gameplay au réalisme.

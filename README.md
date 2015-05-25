@@ -10,3 +10,9 @@ To compile this you project, you'll need some extra libraries:
 
 After that, you just have to launch the command make and let magic be done ;) <br />
 The executable Game will be created at the root of the directory.
+
+The default keys are : 
+
+- [Space] Launch a spell
+- [Directionnal arrows] Move the hero
+- [a] [z] [e] Switch the spell
