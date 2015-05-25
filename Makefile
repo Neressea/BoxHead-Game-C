@@ -1,22 +1,4 @@
-#CPP=gcc    #Commande du compilateur
-#CFLAGS=-O3 #Option d'optimisation du programme
-#LDFLAGS=-lSDL -lSDL_mixer #Linker
-#EXEC=nomProgramme  #Nom du programme à modifier
-
-# Création du dossier bin (à condition que ce dernier n'existe pas déjà)
-
-#all: ${EXEC}
-
-#${EXEC}: ${EXEC}.o
-#	${CPP} $(CFLAGS) -o ${EXEC} ${EXEC}.o ${LDFLAGS}
-
-#${EXEC}.o: ${EXEC}.c
-#	${CPP} $(CFLAGS) -o ${EXEC}.o -c ${EXEC}.c
-
-
-# Création de l'exécutable 'Light'
-
-all: create IA.o Map.o Character.o Building.o Game.o Spell.o Item.o Main.o Keybinds.o
+all: create IA.o Map.o Character.o Building.o Spell.o Item.o Main.o Keybinds.o
 	gcc ./bin/*.o -o ./Game -lSDL2-2.0 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
  
 # Création du dossier bin (à condition que ce dernier n'existe pas déjà)
@@ -36,9 +18,6 @@ Character.o: ./src/Character.c ./header/*.h
  
 Building.o: ./src/Building.c ./header/*.h
 	gcc -Wall -c ./src/Building.c -o ./bin/Building.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
- 
-Game.o: ./src/Game.c ./header/*.h
-	gcc -Wall -c ./src/Game.c -o ./bin/Game.o  -lSDL2-2.0 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 Spell.o: ./src/Spell.c ./header/*.h
 	gcc -Wall -c ./src/Spell.c -o ./bin/Spell.o -lSDL2-2.0 -lSDL2_image -lSDL2_ttf -lSDL2_mixer

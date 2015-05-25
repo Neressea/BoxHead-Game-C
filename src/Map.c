@@ -333,6 +333,7 @@ int blockMonsters(Map* map, SDL_Rect* pos){
 		characters = characters->next;
 	}
 
+	//Finally, we don't block the hero with ennemies, because it's too hard to play.
 	return 0;
 }
 
@@ -376,7 +377,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 		w = SPELL_W;
 	}
 
-	//We loop whilewe have not found if it is a building, or until we are to the end of the list 
+	//We loop while we have not found if it is a building, or until we are to the end of the list 
 	while(cant==0 && b != NULL){
 
 		//If we are between the x position of the building
@@ -394,6 +395,7 @@ int cantMoveSpell(ListBuilding* lb, SDL_Rect* pos, Spell *spell, ListItem *listi
 		}
 		b = b->next;
 	}
+
 	return cant;
 }
 
@@ -492,7 +494,7 @@ void turret(Map *map, TypeSpell *current_type, int key[], int direction, int *la
 		}
 
 		if (mur == 0){
-			Building* b = createBuilding(x * PX_W, y * PX_H, map->characters->current->level*1000, 10, 10);
+			Building* b = createBuilding(x * PX_W, y * PX_H, map->characters->current->level*100, 10, 10);
 			ListBuilding* lb = malloc(sizeof(ListBuilding));
 			lb->current=b;
 			lb->next = map->buildings;

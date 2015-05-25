@@ -6,13 +6,13 @@ L'ensemble du cahier des charges minimal a été implémenté. De plus, la diffi
 
 \subsection{Ce qui reste inachevé}
 
-Malheureusement, nous n'avons pas réussi à mettre en pratique nos autres idées. Cependant, nous avons tout de même préparé l'implémentation de certaines fonctionnalités. Ainsi, même si l'éditeur de cartes n'a pas été réalisé, le code a été adapté afin de pouvoir charger des fichiers textes formatés pour faciliter son ajout par la suite. 
+Malheureusement, nous n'avons pas réussi à mettre en pratique nos autres idées. Nous avons tout de même préparé l'implémentation de certaines fonctionnalités. Ainsi, même si l'éditeur de cartes n'a pas été réalisé, le code a été adapté afin de pouvoir charger des fichiers textes formatés, ce qui facilite son ajout ultérieur. 
 
 \subsection{Les problèmes rencontrés}
 
 	\subsubsection{Quelques problèmes de communication}
  
-En nous confrontant pour la première fois à un travail de groupe de cette ampleur, nous avons rencontré quelques difficultés, dont certaines communicationnelles. En effet, lors de la recherche de sprites, nous avons commencé par les boules de feu ; puis nous nous sommes concertés pour la recherche des boules de glace. Cependant à cause d'un quiproquo, nous avons temporairement fini avec des sprites de cornets de glace. 
+En nous confrontant pour la première fois à un travail de groupe de cette ampleur, nous avons rencontré quelques difficultés, dont certaines communicationnelles. En effet, lors de la recherche de sprites, nous avons commencé par les boules de feu ; puis nous nous sommes concertés pour la recherche des boules de glace. Cependant à cause d'un quiproquo, nous avons eu temporairement des sprites de cornets de glace. 
 
 	\subsubsection{De la mémoire et des fuites}
 
@@ -20,8 +20,8 @@ Après plusieurs longues séances de codage consécutives, nous nous sommes rend
 
 	\subsubsection{Gestion événementielle}
 	
-	Nous n'arrivions pas dans un premier temps à gérer l'appui de plusieurs touches en même temps. Nous avons alors changé notre Wait Event par un Poll Event. Ce dernier a comme avantage de garder en mémoire plusieurs événements, contrairement à Wait Event qui les gère un par un. Les événements étant stockés dès le premier appel de la fonction Poll Event, un switch(Poll Event) n'est pas nécessaire. Nous avons ensuite décidé de créer un tableau de booléen contenant les états de chaque touche nécessaire au jeu. Il a donc fallu contrôler à la fois les pressions exercées sur les touches et leurs relâchements. Ce tableau nous a permis de gérer les événements de manière plus lisible, mais aussi de gérer grâce à un if l'état de plusieurs touches à la fois, permettant de gérer l'appuie de plusieurs touches. 
+	Nous n'arrivions pas dans un premier temps à gérer l'appui de plusieurs touches en même temps. Nous avons alors changé notre Wait Event par un Poll Event. Ce dernier a comme avantage de garder en mémoire plusieurs événements, contrairement à Wait Event qui les gère un par un. Les événements étant stockés dès le premier appel de la fonction Poll Event, un switch(Poll Event) n'est pas nécessaire. Nous avons ensuite décidé de créer un tableau de booléens contenant les états de chaque touche nécessaire au jeu. Il a donc fallu contrôler à la fois les pressions exercées sur les touches et leurs relâchements. Ce tableau nous a permis de gérer les événements de manière plus lisible, mais aussi de gérer grâce à une condition l'état de plusieurs touches à la fois. 
 
 	\subsubsection{La vue et le modèle}
 
-Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette bornée par la taille des cases (dans notre cas 100px). De plus, à cause de ces collisions nous avons dû redécouper les sprites des monstres et des héros afin de rendre la collision avec les murs plus réalistes. En ce qui concerne la collision entre les personnages, nous l'avions implémentée à l'origine, mais vu le nombre d'ennemis, le héros finissait rapidement bloquée par une horde de monstres, ce qui rendait les parties infaisables. Nous l'avons donc retirée, au détriment du réalisme de la chose. 
+Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette différence bornée par la taille des cases (dans notre cas 100px). De plus, à cause des collisions avec les murs nous avons dû redécouper les sprites des monstres et des héros afin de les rendre plus réalistes. En ce qui concerne la collision entre les personnages, nous l'avions implémentée à l'origine, mais vu le nombre d'ennemis, le héros finissait rapidement bloqué par une horde de monstres, ce qui rendait les parties infaisables. Nous l'avons donc retirée, en privilégiant le gameplay au réalisme.
