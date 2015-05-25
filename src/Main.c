@@ -310,7 +310,7 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 	int keyBindings[NB_TOUCHES]={0}; //On génère les raccourcis clavier
 	initialise_keybinds(keyBindings);
-	
+
 
 	SDL_Event event;
 		
@@ -738,7 +738,12 @@ int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non term
 	initialise_keybinds(keyBindings);
 
 	int quit=0;
-	
+	int test = 0;
+	int limit=0, test2=0;
+	int mess=0;
+	char* instruction[11] = {"Choisissez la touche a Configurer", "Touche pour se deplacer vers le haut", "Touche pour se deplacer vers le bas", "Touche pour se deplacer vers la gauche", "Touche pour se deplacer vers la droite", "Touche d'attaque", "Touche pour selectionner le feu", "Touche pour selectionner la glace", "Touche pour selectionner les tours", "Touche deja liee a une action"};
+	int i;
+
 	char t1 = keyBindings[1];
 	char t2 = keyBindings[2];
 	char t3 = keyBindings[3];
@@ -748,48 +753,159 @@ int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non term
 	char t7 = keyBindings[7];
 	char t8 = keyBindings[8];
 
+	SDL_Rect *title3 = malloc(sizeof(SDL_Rect));
+
+	SDL_Rect *point1 = malloc(sizeof(SDL_Rect));
+	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
+	
+	point1->h = screen_h/9.6;
+	point1->w = screen_w/12.8;	
+	point1->x = screen_w/2 - screen_w/6 - screen_w/8;
+	point1->y = screen_h/2 - screen_h/2.25;
+	
+	int pas=screen_h/11;
+
 	TTF_Font* font1 = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100); //!!0 création des textures
 	SDL_Color textColor1 = { 255, 255, 255, 255 }; 
  
+	
+SDL_Event event;
+
+while(quit == 0) {
+
+	SDL_PollEvent(&event);	
+	switch(event.type){
+			case SDL_QUIT:
+				quit = 1;
+			break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym){
+						case SDLK_ESCAPE:
+							quit = 2;
+						break;
+						case SDLK_UP:
+							if (point1->y > screen_h/2 - screen_h/2.25) {
+								point1->y = point1->y - pas;
+							}
+							SDL_Delay(70);							
+						break;
+						case SDLK_DOWN:
+							if (point1->y < screen_h/2 - screen_h/2.25 + 7*pas) {
+								point1->y = point1->y + pas;
+							}
+							SDL_Delay(70);
+						break;
+						case SDLK_SPACE: ;
+							for (i = 1; i < NB_TOUCHES; ++i) {
+								if (point1->y <= screen_h/2 - screen_h/2.25 + i*pas && point1->y > screen_h/2 - screen_h/2.25) {
+									SDL_RenderClear(rendu); //On affiche l'instruction d'appuyer sur une touche
+									mess=i;
+									title3->h = screen_h/5; 
+									title3->w = screen_w/1.5;	
+									title3->x = screen_w/2 - title3->w/2;
+									title3->y = screen_h/2 - title3->h/2;
+									SDL_Surface *Surface_Tinstruction = TTF_RenderText_Solid (font1, instruction[mess], textColor1);
+									SDL_Texture *Text_instruction = SDL_CreateTextureFromSurface(rendu, Surface_Tinstruction);
+									SDL_FreeSurface(Surface_Tinstruction);
+									SDL_RenderCopy(rendu, Text_instruction, NULL, title3 ); 
+									SDL_RenderPresent(rendu);
+									SDL_DestroyTexture(Text_instruction);
+
+									SDL_Delay(70);
+									SDL_Event event;
+									mess=0;
+									int reussi=0;							
+									while( reussi==0) {
+										SDL_PollEvent(&event);
+										if(event.type==SDL_KEYDOWN){
+											if(event.key.keysym.sym == SDLK_ESCAPE) {
+												reussi = 1;
+												break;
+											} else {
+												int test=2;
+												test = configureKeybind(i, keyBindings, event.key.keysym.sym);
+												//On vérifie qu'on peut attribuer cette touche
+												if (test == 1) {
+													mess=9;
+													SDL_RenderClear(rendu);
+													SDL_Surface *Surface_Tinstruction = TTF_RenderText_Solid (font1, instruction[mess], textColor1);
+													SDL_Texture *Text_instruction = SDL_CreateTextureFromSurface(rendu, Surface_Tinstruction);
+													SDL_FreeSurface(Surface_Tinstruction);
+													SDL_RenderCopy(rendu, Text_instruction, NULL, title3 ); 
+													SDL_RenderPresent(rendu);
+													SDL_DestroyTexture(Text_instruction);
+													mess=0;
+												} else {
+													if (test == 0) {
+														reussi = 1;
+													}
+												}
+											}
+										}
+									}
+								break;
+								}
+								
+							}
+							if (point1->y <= screen_h/2 - screen_h/2.25) {
+								createCustomKeybinds();
+								
+							}
+						break;
+				break;
+			}
+			
+	}
 	SDL_RenderClear(rendu); //!!1
 
-	SDL_Surface *Surface_Tkeytitle1 = TTF_RenderText_Solid (font1, "Haut", textColor1);
-	SDL_Surface *Surface_Tkeytitle2 = TTF_RenderText_Solid (font1, "Bas", textColor1);
-	SDL_Surface *Surface_Tkeytitle3 = TTF_RenderText_Solid (font1, "Gauche", textColor1);
-	SDL_Surface *Surface_Tkeytitle4 = TTF_RenderText_Solid (font1, "Droite", textColor1);
-	SDL_Surface *Surface_Tkeytitle5 = TTF_RenderText_Solid (font1, "Attaque", textColor1);
-	SDL_Surface *Surface_Tkeytitle6 = TTF_RenderText_Solid (font1, "Feu", textColor1);
-	SDL_Surface *Surface_Tkeytitle7 = TTF_RenderText_Solid (font1, "Glace", textColor1);
-	SDL_Surface *Surface_Tkeytitle8 = TTF_RenderText_Solid (font1, "Tour", textColor1);
+	SDL_Surface *Surface_Ttitle0 = TTF_RenderText_Solid (font1, "Reinitialiser", textColor1);
+	SDL_Texture *Text_title0 = SDL_CreateTextureFromSurface(rendu, Surface_Ttitle0);
+	SDL_FreeSurface(Surface_Ttitle0);
 
+	SDL_Surface *Surface_Tkeytitle1 = TTF_RenderText_Solid (font1, "Haut", textColor1);
 	SDL_Texture *Text_keytitle1 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle1);
 	SDL_FreeSurface(Surface_Tkeytitle1);
+
+	SDL_Surface *Surface_Tkeytitle2 = TTF_RenderText_Solid (font1, "Bas", textColor1);
 	SDL_Texture *Text_keytitle2 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle2);
 	SDL_FreeSurface(Surface_Tkeytitle2);
+
+	SDL_Surface *Surface_Tkeytitle3 = TTF_RenderText_Solid (font1, "Gauche", textColor1);
 	SDL_Texture *Text_keytitle3 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle3);
 	SDL_FreeSurface(Surface_Tkeytitle3);
+
+	SDL_Surface *Surface_Tkeytitle4 = TTF_RenderText_Solid (font1, "Droite", textColor1);
 	SDL_Texture *Text_keytitle4 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle4);
 	SDL_FreeSurface(Surface_Tkeytitle4);
+
+	SDL_Surface *Surface_Tkeytitle5 = TTF_RenderText_Solid (font1, "Attaque", textColor1);
 	SDL_Texture *Text_keytitle5 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle5);
 	SDL_FreeSurface(Surface_Tkeytitle5);
+
+	SDL_Surface *Surface_Tkeytitle6 = TTF_RenderText_Solid (font1, "Feu", textColor1);
 	SDL_Texture *Text_keytitle6 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle6);
 	SDL_FreeSurface(Surface_Tkeytitle6);
+
+	SDL_Surface *Surface_Tkeytitle7 = TTF_RenderText_Solid (font1, "Glace", textColor1);
 	SDL_Texture *Text_keytitle7 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle7);
 	SDL_FreeSurface(Surface_Tkeytitle7);
+
+	SDL_Surface *Surface_Tkeytitle8 = TTF_RenderText_Solid (font1, "Tour", textColor1);
 	SDL_Texture *Text_keytitle8 = SDL_CreateTextureFromSurface(rendu, Surface_Tkeytitle8);
 	SDL_FreeSurface(Surface_Tkeytitle8);
 
-
-	SDL_Rect *title3 = malloc(sizeof(SDL_Rect));
-	SDL_GetWindowSize(main_screen,&screen_w,&screen_h);
+	SDL_Surface *Surface_Tinstruction = TTF_RenderText_Solid (font1, instruction[mess], textColor1);
+	SDL_Texture *Text_instruction = SDL_CreateTextureFromSurface(rendu, Surface_Tinstruction);
+	SDL_FreeSurface(Surface_Tinstruction);
 		
 		title3->h = screen_h/10;  //definit la taille des textures
-		title3->w = screen_w/2;	
+		title3->w = screen_w/3;	
 		title3->x = screen_w/2 - title3->w/2;
 		title3->y = screen_h/2 - title3->h/2 - 4*screen_h/10;
-	
-	int pas=screen_h/10;
 
+
+	SDL_RenderCopy(rendu, Text_title0, NULL, title3 ); //!!2
+	title3->y += pas;
 	SDL_RenderCopy(rendu, Text_keytitle1, NULL, title3 ); //!!2
 	title3->y += pas;
 	SDL_RenderCopy(rendu, Text_keytitle2, NULL, title3 );
@@ -805,13 +921,10 @@ int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non term
 	SDL_RenderCopy(rendu, Text_keytitle7, NULL, title3 );
 	title3->y += pas;
 	SDL_RenderCopy(rendu, Text_keytitle8, NULL, title3 ); 
-
-	SDL_Rect *point1 = malloc(sizeof(SDL_Rect));
-	
-	point1->h = screen_h/9.6;
-	point1->w = screen_w/12.8;	
-	point1->x = screen_w/2 - title3->w/2 - screen_w/8;
-	point1->y = screen_h/2 - screen_h/2.25;
+	title3->y += pas;
+	title3->w = title3->w*2;
+	title3->x = screen_w/2 - title3->w/2;
+	SDL_RenderCopy(rendu, Text_instruction, NULL, title3 ); 
 
 	SDL_Texture* Pointeur = IMG_LoadTexture(rendu, "./images/sprites/cursor.png");	
 	SDL_RenderCopy(rendu, Pointeur, NULL, point1 );
@@ -826,22 +939,26 @@ int managing_keybinds(SDL_Window * main_screen, SDL_Renderer *rendu){ //Non term
 	SDL_DestroyTexture(Text_keytitle7);
 	SDL_DestroyTexture(Text_keytitle8);
 	SDL_DestroyTexture(Pointeur);
+	SDL_DestroyTexture(Text_title0);
+	SDL_DestroyTexture(Text_instruction);
 
-SDL_Event event;
 
-while(quit == 0) {
-	SDL_PollEvent(&event);	
-	switch(event.type){
-			case SDL_QUIT:
-				quit = 1;
-			break;
-			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE){
-					quit = 2;
-				}
-			break;
-	}
+
+	test2 = SDL_GetTicks();	
+
+		if (limit > test){
+			if (limit > test + FPS){
+				SDL_Delay(FPS);
+			}
+			else {
+				SDL_Delay(limit - test);
+			}
+		}
+
+		limit = SDL_GetTicks() + FPS;
+
 }
+SDL_RenderClear(rendu);
 return quit;
 }
 

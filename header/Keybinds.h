@@ -11,13 +11,13 @@ void keybinds(FILE* fichier, int* keyBindings);
 
 int isTaken(int new, int pos, int* keyBindings);
 
-void configureKeybind(int nb, int* keyBindings);
-
-void configureKeybinds(int* keyBindings);
+int configureKeybind(int nb, int* keyBindings, int key);
 
 int isWellFormed(int* keyBindings);
 
 void createDefaultKeybinds();
+
+void createCustomKeybinds();
 
 int initialise_keybinds(int* keyBindings);
 
