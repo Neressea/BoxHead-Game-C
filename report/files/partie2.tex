@@ -2,13 +2,11 @@
 
 \subsection{Les attentes atteintes}
 
-L'ensemble du cahier des charges minimal a été implémenté. De plus, la difficulté est proportionnelle au niveau du joueur. En effet, le nombre d'ennemis dépend du niveau du joueur, et donc des ennemis qu'il a déjà vaincu. Nous avons aussi ajouté une attaque à usage limitée. Des items sont laissés par les ennemis vaincus pour régénérer les points de vie du héros ou son sort limité. Enfin, la vue a été adaptée pour que la carte soit redimensionnable en cours de partie. 
+L'ensemble du cahier des charges minimal a été implémenté. De plus, la difficulté est proportionnelle au niveau du joueur. En effet, le nombre d'ennemis dépend du niveau du joueur, et donc des dégâts qu'il a infligés. Nous avons aussi ajouté une attaque à usage limitée. Des items sont laissés par les ennemis vaincus pour régénérer les points de vie du héros ou son sort limité. Des musiques et sons sont joués dans l'écran de sélection, durant la partie, et lorsque le joueur perd. Nous avons aussi implémenté la possibilité de changer les touches de contrôle. Cependant, les touches actuellement sélectionnées ne sont pas affichées et une touche déjà affectée doit être désaffectée avant d'être de nouveau assignée à une autre commande. Enfin, la vue a été adaptée pour que la carte soit redimensionnable en cours de partie. 
 
 \subsection{Ce qui reste inachevé}
 
 Malheureusement, nous n'avons pas réussi à mettre en pratique nos autres idées. Cependant, nous avons tout de même préparé l'implémentation de certaines fonctionnalités. Ainsi, même si l'éditeur de cartes n'a pas été réalisé, le code a été adapté afin de pouvoir charger des fichiers textes formatés pour faciliter son ajout par la suite. 
-
-De la même manière, bien que la vue soit prête pour la modification des touches, et qu'il existe une fonction permettant de modifier les contrôles utilisateurs, nous n'avons pas eu le temps de lier les deux.
 
 \subsection{Les problèmes rencontrés}
 
@@ -26,4 +24,4 @@ Après plusieurs longues séances de codage consécutives, nous nous sommes rend
 
 	\subsubsection{La vue et le modèle}
 
-Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette bornée par la taille des cases (dans notre cas 100px).
+Nous avons essayé de respecter au mieux possible un pattern vue-modèle, en les dissociant au maximum. Ceci a entraîné de nombreuses phases de calcul pour l'affichage, étant donné que le modèle est un quadrillage alors que la vue peut "glisser" sur la carte pixel par pixel. De la même manière, un calcul a été nécessaire dans la gestion des collisions pour corriger cette bornée par la taille des cases (dans notre cas 100px). De plus, à cause de ces collisions nous avons dû redécouper les sprites des monstres et des héros afin de rendre la collision avec les murs plus réalistes. En ce qui concerne la collision entre les personnages, nous l'avions implémentée à l'origine, mais vu le nombre d'ennemis, le héros finissait rapidement bloquée par une horde de monstres, ce qui rendait les parties infaisables. Nous l'avons donc retirée, au détriment du réalisme de la chose. 
