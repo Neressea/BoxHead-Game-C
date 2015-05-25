@@ -36,8 +36,6 @@ int main(){
 	SDL_Rect *point = malloc(sizeof(SDL_Rect));
 	SDL_Color textColor = { 255, 255, 255, 255 }; 
 	SDL_Event event;
-	SDL_Event event1;
-
 
 
 	TTF_Font* font = TTF_OpenFont("./images/polices/AmaticSC-Regular.ttf",100); //!!0 création des textures 
@@ -136,6 +134,8 @@ int main(){
 	point->y = screen_h/2 - screen_h/3.2;
 
 	while(quit == 0){
+		SDL_Event event1;
+		event1.type = 0;
 		SDL_PollEvent(&event1);
 			switch(event1.type){
 				case SDL_QUIT:
@@ -212,19 +212,22 @@ int main(){
 			option=0;
 			SDL_RenderClear(rendu);
 		}
-		
+
+		if (play == 1){
+			quit = managing_event(main_screen,rendu);
+		}
+
+		if(quit == 2){
+			screen = 0;
+			quit = 0;
+			play = 0;
+			option = 0;
+			test = 0;
+		}
 	}
 
-	
-
-	if (play == 1){
-		Mix_FreeMusic(musique);
-		quit = managing_event(main_screen,rendu);
-	}
-
-	if(quit == 2) main();
-
-	
+	SDL_DestroyRenderer(rendu);
+	SDL_DestroyWindow(main_screen);
 	free(title);
 	free(title2);
 	free(point);
@@ -233,14 +236,12 @@ int main(){
 	SDL_DestroyTexture(Text_subtitle);
 	SDL_DestroyTexture(Pointeur);	
 	SDL_DestroyTexture(Text_subtitle2);
-	SDL_DestroyRenderer(rendu);
-	SDL_DestroyWindow(main_screen);
 	IMG_Quit();
 	SDL_VideoQuit();
-	Mix_FreeMusic(musique);
+	SDL_AudioQuit();
 	Mix_CloseAudio();
-	SDL_Quit();
 	TTF_Quit();
+	SDL_Quit();
 
 	return EXIT_SUCCESS;
 }
@@ -325,7 +326,7 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 				break;
 				case SDL_KEYDOWN:
 					if (event.key.keysym.sym == keyBindings[ESCAPE]) {
-						quit = 1;
+						quit = 2;
 					break; 
 					} else if (event.key.keysym.sym == keyBindings[UP]) {
 						key[0] = 1;
@@ -478,8 +479,7 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 
 			SDL_DestroyTexture(end_screen);
 			quit = 2;	
-		} 
-
+		}
 	}
 
 	int i=0;
@@ -518,8 +518,6 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	SDL_DestroyTexture(current_texture);
 	destroy_texture(NB_SPRITES_H, texture_heros);
 	destroyMap(map);
-	SDL_DestroyRenderer(rendu);
-	SDL_DestroyWindow(main_screen);
 	free(tab_typeSpell);
 	free(move);
 	Mix_FreeChunk(feu);
@@ -527,9 +525,9 @@ int managing_event(SDL_Window * main_screen, SDL_Renderer *rendu){
 	Mix_FreeChunk(mort);
 	Mix_FreeChunk(tour);
 	TTF_CloseFont(font);
+	Mix_FreeMusic(musique);
 
 	return quit;
-	
 }
 
 void init_texture(SDL_Renderer *rendu, SDL_Texture *tableau[]){
