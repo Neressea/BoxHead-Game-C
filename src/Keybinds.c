@@ -1,16 +1,16 @@
 #include "../header/Keybinds.h"
 
-//Fonction remplissant le tableau a partir d'un fichier
 void keybinds(FILE* fichier, int* keyBindings) {
 	char chaine[LGR_MAX]="";
 	int i=0;
+
+	//Fill the array with the content of the file
 	for (i=0; i<NB_TOUCHES; i++) {
 		fgets(chaine, LGR_MAX, fichier);
 		keyBindings[i]=atoi(chaine);
 	}
 }
 
-//retourne 1 si la touche n'est pas déjà assignée
 int isTaken(int new, int pos, int* keyBindings) {
 	int i=0;
 	for (i=0; i<pos; i++) {
@@ -26,28 +26,34 @@ int isTaken(int new, int pos, int* keyBindings) {
 	return 1;
 }
 
-//Sous-fonction configurant une touche
 int configureKeybind(int nb, int* keyBindings, int key) {
+	//We check that the key is free.
 	if(isTaken(key, nb, keyBindings)==0) {
 		return 1;
 	}
-		remove("./keybinds/CustomKeybinds");
-		keyBindings[nb]=key;
-		FILE* fichierTmp = NULL;
-		fichierTmp=fopen("./keybinds/CustomKeybinds", "w+");
-		int i;
-		char chaine[LGR_MAX]="";
-		for (i=0; i<NB_TOUCHES; i++) {
-			sprintf(chaine, "%d\n", keyBindings[i]);
-			fputs(chaine, fichierTmp);
-		}
-		fclose(fichierTmp);
-return 0;
+	//We delete the file.
+	remove("./keybinds/CustomKeybinds");
+	keyBindings[nb]=key;
+	FILE* fichierTmp = NULL;
+
+	//We rewrite the file.
+	fichierTmp=fopen("./keybinds/CustomKeybinds", "w+");
+	int i;
+	char chaine[LGR_MAX]="";
+
+	for (i=0; i<NB_TOUCHES; i++) {
+		sprintf(chaine, "%d\n", keyBindings[i]);
+		fputs(chaine, fichierTmp);
+	}
+
+	fclose(fichierTmp);
+	return 0;
 }
 
-//vérifie que les touches sont bien configurées
 int isWellFormed(int* keyBindings) {
 	int i=0;
+
+	//If there is one key not well-formed, we return 0.
 	for (i=0; i<NB_TOUCHES; i++) {
 		if (keyBindings[i]==0 || isTaken(keyBindings[i],i,keyBindings)==0) {
 			return 0;
@@ -56,8 +62,8 @@ int isWellFormed(int* keyBindings) {
 	return 1;
 }
 
-//Fonction créant le fichier de base si celui-ci est manquant ou corrompu
 void createDefaultKeybinds() {
+	//Create a default configuration.
 	FILE* fichier = NULL;
 	remove("./keybinds/DefaultKeybinds");
 	fichier=fopen("./keybinds/DefaultKeybinds", "w+");
@@ -84,6 +90,7 @@ void createDefaultKeybinds() {
 }
 
 void createCustomKeybinds() {
+	//Create a new basic custom file.
 	FILE* fichier = NULL;
 	remove("./keybinds/CustomKeybinds");
 	fichier=fopen("./keybinds/CustomKeybinds", "w+");
@@ -139,16 +146,6 @@ int initialise_keybinds(int* keyBindings) {
 		} 
 return 0;
 
-}	
-
-int test() {
-	int keyBindings[NB_TOUCHES] = {0}; //On génère les raccourcis clavier
-	initialise_keybinds(keyBindings);
-	int j=0;
-	for (j=0; j<NB_TOUCHES; j++) {
-		printf("%d\n", keyBindings[j]);
-	}
-	return 0;
 }
 
 
