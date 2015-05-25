@@ -23,7 +23,7 @@ typedef struct{
 /**
 * Defines a list of buildings.
 * current : the current building of the list
-* next : the next building of the list. 
+* next : the next building of the list. NULL if it is the end.
 */
 typedef struct ListBuilding ListBuilding;
 struct ListBuilding{
@@ -41,6 +41,8 @@ struct ListBuilding{
 Building* createBuilding(int x, int y, int hp, int attack, int defense);
 
 /**
+* Free the allocated memory of the list of buildings.
+* lb : the ListBuilding to free.
 */
 void destroyListBuild(ListBuilding* lb);
 

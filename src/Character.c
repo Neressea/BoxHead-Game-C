@@ -4,6 +4,9 @@
 * Move the character
 */
 void move(Character *p, int key[]){
+	/*We manage the display with the FPS and the SPEED of the characters. 
+	We move the character from SPEED pixel each loop.*/
+
 	if (key[0] && key[2]){
 		p->pos->y -= SPEED;
 		p->pos->x -= SPEED;
@@ -34,28 +37,6 @@ void move(Character *p, int key[]){
 	if (key[3] && !key[0] && !key[1]){
 		p->pos->x += SPEED;
 	}
-}
-
-/**
-* p1 attacks p2
-*/
-void attackCharacter(Character p1, Character p2){
-	p1.hp = 0;
-	p2.hp = 0;
-
-	int hh = p1.hp + p2.hp;
-	p1.hp = hh;
-}
-
-/**
-* p attacks the building b
-*/
-void attackBuilding(Character p, Building b){
-	p.hp = 0;
-	b.hp = 0;
-
-	int hh = p.hp + b.hp;
-	p.hp = hh;
 }
 
 Character *createChar(int hp, int defense, int attack, int level, int xp, int pos_x, int pos_y, int w, int h, ListSpell *spells){
@@ -94,6 +75,8 @@ void addChar(ListChar *characters, Character* ch){
 	while(characters->next != NULL) characters = characters->next;
 
 	ennemy->current = ch;
+
+	//We don't forget to precise that it is the last element of the list.
 	ennemy->next = NULL;
 
 	characters->next = ennemy;
@@ -111,14 +94,15 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 	blit->w = characters->current->pos->w;
 	blit->h = characters->current->pos->h;
 
+	//The variables are static. That allow us to keep a memory of the previous trames used.
 	static int trame = 0;
 	static int j = 0;
+
+	//We blit the texture at the location.
 	current_texture = update_texture(key, texture_heros, &trame, direction);
 	compute_tram(&j, &trame);
-
 	SDL_RenderCopy(rendu, current_texture, NULL, blit);
 
-	//WE MOVE THE ENNEMIES
 	Character* heros = characters->current;
 	characters = characters->next;
 	int key2[5]={0, 0, 0, 0, 0};
@@ -126,6 +110,7 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 
 	int i=0;
 
+	//Then we move all the ennemies.
 	while(characters != NULL){
 
 		moveEnnemy(b, heros, characters->current, key2);
@@ -139,12 +124,12 @@ void showCharacters(SDL_Renderer *rendu, ListChar* characters, SDL_Rect* corner,
 		characters = characters->next;
 	}
 
-
 	free(blit);
 }
 
 SDL_Texture* update_texture(int key[], SDL_Texture *tableau[], int *trame, int *f){
-	
+	//The computed numbers depend on the number of trames we use for each type of character.
+
 	if (key[4]){
 		return tableau[*f/3 + 24];
 	}	
@@ -184,6 +169,7 @@ SDL_Texture* update_texture(int key[], SDL_Texture *tableau[], int *trame, int *
 		return tableau[9 + text_move(trame)];
 	}
 
+	//We return the corresponding texture.
 	return tableau[*f];	
 }
 
@@ -226,7 +212,7 @@ ListChar* removeKilled(ListChar* characters){
 		if(cur->current->hp<=0){
 			previous->next = cur->next;
 			ListChar* tmp = cur->next;
-			free(cur);
+			destroyChara(cur->current);
 			cur = tmp;
 		}else{
 			previous = cur;
